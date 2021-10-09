@@ -74,7 +74,7 @@ dependencies {
     compileOnly("com.fastasyncworldedit:FAWE-Core:1.17-162")
 
     // WorldGuard
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.6-SNAPSHOT")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-SNAPSHOT")
 
     // Commodore (Minecraft Brigadier)
     implementation("me.lucko:commodore:1.10")
