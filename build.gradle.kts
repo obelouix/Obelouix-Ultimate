@@ -71,7 +71,7 @@ dependencies {
 
     // WorldEdit
     compileOnly("com.fastasyncworldedit:FAWE-Bukkit:1.17-268") { isTransitive = false }
-    compileOnly("com.fastasyncworldedit:FAWE-Core:1.17-162")
+    compileOnly("com.fastasyncworldedit:FAWE-Core:1.17-268")
 
     // WorldGuard
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.6-SNAPSHOT")
