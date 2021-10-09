@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ResourceBundleManager">
+    <file url="file://$PROJECT_DIR$/src/main/resources/messages_de_DE.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/messages_en_GB.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/messages_en_US.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/messages_es_ES.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/messages_fr_CA.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/messages_fr_FR.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/messages_it_IT.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/messages_jp_JP.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/messages_nl_NL.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/messages_pt_BR.properties" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/messages_pt_PT.properties" />
+    <custom-resource-bundle>
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_de_DE.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_en_GB.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_en_US.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_es_ES.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_fr_CA.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_fr_FR.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_it_IT.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_jp_JP.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_nl_NL.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_pt_BR.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_pt_PT.properties" />
+      <base-name>messages</base-name>
+    </custom-resource-bundle>
+  </component>
+</project>
