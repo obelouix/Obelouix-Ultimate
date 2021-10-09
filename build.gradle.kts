@@ -70,7 +70,7 @@ dependencies {
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
 
     // WorldEdit
-    compileOnly("com.fastasyncworldedit:FAWE-Bukkit:1.17-162") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FAWE-Bukkit:1.17-268") { isTransitive = false }
     compileOnly("com.fastasyncworldedit:FAWE-Core:1.17-162")
 
     // WorldGuard
