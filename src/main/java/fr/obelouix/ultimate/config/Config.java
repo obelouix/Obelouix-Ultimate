@@ -25,13 +25,16 @@ public class Config {
     public static Map<String, String> chatFormat = new HashMap<>();
     private static CommentedConfigurationNode root;
     private static boolean disableReloadCommand = false;
+    private static boolean configReloaded = true;
 
     public static void loadConfig() {
         try {
+            if(!configReloaded) configReloaded = true;
             root = configLoader.load();
             createFile();
         } catch (ConfigurateException e) {
             plugin.getLogger().severe("An error occurred while loading this configuration: " + e.getMessage());
+            configReloaded = false;
             if (e.getCause() != null) {
                 e.getCause().printStackTrace();
             }
@@ -103,5 +106,9 @@ public class Config {
 
     public static boolean isDisableReloadCommand() {
         return disableReloadCommand;
+    }
+
+    public static boolean isConfigReloaded() {
+        return configReloaded;
     }
 }

@@ -2,6 +2,7 @@ package fr.obelouix.ultimate.commands;
 
 import com.google.common.collect.ImmutableList;
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.i18n.I18n;
 import fr.obelouix.ultimate.messages.PluginMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
@@ -51,7 +52,15 @@ public class ObelouixUltimateCommand extends BukkitCommand {
                                     .build());
 
                 } else if (args[0].equalsIgnoreCase("reload")) {
-                    // TODO: implements reloading of configuration file
+                    Config.loadConfig();
+                    if(Config.isConfigReloaded()) {
+                        message = Component.text(i18n.getTranslation(commandSender, "obelouix.command.obelouixultimate.reload"))
+                                .color(NamedTextColor.AQUA);
+                    } else {
+                        message = Component.text(i18n.getTranslation(commandSender, "obelouix.command.obelouixultimate.reload.failed"))
+                                .color(NamedTextColor.AQUA);
+                    }
+
                 } else {
                     message = PluginMessages.wrongCommandUsage(this, commandSender);
                 }
