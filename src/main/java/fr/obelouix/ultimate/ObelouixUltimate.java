@@ -4,6 +4,7 @@ import co.aikar.timings.lib.TimingManager;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.events.manager.EventManager;
+import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NonNls;
 
@@ -52,6 +53,7 @@ public class ObelouixUltimate extends JavaPlugin {
 
             new EventManager();
         });
+        LuckPermsUtils.checkForLuckPerms();
     }
 
     /**
@@ -82,7 +84,7 @@ public class ObelouixUltimate extends JavaPlugin {
      * @param classPath the {@link Class class} to be checked, must not be null
      * @return {@code true} or {@code false}
      */
-    private boolean getClass(@NonNls String classPath) {
+    public boolean getClass(@NonNls String classPath) {
         try {
             Class.forName(classPath);
             return true;
