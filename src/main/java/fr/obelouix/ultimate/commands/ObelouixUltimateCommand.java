@@ -58,7 +58,7 @@ public class ObelouixUltimateCommand extends BukkitCommand {
                                 .color(NamedTextColor.AQUA);
                     } else {
                         message = Component.text(i18n.getTranslation(commandSender, "obelouix.command.obelouixultimate.reload.failed"))
-                                .color(NamedTextColor.AQUA);
+                                .color(NamedTextColor.DARK_RED);
                     }
 
                 } else {
