@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.events;
 
 import com.google.common.collect.ImmutableList;
+import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.i18n.I18n;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
@@ -27,7 +28,13 @@ public class ReloadDetector implements Listener {
         final Player player = event.getPlayer();
         for (final String match : commands) {
             if (event.getMessage().equalsIgnoreCase("/" + match) && player.hasPermission("bukkit.command.reload")) {
-                player.sendMessage(message(player));
+                if(Config.isDisableReloadCommand()){
+                    player.sendMessage(commandDisabledMessage(player));
+                    event.setCancelled(true);
+                } else {
+                    player.sendMessage(warnMessage(player));
+                }
+
                 break;
             }
         }
@@ -37,15 +44,31 @@ public class ReloadDetector implements Listener {
     public void consoleCommandPreProcess(ServerCommandEvent event) {
         for (final String match : commands) {
             if (event.getCommand().equalsIgnoreCase(match)) {
-                event.getSender().sendMessage(message(event.getSender()));
+                if(Config.isDisableReloadCommand()){
+                    event.getSender().sendMessage(commandDisabledMessage(event.getSender()));
+                    event.setCancelled(true);
+                } else{
+                    event.getSender().sendMessage(warnMessage(event.getSender()));
+                }
                 break;
             }
         }
     }
 
-    private Component message(CommandSender sender) {
+    private Component warnMessage(CommandSender sender) {
         return Component.text(i18n.getTranslation(sender, "obelouix.reload_cmd_is_bad"))
                 .color(NamedTextColor.DARK_RED)
+                .replaceText(TextReplacementConfig.builder()
+                        .matchLiteral("{0}")
+                        .replacement(Component.text("https://madelinemiller.dev/blog/problem-with-reload/", Style.style(TextDecoration.UNDERLINED))
+                                .color(NamedTextColor.WHITE)
+                                .clickEvent(ClickEvent.openUrl("https://madelinemiller.dev/blog/problem-with-reload/")))
+                        .build());
+    }
+
+    private Component commandDisabledMessage(CommandSender sender){
+        return Component.text(i18n.getTranslation(sender, "obelouix.command.bukkit.reload.disabled"))
+                .color(NamedTextColor.GREEN)
                 .replaceText(TextReplacementConfig.builder()
                         .matchLiteral("{0}")
                         .replacement(Component.text("https://madelinemiller.dev/blog/problem-with-reload/", Style.style(TextDecoration.UNDERLINED))

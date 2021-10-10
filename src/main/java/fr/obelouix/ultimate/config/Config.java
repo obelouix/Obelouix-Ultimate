@@ -22,8 +22,9 @@ public class Config {
             .path(Path.of(plugin.getDataFolder().getPath(), "config.yml"))
             .build();
     private static final @NonNls FileConfiguration pluginConfig = plugin.getConfig();
-    private static CommentedConfigurationNode root;
     public static Map<String, String> chatFormat = new HashMap<>();
+    private static CommentedConfigurationNode root;
+    private static boolean disableReloadCommand = false;
 
     public static void loadConfig() {
         try {
@@ -35,6 +36,7 @@ public class Config {
                 e.getCause().printStackTrace();
             }
         }
+        disableReloadCommand = root.node("disable-default-reload-command").getBoolean();
         if (LuckPermsUtils.getLuckPermsAPI() != null) {
             for (final Object group : root.node("chat", "format").childrenMap().keySet()) {
                 chatFormat.put(group.toString(), root.node("chat", "format", group.toString()).getString());
@@ -48,6 +50,8 @@ public class Config {
 
         if (!file.exists()) {
             plugin.getLogger().info("Creating configuration file...");
+
+            root.node("disable-default-reload-command").set(false);
 
             // Get all groups and generate the config dynamically
             if (LuckPermsUtils.getLuckPermsAPI() != null) {
@@ -95,5 +99,9 @@ public class Config {
         } catch (ConfigurateException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean isDisableReloadCommand() {
+        return disableReloadCommand;
     }
 }

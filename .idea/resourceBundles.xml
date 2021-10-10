@@ -24,6 +24,7 @@
       <file value="file://$PROJECT_DIR$/src/main/resources/messages_nl_NL.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/messages_pt_BR.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/messages_pt_PT.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/messages_ru_RU.properties" />
       <base-name>messages</base-name>
     </custom-resource-bundle>
   </component>
