@@ -1,6 +1,8 @@
 package fr.obelouix.ultimate.config;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.utils.LuckPermsUtils;
+import net.luckperms.api.model.group.Group;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NonNls;
 import org.spongepowered.configurate.CommentedConfigurationNode;
@@ -20,7 +22,7 @@ public class Config {
     private static final @NonNls FileConfiguration pluginConfig = plugin.getConfig();
     private static CommentedConfigurationNode root;
 
-    public static void loadConfig(){
+    public static void loadConfig() {
         try {
             root = configLoader.load();
             createFile();
@@ -31,23 +33,16 @@ public class Config {
             }
         }
     }
+
     private static void createFile() throws ConfigurateException {
         final File file = Path.of(plugin.getDataFolder().getPath(), "config.yml").toFile();
 
         if (!file.exists()) {
             plugin.getLogger().info("Creating configuration file...");
-            /*root.node("commands").act(n -> {
-                n.commentIfAbsent("Allow you to control which commands you want on your server");
-                for (final String command : commandList) {
-                    n.node(command).raw(true);
-                }
-            });
-
-            root.node("tablist").act(n -> n.node("show-player-ping").raw(true));
 
             // Get all groups and generate the config dynamically
-            if (plugin.getLuckPermsAPI() != null) {
-                for (Group group : LuckPermsGroups.getGroups()) {
+            if (LuckPermsUtils.getLuckPermsAPI() != null) {
+                for (Group group : LuckPermsUtils.getGroups()) {
                     root.node("chat").act(n -> {
                         if (group.getName().equals("default")) {
                             n.node("format").node(group.getName()).set("&#808080{displayname}: {message}");
@@ -58,6 +53,15 @@ public class Config {
                     });
                 }
             }
+
+            /*root.node("commands").act(n -> {
+                n.commentIfAbsent("Allow you to control which commands you want on your server");
+                for (final String command : commandList) {
+                    n.node(command).raw(true);
+                }
+            });
+
+            root.node("tablist").act(n -> n.node("show-player-ping").raw(true));
 
             root.node("watchdog", "enabled").raw(true);
             root.node("watchdog", "fly").act(
