@@ -11,6 +11,8 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Config {
 
@@ -21,6 +23,7 @@ public class Config {
             .build();
     private static final @NonNls FileConfiguration pluginConfig = plugin.getConfig();
     private static CommentedConfigurationNode root;
+    public static Map<String, String> chatFormat = new HashMap<>();
 
     public static void loadConfig() {
         try {
@@ -31,6 +34,12 @@ public class Config {
             if (e.getCause() != null) {
                 e.getCause().printStackTrace();
             }
+        }
+        if (LuckPermsUtils.getLuckPermsAPI() != null) {
+            for (final Object group : root.node("chat", "format").childrenMap().keySet()) {
+                chatFormat.put(group.toString(), root.node("chat", "format", group.toString()).getString());
+            }
+
         }
     }
 

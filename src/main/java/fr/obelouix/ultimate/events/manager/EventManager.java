@@ -2,6 +2,7 @@ package fr.obelouix.ultimate.events.manager;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.data.PlayerData;
+import fr.obelouix.ultimate.events.ChatEvent;
 import org.bukkit.event.Listener;
 
 public class EventManager {
@@ -10,6 +11,7 @@ public class EventManager {
 
     public EventManager() {
         registerEvent(new PlayerData());
+        registerEvent(new ChatEvent());
     }
 
     public void registerEvent(Listener listener){
