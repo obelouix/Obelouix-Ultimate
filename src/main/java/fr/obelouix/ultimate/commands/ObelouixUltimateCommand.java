@@ -30,8 +30,8 @@ public class ObelouixUltimateCommand extends BukkitCommand {
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, String[] args) {
         final List<String> subcommandList = new ArrayList<>(Collections.emptyList());
-        for (final String subcommand : subcommands){
-            if(sender.hasPermission("obelouix.command.obelouixultimate." + subcommand)){
+        for (final String subcommand : subcommands) {
+            if (sender.hasPermission("obelouix.command.obelouixultimate." + subcommand)) {
                 subcommandList.add(subcommand);
             }
         }
@@ -40,19 +40,20 @@ public class ObelouixUltimateCommand extends BukkitCommand {
 
     @Override
     public boolean execute(@NotNull CommandSender commandSender, @NotNull String commandLabel, @NotNull String[] args) {
-        if(IPermission.hasPermission(commandSender, "obelouix.command.obelouixultimate")){
+        if (IPermission.hasPermission(commandSender, "obelouix.command.obelouixultimate")) {
             Component message = Component.text("");
-            if(args.length == 1){
-                if(args[0].equalsIgnoreCase("version") && IPermission.hasPermission(commandSender, "obelouix.command.obelouixultimate.version")){
+            if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("version") && IPermission.hasPermission(commandSender, "obelouix.command.obelouixultimate.version")) {
                     message = Component.text(i18n.getTranslation(commandSender, "obelouix.plugin.version")).color(NamedTextColor.GREEN)
                             .replaceText(TextReplacementConfig.builder()
                                     .matchLiteral("{0}")
                                     .replacement(Component.text(plugin.getDescription().getVersion()).color(NamedTextColor.AQUA))
                                     .build());
-                    
-                }
-                if (args[0].equalsIgnoreCase("reload")) {
+
+                } else if (args[0].equalsIgnoreCase("reload")) {
                     // TODO: implements reloading of configuration file
+                } else {
+                    message = PluginMessages.wrongCommandUsage(this, commandSender);
                 }
             } else {
                 message = PluginMessages.wrongCommandUsage(this, commandSender);

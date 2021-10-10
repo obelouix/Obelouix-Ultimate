@@ -3,6 +3,7 @@ package fr.obelouix.ultimate.messages;
 import fr.obelouix.ultimate.i18n.I18n;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -12,9 +13,10 @@ public class PluginMessages {
 
     public static Component wrongCommandUsage(Command command, CommandSender commandSender){
         return Component.text(i18n.getTranslation(commandSender, "obelouix.wrong_command_usage"))
+                .color(NamedTextColor.DARK_RED)
                 .replaceText(TextReplacementConfig.builder()
                         .matchLiteral("{0}")
-                        .replacement(Component.text(command.getUsage()))
+                        .replacement(Component.text(command.getUsage()).color(NamedTextColor.RED))
                         .build());
     }
 
