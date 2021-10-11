@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NonNls;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
@@ -18,18 +19,19 @@ public class Config {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
 
-    private static final YamlConfigurationLoader configLoader = YamlConfigurationLoader.builder()
-            .path(Path.of(plugin.getDataFolder().getPath(), "config.yml"))
+    private static final HoconConfigurationLoader configLoader = HoconConfigurationLoader.builder()
+            .path(Path.of(plugin.getDataFolder().getPath(), "config.conf"))
             .build();
     private static final @NonNls FileConfiguration pluginConfig = plugin.getConfig();
+    private static boolean disableReloadCommand = false;
+    private static String storageType;
     public static Map<String, String> chatFormat = new HashMap<>();
     private static CommentedConfigurationNode root;
-    private static boolean disableReloadCommand = false;
     private static boolean configReloaded = true;
 
     public static void loadConfig() {
         try {
-            if(!configReloaded) configReloaded = true;
+            if (!configReloaded) configReloaded = true;
             root = configLoader.load();
             createFile();
         } catch (ConfigurateException e) {
@@ -39,6 +41,7 @@ public class Config {
                 e.getCause().printStackTrace();
             }
         }
+        storageType = root.node("data-storage-type").getString();
         disableReloadCommand = root.node("disable-default-reload-command").getBoolean();
         if (LuckPermsUtils.getLuckPermsAPI() != null) {
             for (final Object group : root.node("chat", "format").childrenMap().keySet()) {
@@ -49,21 +52,25 @@ public class Config {
     }
 
     private static void createFile() throws ConfigurateException {
-        final File file = Path.of(plugin.getDataFolder().getPath(), "config.yml").toFile();
+        final File file = Path.of(plugin.getDataFolder().getPath(), "config.conf").toFile();
 
         if (!file.exists()) {
             plugin.getLogger().info("Creating configuration file...");
 
-            root.node("disable-default-reload-command").set(false);
+            root.node("data-storage-type").set("file")
+                    .commentIfAbsent("Choose between: file, H2, MYSQL, SQLite . Note that SQL database are not yet implemented");
+            root.node("disable-default-reload-command").set(false).commentIfAbsent("Enabling this will block the /reload command");
 
             // Get all groups and generate the config dynamically
             if (LuckPermsUtils.getLuckPermsAPI() != null) {
                 for (Group group : LuckPermsUtils.getGroups()) {
                     root.node("chat").act(n -> {
                         if (group.getName().equals("default")) {
-                            n.node("format").node(group.getName()).set("&#808080{displayname}: {message}");
+                            n.node("format").node(group.getName()).set("&#808080{displayname}: {message}")
+                                    .commentIfAbsent("default LuckPerms group");
                         } else {
-                            n.node("format").node(group.getName()).set("&#32cd32[{world}]&r{prefix}{displayname}{suffix}: &r{message}");
+                            n.node("format").node(group.getName()).set("&#32cd32[{world}]&r{prefix}{displayname}{suffix}: &r{message}")
+                                    .commentIfAbsent(group.getName() + " group");
                         }
 
                     });
@@ -102,6 +109,10 @@ public class Config {
         } catch (ConfigurateException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String getStorageType() {
+        return storageType;
     }
 
     public static boolean isDisableReloadCommand() {

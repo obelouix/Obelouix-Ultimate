@@ -87,12 +87,13 @@ dependencies {
 
     // Sponge Configurate
     implementation("org.spongepowered:configurate-core:4.1.2")
-    implementation("org.spongepowered:configurate-yaml:4.1.2")
+    implementation("org.spongepowered:configurate-hocon:4.1.2")
 
     // NBT API
     implementation("de.tr7zw:item-nbt-api-plugin:2.8.0")
 
     implementation("org.apache.commons:commons-collections4:4.4")
+    implementation("com.h2database:h2:1.4.200")
 
     //test dependencies
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")

@@ -3,6 +3,7 @@ package fr.obelouix.ultimate;
 import co.aikar.timings.lib.TimingManager;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
+import fr.obelouix.ultimate.data.DataStorage;
 import fr.obelouix.ultimate.events.manager.EventManager;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,14 +46,15 @@ public class ObelouixUltimate extends JavaPlugin {
         timingManager = TimingManager.of(this);
         CompletableFuture.runAsync(() -> {
             Config.loadConfig();
+            DataStorage.setupStorage();
             try {
                 new CommandManager();
             } catch (ReflectiveOperationException e) {
                 e.printStackTrace();
             }
-
             new EventManager();
         });
+
         LuckPermsUtils.checkForLuckPerms();
     }
 

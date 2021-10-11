@@ -10,11 +10,13 @@ import org.bukkit.event.player.PlayerLocaleChangeEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+
 public class PlayerData implements Listener {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     private static String playerLocale;
-
+    private static final File dataFolder = new File(plugin.getDataFolder(), "data");
     /**
      * This method allow to get the client locale of a player
      *
@@ -35,6 +37,8 @@ public class PlayerData implements Listener {
         };
         //execute the task 10 ticks ( = 500 ms) after player logged in
         bukkitRunnable.runTaskLaterAsynchronously(plugin, 10L);
+
+        if(!dataFolder.exists()) dataFolder.mkdir();
     }
 
     @EventHandler
