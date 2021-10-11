@@ -76,6 +76,9 @@ public class Config {
                                             - {world} : the current world of the player
                                             - {prefix} : the luckperms prefix of the group
                                             - {suffix} : the luckperms suffix of the group
+                                                                                        
+                                            /!\\ PLEASE NOTE THAT IF YOU ADD COLOR CODES DIRECTLY IN LUCKPERMS META FOR
+                                            PREFIX AND SUFFIX, THEY WILL OVERRIDE PREFIX AND SUFFIX COLORS FROM THIS CONFIG
                                             """)
                                     .node(group.getName()).set("&#808080{displayname}: {message}")
                                     .commentIfAbsent("default LuckPerms group");
