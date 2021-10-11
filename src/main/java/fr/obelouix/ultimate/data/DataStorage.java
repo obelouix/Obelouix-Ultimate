@@ -20,15 +20,18 @@ public class DataStorage {
 
         plugin.getLogger().info("Using " + Config.getStorageType() + " data storage type");
 
-        if(Config.getStorageType().equalsIgnoreCase("file")) fileBasedStorage = true;
-        if(Config.getStorageType().equalsIgnoreCase("H2")){
+        if (Config.getStorageType().equalsIgnoreCase("file")) fileBasedStorage = true;
+        else if (Config.getStorageType().equalsIgnoreCase("H2")) {
             try {
                 Class.forName("org.h2.Driver");
-                databaseURL  = "jdbc:h2:" + plugin.getDataFolder() + "/database";
+                databaseURL = "jdbc:h2:" + plugin.getDataFolder() + "/database";
                 connection = DriverManager.getConnection(databaseURL, "", "");
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
             }
+        } else {
+            //if a wrong value if given force the plugin to use file storage method
+            fileBasedStorage = true;
         }
     }
 

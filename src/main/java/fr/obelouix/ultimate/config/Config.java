@@ -3,6 +3,7 @@ package fr.obelouix.ultimate.config;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import net.luckperms.api.model.group.Group;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NonNls;
 import org.spongepowered.configurate.CommentedConfigurationNode;
@@ -22,9 +23,10 @@ public class Config {
             .path(Path.of(plugin.getDataFolder().getPath(), "config.conf"))
             .build();
     private static final @NonNls FileConfiguration pluginConfig = plugin.getConfig();
+    public static Map<String, String> chatFormat = new HashMap<>();
+    private static String customServerBrandName;
     private static boolean disableReloadCommand = false;
     private static String storageType;
-    public static Map<String, String> chatFormat = new HashMap<>();
     private static CommentedConfigurationNode root;
     private static boolean configReloaded = true;
 
@@ -40,6 +42,8 @@ public class Config {
                 e.getCause().printStackTrace();
             }
         }
+
+        customServerBrandName = root.node("custom-server-brand").getString();
         storageType = root.node("data-storage-type").getString();
         disableReloadCommand = root.node("disable-default-reload-command").getBoolean();
         if (LuckPermsUtils.getLuckPermsAPI() != null) {
@@ -90,7 +94,8 @@ public class Config {
                     });
                 }
             }
-
+            root.node("custom-server-brand").set(Bukkit.getServer().getName())
+                    .commentIfAbsent("Allows you to fake the server brand in the F3 menu");
             /*root.node("commands").act(n -> {
                 n.commentIfAbsent("Allow you to control which commands you want on your server");
                 for (final String command : commandList) {
@@ -135,5 +140,9 @@ public class Config {
 
     public static boolean isConfigReloaded() {
         return configReloaded;
+    }
+
+    public static String getCustomServerBrandName() {
+        return customServerBrandName;
     }
 }
