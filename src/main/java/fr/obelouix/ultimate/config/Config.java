@@ -94,8 +94,11 @@ public class Config {
                     });
                 }
             }
-            root.node("custom-server-brand").set(Bukkit.getServer().getName())
-                    .commentIfAbsent("Allows you to fake the server brand in the F3 menu");
+            root.node("custom-server-brand").set("\"" + Bukkit.getServer().getName() + "\"")
+                    .commentIfAbsent("""
+                            Allows you to fake the server brand in the F3 menu
+                            You can use colors codes like &a,&1,&2,...
+                            """);
             /*root.node("commands").act(n -> {
                 n.commentIfAbsent("Allow you to control which commands you want on your server");
                 for (final String command : commandList) {
