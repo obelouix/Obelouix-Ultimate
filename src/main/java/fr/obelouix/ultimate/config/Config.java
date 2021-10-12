@@ -27,6 +27,7 @@ public class Config {
     private static CommentedConfigurationNode root;
     private static boolean configReloaded = true;
     private static boolean disableWitherBlockDamage = false;
+    private static boolean showWitherSkullExplosionsParticles = false;
 
     public static void loadConfig() {
         try {
@@ -53,8 +54,8 @@ public class Config {
 
         }
 
-        disableWitherBlockDamage = root.node("protection", "explosions", "disable-wither-block-damage").getBoolean();
-
+        disableWitherBlockDamage = root.node("protection", "explosions", "wither", "disable-block-damage").getBoolean();
+        showWitherSkullExplosionsParticles = root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").getBoolean();
         plugin.getLogger().info("Configuration loaded");
 
     }
@@ -106,8 +107,12 @@ public class Config {
                             Please don't remove " or it will fail to parse color codes
                             """);
 
-            root.node("protection", "explosions", "disable-wither-block-damage").set(false)
+            root.node("protection", "explosions", "wither", "disable-block-damage").set(false)
                     .commentIfAbsent("Disable damages on blocks from the wither boss");
+
+            root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").set(false)
+                    .commentIfAbsent("Show smoke at the location where wither skulls explodes\n" +
+                            "only works if block damages are blocked");
             /*root.node("commands").act(n -> {
                 n.commentIfAbsent("Allow you to control which commands you want on your server");
                 for (final String command : commandList) {
@@ -160,5 +165,9 @@ public class Config {
 
     public static boolean isWitherBlockDamageDisabled() {
         return disableWitherBlockDamage;
+    }
+
+    public static boolean showWitherSkullExplosionsParticles() {
+        return showWitherSkullExplosionsParticles;
     }
 }

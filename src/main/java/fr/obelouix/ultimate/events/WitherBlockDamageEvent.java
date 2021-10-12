@@ -1,5 +1,9 @@
 package fr.obelouix.ultimate.events;
 
+import fr.obelouix.ultimate.config.Config;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.WitherSkull;
@@ -20,6 +24,11 @@ public class WitherBlockDamageEvent implements Listener {
         }
 
         if (entity instanceof WitherSkull) {
+            if (Config.showWitherSkullExplosionsParticles()) {
+                World world = event.getLocation().getWorld();
+                Location location = event.getLocation();
+                world.playEffect(location, Effect.SMOKE, 50);
+            }
             event.setCancelled(true);
         }
 
