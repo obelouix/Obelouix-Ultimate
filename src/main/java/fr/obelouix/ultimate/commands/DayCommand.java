@@ -7,11 +7,13 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -53,6 +55,16 @@ public class DayCommand extends BukkitCommand {
 
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
+        if (sender.hasPermission("obelouix.command.day") && args.length == 1) {
+            List<String> worldList = new java.util.ArrayList<>(Collections.emptyList());
+            for (World world : Bukkit.getWorlds()) {
+                // Only add overworlds as we don't care about changing the time and nether and ends dimensions
+                if (world.getEnvironment() == World.Environment.NORMAL) {
+                    worldList.add(world.getName());
+                }
+            }
+            return worldList;
+        }
         return super.tabComplete(sender, alias, args);
     }
 
