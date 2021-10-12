@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +39,7 @@ public class NightCommand extends BukkitCommand {
                 player.sendMessage(PluginMessages.wrongCommandUsage(this, player));
             }
             player.sendMessage(message);
-        } else {
+        } else if (commandSender instanceof ConsoleCommandSender) {
             if (args.length == 0) {
                 commandSender.sendMessage(i18n.getTranslation(commandSender, "obelouix.command.day.console.too_few_arguments"));
             } else if (args.length == 1) {
