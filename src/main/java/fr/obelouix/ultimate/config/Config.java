@@ -94,10 +94,11 @@ public class Config {
                     });
                 }
             }
-            root.node("custom-server-brand").set("\"" + Bukkit.getServer().getName() + "\"")
+            root.node("custom-server-brand").set("&r" + Bukkit.getName())
                     .commentIfAbsent("""
                             Allows you to fake the server brand in the F3 menu
                             You can use colors codes like &a,&1,&2,...
+                            Please don't remove " or it will fail to parse color codes
                             """);
             /*root.node("commands").act(n -> {
                 n.commentIfAbsent("Allow you to control which commands you want on your server");
