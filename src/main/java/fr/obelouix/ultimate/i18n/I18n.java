@@ -2,8 +2,10 @@ package fr.obelouix.ultimate.i18n;
 
 import fr.obelouix.ultimate.data.PlayerData;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
@@ -43,6 +45,8 @@ public class I18n {
                 playerMessages = ResourceBundle.getBundle("messages_en_US");
             }
 
+        } else if (commandSender instanceof ConsoleCommandSender) {
+            playerMessages = ResourceBundle.getBundle("messages_" + Locale.getDefault().toLanguageTag().replace("-", "_"));
         } else {
             playerMessages = ResourceBundle.getBundle("messages_en_US");
         }

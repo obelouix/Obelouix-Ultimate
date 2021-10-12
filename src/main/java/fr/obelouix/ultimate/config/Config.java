@@ -43,6 +43,8 @@ public class Config {
             }
         }
 
+        plugin.getLogger().info("Loading configuration...");
+
         customServerBrandName = root.node("custom-server-brand").getString();
         storageType = root.node("data-storage-type").getString();
         disableReloadCommand = root.node("disable-default-reload-command").getBoolean();
@@ -52,6 +54,9 @@ public class Config {
             }
 
         }
+
+        plugin.getLogger().info("Configuration loaded");
+
     }
 
     private static void createFile() throws ConfigurateException {

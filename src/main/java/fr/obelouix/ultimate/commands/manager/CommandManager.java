@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.commands.manager;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.commands.DayCommand;
 import fr.obelouix.ultimate.commands.ObelouixUltimateCommand;
 import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,10 +10,11 @@ import java.lang.reflect.Method;
 
 public class CommandManager {
 
-    private final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
+    private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
 
     public CommandManager() throws ReflectiveOperationException {
         registerCommand(new ObelouixUltimateCommand("obelouixultimate"), plugin);
+        registerCommand(new DayCommand("day"), plugin);
     }
 
     /**
