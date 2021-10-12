@@ -26,6 +26,7 @@ public class Config {
     private static String storageType;
     private static CommentedConfigurationNode root;
     private static boolean configReloaded = true;
+    private static boolean disableWitherBlockDamage = false;
 
     public static void loadConfig() {
         try {
@@ -51,6 +52,8 @@ public class Config {
             }
 
         }
+
+        disableWitherBlockDamage = root.node("protection", "explosions", "disable-wither-block-damage").getBoolean();
 
         plugin.getLogger().info("Configuration loaded");
 
@@ -102,6 +105,9 @@ public class Config {
                             You can use colors codes like &a,&1,&2,...
                             Please don't remove " or it will fail to parse color codes
                             """);
+
+            root.node("protection", "explosions", "disable-wither-block-damage").set(false)
+                    .commentIfAbsent("Disable damages on blocks from the wither boss");
             /*root.node("commands").act(n -> {
                 n.commentIfAbsent("Allow you to control which commands you want on your server");
                 for (final String command : commandList) {
@@ -150,5 +156,9 @@ public class Config {
 
     public static String getCustomServerBrandName() {
         return customServerBrandName;
+    }
+
+    public static boolean isWitherBlockDamageDisabled() {
+        return disableWitherBlockDamage;
     }
 }
