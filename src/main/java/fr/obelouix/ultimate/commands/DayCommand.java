@@ -58,7 +58,7 @@ public class DayCommand extends BukkitCommand {
         if (sender.hasPermission("obelouix.command.day") && args.length == 1) {
             List<String> worldList = new java.util.ArrayList<>(Collections.emptyList());
             for (World world : Bukkit.getWorlds()) {
-                // Only add overworlds as we don't care about changing the time and nether and ends dimensions
+                // Only add overworlds as we don't care about changing the time in nether and ends dimensions
                 if (world.getEnvironment() == World.Environment.NORMAL) {
                     worldList.add(world.getName());
                 }
