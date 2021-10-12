@@ -2,6 +2,7 @@ package fr.obelouix.ultimate.commands.manager;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.commands.DayCommand;
+import fr.obelouix.ultimate.commands.MiddayCommand;
 import fr.obelouix.ultimate.commands.NightCommand;
 import fr.obelouix.ultimate.commands.ObelouixUltimateCommand;
 import org.bukkit.command.Command;
@@ -17,6 +18,7 @@ public class CommandManager {
         registerCommand(new ObelouixUltimateCommand("obelouixultimate"), plugin);
         registerCommand(new DayCommand("day"), plugin);
         registerCommand(new NightCommand("night"), plugin);
+        registerCommand(new MiddayCommand("midday"), plugin);
     }
 
     /**
