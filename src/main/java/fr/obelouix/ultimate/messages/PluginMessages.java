@@ -97,4 +97,12 @@ public class PluginMessages {
         }
     }
 
+    public static Component nonExistentWorldMessage(CommandSender sender, String world) {
+        return Component.text(i18n.getTranslation(sender, "obelouix.command.day.world_non_existent"))
+                .color(NamedTextColor.DARK_RED)
+                .replaceText(TextReplacementConfig.builder()
+                        .matchLiteral("{0}")
+                        .replacement(Component.text(world).color(NamedTextColor.RED))
+                        .build());
+    }
 }

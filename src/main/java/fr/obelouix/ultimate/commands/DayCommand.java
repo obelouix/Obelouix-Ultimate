@@ -4,8 +4,6 @@ import fr.obelouix.ultimate.i18n.I18n;
 import fr.obelouix.ultimate.messages.PluginMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextReplacementConfig;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -78,13 +76,8 @@ public class DayCommand extends BukkitCommand {
             }
 
         } else {
-            message = Component.text(i18n.getTranslation(sender, "obelouix.command.day.world_non_existent"))
-                    .color(NamedTextColor.DARK_RED)
-                    .replaceText(TextReplacementConfig.builder()
-                            .matchLiteral("{0}")
-                            .replacement(Component.text(world).color(NamedTextColor.RED))
-                            .build());
+            message = PluginMessages.nonExistentWorldMessage(sender, world);
         }
-    }
 
+    }
 }

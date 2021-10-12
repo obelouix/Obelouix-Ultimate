@@ -4,8 +4,6 @@ import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.jetbrains.annotations.NonNls;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
@@ -22,7 +20,6 @@ public class Config {
     private static final HoconConfigurationLoader configLoader = HoconConfigurationLoader.builder()
             .path(Path.of(plugin.getDataFolder().getPath(), "config.conf"))
             .build();
-    private static final @NonNls FileConfiguration pluginConfig = plugin.getConfig();
     public static Map<String, String> chatFormat = new HashMap<>();
     private static String customServerBrandName;
     private static boolean disableReloadCommand = false;
