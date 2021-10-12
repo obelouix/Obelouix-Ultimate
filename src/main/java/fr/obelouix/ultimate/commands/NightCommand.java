@@ -5,14 +5,12 @@ import fr.obelouix.ultimate.messages.PluginMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,14 +53,7 @@ public class NightCommand extends BukkitCommand {
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
         if (sender.hasPermission("obelouix.command.night") && args.length == 1) {
-            final List<String> worldList = new java.util.ArrayList<>(Collections.emptyList());
-            for (final World world : Bukkit.getWorlds()) {
-                // Only add overworlds as we don't care about changing the time in nether and ends dimensions
-                if (world.getEnvironment() == World.Environment.NORMAL) {
-                    worldList.add(world.getName());
-                }
-            }
-            return worldList;
+            return DayCommand.getNormalWorlds();
         }
         return super.tabComplete(sender, alias, args);
     }

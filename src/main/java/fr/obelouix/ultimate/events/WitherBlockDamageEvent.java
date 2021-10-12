@@ -12,8 +12,8 @@ public class WitherBlockDamageEvent implements Listener {
 
     @EventHandler
     public void onWitherExplosion(EntityExplodeEvent event) {
-        EntityType entityType = event.getEntityType();
-        Entity entity = event.getEntity();
+        final EntityType entityType = event.getEntityType();
+        final Entity entity = event.getEntity();
 
         if (entityType == EntityType.WITHER) {
             event.blockList().removeAll(event.blockList());
@@ -27,7 +27,7 @@ public class WitherBlockDamageEvent implements Listener {
 
     @EventHandler
     public void onWitherDestroyBlocks(EntityChangeBlockEvent event) {
-        EntityType type = event.getEntity().getType();
+        final EntityType type = event.getEntity().getType();
         if (type == EntityType.WITHER)
             event.setCancelled(true);
     }
