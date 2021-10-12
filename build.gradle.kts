@@ -10,6 +10,15 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.0"
 //    id("com.palantir.git-version") version "0.12.3"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.0"
+    id("org.sonarqube") version "3.3"
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "obelouix_Obelouix-Ultimate")
+        property("sonar.organization", "obelouix")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
 
 group = "fr.obelouix.ultimate"
