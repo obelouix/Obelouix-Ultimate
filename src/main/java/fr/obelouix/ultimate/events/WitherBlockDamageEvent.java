@@ -25,8 +25,8 @@ public class WitherBlockDamageEvent implements Listener {
 
         if (entity instanceof WitherSkull) {
             if (Config.showWitherSkullExplosionsParticles()) {
-                World world = event.getLocation().getWorld();
-                Location location = event.getLocation();
+                final World world = event.getLocation().getWorld();
+                final Location location = event.getLocation();
                 world.playEffect(location, Effect.SMOKE, 50);
             }
             event.setCancelled(true);
