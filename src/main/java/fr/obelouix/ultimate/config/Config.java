@@ -71,7 +71,7 @@ public class Config {
 
             // Get all groups and generate the config dynamically
             if (LuckPermsUtils.getLuckPermsAPI() != null) {
-                for (Group group : LuckPermsUtils.getGroups()) {
+                for (final Group group : LuckPermsUtils.getGroups()) {
                     root.node("chat").act(n -> {
                         if (group.getName().equals("default")) {
                             n.node("format")

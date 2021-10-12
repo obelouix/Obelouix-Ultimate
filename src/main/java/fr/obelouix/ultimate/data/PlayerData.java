@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -22,7 +21,6 @@ public class PlayerData implements Listener {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     private static String playerLocale;
-    private static final File dataFolder = new File(plugin.getDataFolder(), "data");
     /**
      * This method allow to get the client locale of a player
      *
@@ -47,10 +45,10 @@ public class PlayerData implements Listener {
         FakeServerBrand.sendFakeBrand(event.getPlayer());
 
         if (DataStorage.isFileBasedStorage()) {
-            HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
+            final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
                     .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", event.getPlayer().getName() + ".conf"))
                     .build();
-            CommentedConfigurationNode root = playerFile.load();
+            final CommentedConfigurationNode root = playerFile.load();
             root.node("uuid").set(event.getPlayer().getUniqueId());
             root.node("IP").set(Objects.requireNonNull(event.getPlayer().getAddress()).getHostName());
             playerFile.save(root);

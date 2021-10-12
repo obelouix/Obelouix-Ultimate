@@ -17,7 +17,7 @@ public class FakeServerBrand {
     public static void sendFakeBrand(Player player) {
         Set<String> channels = null;
         try {
-            Field playerChannels = player.getClass().getDeclaredField("channels");
+            final Field playerChannels = player.getClass().getDeclaredField("channels");
             playerChannels.setAccessible(true);
             channels = (Set<String>) playerChannels.get(player);
         } catch (Exception exception) {
