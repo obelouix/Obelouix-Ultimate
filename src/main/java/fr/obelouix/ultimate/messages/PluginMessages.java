@@ -84,7 +84,7 @@ public class PluginMessages {
     }
 
     /**
-     * Allows to calculate real time of the world in human format
+     * Allows calculating real time of the world in human format
      *
      * @param time - time of the world in ticks
      */
