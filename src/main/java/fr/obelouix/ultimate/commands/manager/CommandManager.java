@@ -1,10 +1,7 @@
 package fr.obelouix.ultimate.commands.manager;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.commands.DayCommand;
-import fr.obelouix.ultimate.commands.MiddayCommand;
-import fr.obelouix.ultimate.commands.NightCommand;
-import fr.obelouix.ultimate.commands.ObelouixUltimateCommand;
+import fr.obelouix.ultimate.commands.*;
 import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,6 +16,7 @@ public class CommandManager {
         registerCommand(new DayCommand("day"), plugin);
         registerCommand(new NightCommand("night"), plugin);
         registerCommand(new MiddayCommand("midday"), plugin);
+        registerCommand(new PluginCommand("plugins"), plugin);
     }
 
     /**

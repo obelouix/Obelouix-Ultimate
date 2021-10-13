@@ -42,6 +42,7 @@ public class ObelouixUltimate extends JavaPlugin {
     @Override
     public void onEnable() {
         checkPaperPresence();
+        checkOfflineMode();
         instance = this;
         timingManager = TimingManager.of(this);
         CompletableFuture.runAsync(() -> {
@@ -94,4 +95,20 @@ public class ObelouixUltimate extends JavaPlugin {
         }
         return false;
     }
+
+    private void checkOfflineMode() {
+        if (!this.getServer().getOnlineMode()) {
+            LOGGER.warning("""
+                                        
+                    ****************************************************************
+                                        
+                      THIS SERVER IS RUNNING IN OFFLINE MODE. IF YOU RUN INTO ANY
+                      PROBLEMS DON'T ASK FOR SUPPORT. SUPPORT WILL BE ONLY GIVEN
+                      TO SERVERS RUNNING IN ONLINE MODE
+                                        
+                    ****************************************************************
+                    """);
+        }
+    }
+
 }

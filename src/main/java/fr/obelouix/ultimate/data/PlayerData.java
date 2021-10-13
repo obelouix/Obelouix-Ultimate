@@ -50,7 +50,7 @@ public class PlayerData implements Listener {
                     .build();
             final CommentedConfigurationNode root = playerFile.load();
             root.node("uuid").set(event.getPlayer().getUniqueId());
-            root.node("IP").set(Objects.requireNonNull(event.getPlayer().getAddress()).getHostName());
+            root.node("IP").set(Objects.requireNonNull(event.getPlayer().getAddress()));
             playerFile.save(root);
         }
 
