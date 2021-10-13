@@ -13,6 +13,7 @@ import java.util.Set;
 public class FakeServerBrand {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
+    private static final String minecraftBrandChannel = "minecraft:brand";
 
     public static void sendFakeBrand(Player player) {
         Set<String> channels = null;
@@ -24,9 +25,9 @@ public class FakeServerBrand {
             exception.printStackTrace();
         }
         if (channels != null && !channels.contains("minecraft:brand")) {
-            channels.add("minecraft:brand");
-            plugin.getServer().getMessenger().registerOutgoingPluginChannel(plugin, "minecraft:brand");
-            player.sendPluginMessage(plugin, "minecraft:brand", new PacketDataSerializer(Unpooled.buffer()).a(ChatColor.translateAlternateColorCodes('&', Config.getCustomServerBrandName() + "&r")).array());
+            channels.add(minecraftBrandChannel);
+            plugin.getServer().getMessenger().registerOutgoingPluginChannel(plugin, minecraftBrandChannel);
+            player.sendPluginMessage(plugin, minecraftBrandChannel, new PacketDataSerializer(Unpooled.buffer()).a(ChatColor.translateAlternateColorCodes('&', Config.getCustomServerBrandName() + "&r")).array());
         }
     }
 
