@@ -20,6 +20,9 @@ public class LuckPermsUtils {
     private static RegisteredServiceProvider<LuckPerms> luckPermsProvider;
     private static LuckPerms luckPermsAPI;
 
+    private LuckPermsUtils() {
+    }
+
     public static void checkForLuckPerms() {
         if (plugin.getClass("net.luckperms.api.LuckPerms")) {
             plugin.getLogger().info("Found LuckPerms");
