@@ -47,10 +47,11 @@ public class PlayerData implements Listener {
                 -> Geolocation.getCountry(event.getPlayer()));
 
         try {
-            plugin.getLogger().info(event.getPlayer().getName() + "logged in from" + completableFuture.get());
+            plugin.getLogger().info(event.getPlayer().getName() + " logged in from " + completableFuture.get());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+
 
         FakeServerBrand.sendFakeBrand(event.getPlayer());
 
