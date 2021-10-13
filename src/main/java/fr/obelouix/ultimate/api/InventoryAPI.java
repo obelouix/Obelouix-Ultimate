@@ -19,7 +19,7 @@ import java.util.ListIterator;
 
 public class InventoryAPI implements Inventory {
 
-    private Inventory inventory;
+    private final Inventory inventory;
 
     public InventoryAPI(int size, Component title) {
         inventory = createInventory(size, title);
