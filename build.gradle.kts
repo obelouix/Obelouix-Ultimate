@@ -104,6 +104,9 @@ dependencies {
     implementation("org.apache.commons:commons-collections4:4.4")
     implementation("com.h2database:h2:1.4.200")
 
+    //PacketListenerAPI
+    implementation("org.inventivetalent.packetlistenerapi:api:3.9.8-SNAPSHOT")
+
     //test dependencies
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")

@@ -88,7 +88,7 @@ public class PluginMessages {
      *
      * @param time - time of the world in ticks
      */
-    private static void calculateTime(int time) {
+    private static void calculateTime(long time) {
         worldHour = time / 1000 + 6;
         worldMinute = (time % 1000) * 60 / 1000;
 
