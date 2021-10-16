@@ -7,12 +7,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class BaseGUI implements Listener {
 
-    protected ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    protected I18n i18n = I18n.getInstance();
+    protected static ObelouixUltimate plugin = ObelouixUltimate.getInstance();
+    protected static I18n i18n = I18n.getInstance();
+    protected Inventory inventory;
 
     /**
      * Used to show a custom inventory to a player

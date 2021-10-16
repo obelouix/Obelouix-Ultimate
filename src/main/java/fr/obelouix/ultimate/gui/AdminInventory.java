@@ -1,18 +1,18 @@
 package fr.obelouix.ultimate.gui;
 
-import fr.obelouix.ultimate.api.InventoryAPI;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 public class AdminInventory extends BaseGUI {
 
-    private final Inventory inventory;
-
     public AdminInventory(Player player) {
-        inventory = new InventoryAPI(54, Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center")));
+        inventory = Bukkit.createInventory(null, 54, Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center"), NamedTextColor.DARK_RED));
+        setupInventory();
+        showInventory(player);
     }
 
     private void setupInventory() {
