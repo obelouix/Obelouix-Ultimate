@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.gui;
 
 import fr.obelouix.ultimate.api.InventoryAPI;
+import fr.obelouix.ultimate.utils.CustomHeadSkins;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -12,7 +13,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class AdminInventory extends BaseGUI {
 
+    // title of the item that will show the inventory that manage online players
     private Component playerManagementComponent;
+    // title of the item that will show the inventory that manage server worlds
+    private Component worldManagementComponent;
+    // the player who see the inventory
     private Player viewer;
 
     /**
@@ -30,6 +35,7 @@ public class AdminInventory extends BaseGUI {
         inventory = Bukkit.createInventory(null, 54, title(player));
         this.viewer = player;
         playerManagementComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.player_management"), NamedTextColor.GREEN);
+        worldManagementComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.world_management"), NamedTextColor.GOLD);
         setupInventory();
         showInventory(player);
     }
@@ -41,6 +47,7 @@ public class AdminInventory extends BaseGUI {
 
     protected void setupInventory() {
         inventory.setItem(0, InventoryAPI.addCustomSkull(viewer, playerManagementComponent));
+        inventory.setItem(4, InventoryAPI.addCustomSkull(CustomHeadSkins.GLOBE, worldManagementComponent));
     }
 
     @Override
