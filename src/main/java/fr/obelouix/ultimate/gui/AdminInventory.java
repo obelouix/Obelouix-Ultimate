@@ -12,12 +12,20 @@ import org.jetbrains.annotations.NotNull;
 
 public class AdminInventory extends BaseGUI {
 
-    private Player viewer;
     private Component playerManagementComponent;
+    private Player viewer;
 
+    /**
+     * This constructor is only for registering the event
+     */
     public AdminInventory() {
     }
 
+    /**
+     * This constructor set up the inventory to open when called
+     *
+     * @param player - the player that will see the inventory
+     */
     public AdminInventory(Player player) {
         inventory = Bukkit.createInventory(null, 54, title(player));
         this.viewer = player;
@@ -43,8 +51,8 @@ public class AdminInventory extends BaseGUI {
     @Override
     @EventHandler
     public void cancelClick(InventoryClickEvent event) {
-        InventoryView view = event.getView();
-        Player player = (Player) event.getWhoClicked();
+        final InventoryView view = event.getView();
+        final Player player = (Player) event.getWhoClicked();
         if (view.title().equals(title(player))) {
             event.setCancelled(true);
         }
