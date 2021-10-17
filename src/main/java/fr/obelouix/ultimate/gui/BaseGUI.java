@@ -34,6 +34,11 @@ public abstract class BaseGUI implements Listener {
     protected abstract Component title(Player player);
 
     /**
+     * Use this method to fill the inventory gui
+     */
+    protected abstract void setupInventory();
+
+    /**
      * Used to show a custom inventory to a player
      *
      * @param player The player who will see the custom inventory

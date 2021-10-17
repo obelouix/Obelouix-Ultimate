@@ -1,23 +1,27 @@
 package fr.obelouix.ultimate.gui;
 
+import fr.obelouix.ultimate.api.InventoryAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class AdminInventory extends BaseGUI {
+
+    private Player viewer;
+    private Component playerManagementComponent;
 
     public AdminInventory() {
     }
 
     public AdminInventory(Player player) {
         inventory = Bukkit.createInventory(null, 54, title(player));
+        this.viewer = player;
+        playerManagementComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.player_management"), NamedTextColor.GREEN);
         setupInventory();
         showInventory(player);
     }
@@ -27,8 +31,8 @@ public class AdminInventory extends BaseGUI {
         return Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center"), NamedTextColor.DARK_RED);
     }
 
-    private void setupInventory() {
-        inventory.setItem(0, new ItemStack(Material.DIRT));
+    protected void setupInventory() {
+        inventory.setItem(0, InventoryAPI.addCustomSkull(viewer, playerManagementComponent));
     }
 
     @Override

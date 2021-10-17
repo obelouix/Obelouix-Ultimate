@@ -1,30 +1,28 @@
 package fr.obelouix.ultimate.api;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
-import org.bukkit.inventory.Inventory;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class InventoryAPI {
 
-    private Inventory inventory;
-    private int size;
-    private Component title = Component.text("");
+    private InventoryAPI() {
 
-    protected InventoryAPI() {
-        inventory = createInventory(size, this.title);
     }
 
-    public InventoryAPI(int size, @NotNull Component title) {
-        this.size = size;
-        this.title = title;
+    public static ItemStack addCustomSkull(Player player, Component itemName) {
+        final ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
+        final SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+
+        skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()));
+        skullMeta.displayName(itemName.decoration(TextDecoration.ITALIC, false));
+        skull.setItemMeta(skullMeta);
+
+        return skull;
     }
 
-    public Inventory createInventory(int size, @NotNull Component title) {
-        return Bukkit.createInventory(null, size, title);
-    }
-
-    public Inventory getInventory() {
-        return inventory;
-    }
 }
