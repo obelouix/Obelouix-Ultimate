@@ -2,6 +2,7 @@ package fr.obelouix.ultimate.gui;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.i18n.I18n;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,6 +16,22 @@ public abstract class BaseGUI implements Listener {
     protected static ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     protected static I18n i18n = I18n.getInstance();
     protected Inventory inventory;
+
+    public BaseGUI() {
+
+    }
+
+    public BaseGUI(Player player) {
+
+    }
+
+    /**
+     * Used to set the translated title for the inventory
+     *
+     * @param player - the player who will se the inventory
+     * @return a title {@link Component component}
+     */
+    protected abstract Component title(Player player);
 
     /**
      * Used to show a custom inventory to a player
