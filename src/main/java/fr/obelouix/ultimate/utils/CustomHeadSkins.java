@@ -11,4 +11,9 @@ public enum CustomHeadSkins {
     CustomHeadSkins(String texture) {
         this.texture = texture;
     }
+
+    @Override
+    public String toString() {
+        return texture;
+    }
 }
