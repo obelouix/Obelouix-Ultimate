@@ -22,6 +22,7 @@ public class AdminInventory extends BaseGUI {
     private Component playerManagementDescriptionComponent;
     // title of the item that will show the inventory that manage server worlds
     private Component worldManagementComponent;
+    private Component worldManagementDescriptionComponent;
     // the player who see the inventory
     private Player viewer;
 
@@ -43,6 +44,8 @@ public class AdminInventory extends BaseGUI {
         playerManagementDescriptionComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.player_management.description"), NamedTextColor.GOLD)
                 .decoration(TextDecoration.ITALIC, false);
         worldManagementComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.world_management"), NamedTextColor.GOLD);
+        worldManagementDescriptionComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.world_management.description"))
+                .decoration(TextDecoration.ITALIC, false);
         setupInventory();
         showInventory(player);
     }
