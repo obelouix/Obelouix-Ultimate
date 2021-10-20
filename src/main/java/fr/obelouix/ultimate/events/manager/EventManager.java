@@ -5,6 +5,7 @@ import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.events.ChatEvent;
 import fr.obelouix.ultimate.events.ReloadDetector;
+import fr.obelouix.ultimate.events.ServerListEvent;
 import fr.obelouix.ultimate.events.WitherBlockDamageEvent;
 import fr.obelouix.ultimate.gui.AdminInventory;
 import org.bukkit.event.Listener;
@@ -15,6 +16,7 @@ public class EventManager {
 
     public EventManager() {
         registerEvent(new PlayerData());
+        registerEvent(new ServerListEvent());
         registerEvent(new ChatEvent());
         registerEvent(new ReloadDetector());
         if (Config.isWitherBlockDamageDisabled()) {

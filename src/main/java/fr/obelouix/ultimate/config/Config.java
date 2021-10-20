@@ -28,6 +28,7 @@ public class Config {
     private static boolean configReloaded = true;
     private static boolean disableWitherBlockDamage = false;
     private static boolean showWitherSkullExplosionsParticles = false;
+    private static boolean serverInMaintenance = false;
 
     public static void loadConfig() {
         try {
@@ -56,6 +57,7 @@ public class Config {
 
         disableWitherBlockDamage = root.node("protection", "explosions", "wither", "disable-block-damage").getBoolean();
         showWitherSkullExplosionsParticles = root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").getBoolean();
+        serverInMaintenance = root.node("maintenance").getBoolean();
         plugin.getLogger().info("Configuration loaded");
 
     }
@@ -113,6 +115,10 @@ public class Config {
             root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").set(false)
                     .commentIfAbsent("Show smoke at the location where wither skulls explodes\n" +
                             "only works if block damages are blocked");
+
+            root.node("maintenance").set(false)
+                    .commentIfAbsent("This allow to put the server in maintenance mode and also\n" +
+                            "memorize maintenance state if you need to restart the server");
             /*root.node("commands").act(n -> {
                 n.commentIfAbsent("Allow you to control which commands you want on your server");
                 for (final String command : commandList) {
@@ -169,5 +175,9 @@ public class Config {
 
     public static boolean showWitherSkullExplosionsParticles() {
         return showWitherSkullExplosionsParticles;
+    }
+
+    public static boolean isServerInMaintenance() {
+        return serverInMaintenance;
     }
 }
