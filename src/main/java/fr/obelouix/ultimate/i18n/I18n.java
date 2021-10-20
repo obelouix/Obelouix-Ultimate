@@ -42,7 +42,11 @@ public class I18n {
 
                 playerMessages = completableFuture.get();
             } catch (MissingResourceException | InterruptedException | ExecutionException e) {
-                playerMessages = ResourceBundle.getBundle("messages_en_US");
+                if (playerData.getPlayerLocale().equalsIgnoreCase("br_fr")) {
+                    playerMessages = ResourceBundle.getBundle("messages_fr_FR");
+                } else {
+                    playerMessages = ResourceBundle.getBundle("messages_en_US");
+                }
             }
 
         } else if (commandSender instanceof ConsoleCommandSender) {
