@@ -28,14 +28,7 @@ jobs:
     
     - name: Gradle Wrapper Validation
       uses: gradle/wrapper-validation-action@v1.0.3
-    
-    - name: Cache SonarCloud packages
-      uses: actions/cache@v1
-      with:
-        path: ~/.sonar/cache
-        key: ${{ runner.os }}-sonar
-        restore-keys: ${{ runner.os }}-sona
-    
+
     - name: Cache Gradle packages
       uses: actions/cache@v1
       with:
@@ -46,7 +39,6 @@ jobs:
     - name: Build with Gradle
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: ./gradlew build sonarqube --info
     
     - name: Upload artifact

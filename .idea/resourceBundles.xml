@@ -7,7 +7,6 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/messages_az_az.properties" />
     <file url="file://$PROJECT_DIR$/src/main/resources/messages_be_by.properties" />
     <file url="file://$PROJECT_DIR$/src/main/resources/messages_bg_bg.properties" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/messages_br_fr.properties" />
     <file url="file://$PROJECT_DIR$/src/main/resources/messages_brb.properties" />
     <file url="file://$PROJECT_DIR$/src/main/resources/messages_bs_BA.properties" />
     <file url="file://$PROJECT_DIR$/src/main/resources/messages_ca_es.properties" />
@@ -115,7 +114,6 @@
       <file value="file://$PROJECT_DIR$/src/main/resources/messages_az_az.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/messages_be_by.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/messages_bg_bg.properties" />
-      <file value="file://$PROJECT_DIR$/src/main/resources/messages_br_fr.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/messages_brb.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/messages_bs_BA.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/messages_ca_es.properties" />
