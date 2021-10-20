@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EasyI18nSettings">
+    <option name="localesPath" value="C:\Users\obelo\OneDrive\Documents\programmation\Obelouix-Ultimate\src\main\resources" />
+    <option name="previewLocale" value="fr" />
+  </component>
   <component name="EntryPointsManager">
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="org.bukkit.event.EventHandler" />
