@@ -18,6 +18,7 @@ public class CommandManager {
         registerCommand(new MiddayCommand("midday"), plugin);
         registerCommand(new PluginCommand("plugins"), plugin);
         registerCommand(new AdminCommand("admin"), plugin);
+        registerCommand(new MaintenanceCommand("maintenance"), plugin);
     }
 
     /**

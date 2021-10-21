@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -179,5 +180,19 @@ public class Config {
 
     public static boolean isServerInMaintenance() {
         return serverInMaintenance;
+    }
+
+    public static void setServerInMaintenance(boolean serverInMaintenance) {
+        Config.serverInMaintenance = serverInMaintenance;
+        try {
+            root.node("maintenance").set(serverInMaintenance);
+            save(Config.getRoot());
+        } catch (SerializationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static CommentedConfigurationNode getRoot() {
+        return root;
     }
 }
