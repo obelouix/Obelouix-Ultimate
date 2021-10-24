@@ -55,6 +55,10 @@ public class I18n {
             playerMessages = ResourceBundle.getBundle("messages_en_US");
         }
 
+        if (!playerMessages.containsKey(message)) {
+            playerMessages = ResourceBundle.getBundle("messages_en_US");
+        }
+
         return playerMessages.getString(message);
     }
 }
