@@ -41,14 +41,14 @@ public class MaintenanceCommand extends BukkitCommand {
                                 }
                             }
                         } else {
-                            commandSender.sendMessage("TBD");
+                            commandSender.sendMessage(Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.already_enabled")));
                         }
                     }
                     case "off" -> {
                         if (Config.isServerInMaintenance()) {
                             Config.setServerInMaintenance(false);
                         } else {
-                            commandSender.sendMessage("TBD");
+                            commandSender.sendMessage(Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.already_disabled")));
                         }
                     }
                     default -> commandSender.sendMessage(PluginMessages.wrongCommandUsage(this, commandSender));
