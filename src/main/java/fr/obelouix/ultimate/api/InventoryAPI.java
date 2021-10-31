@@ -55,7 +55,7 @@ public class InventoryAPI {
      * @param title   - the item name
      * @return Player Head with custom skin and name
      */
-    public static ItemStack addCustomSkull(CustomHeadSkins texture, Component title) {
+    public static ItemStack addCustomSkull(CustomHeadSkins texture, @org.jetbrains.annotations.NotNull Component title) {
         final ItemStack skull = new ItemStack(Material.PLAYER_HEAD); // Create a new ItemStack of the Player Head type.
         final SkullMeta skullMeta = (SkullMeta) skull.getItemMeta(); // Get the created item's ItemMeta and cast it to SkullMeta so we can access the skull properties
 
