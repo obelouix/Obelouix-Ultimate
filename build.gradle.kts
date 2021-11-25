@@ -58,7 +58,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper:1.17.1-R0.1-SNAPSHOT")
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
     compileOnly("io.papermc.paper:paper-mojangapi:1.17.1-R0.1-SNAPSHOT")
-    implementation("io.papermc:paperlib:1.0.6")
+    implementation("io.papermc:paperlib:1.0.7")
 
     //Purpur
     compileOnly("net.pl3x.purpur:purpur-api:1.17.1-R0.1-SNAPSHOT")
