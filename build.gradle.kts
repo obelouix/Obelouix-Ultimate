@@ -93,7 +93,7 @@ dependencies {
     implementation("de.tr7zw:item-nbt-api-plugin:2.8.0")
 
     implementation("org.apache.commons:commons-collections4:4.4")
-    implementation("com.h2database:h2:1.4.200")
+    implementation("com.h2database:h2:2.0.202")
 
     //PacketListenerAPI
     implementation("org.inventivetalent.packetlistenerapi:api:3.9.8-SNAPSHOT")
