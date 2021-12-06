@@ -48,6 +48,8 @@ repositories {
     maven("https://repo.mikeprimm.com")
     // Intellectualsites (FAWE)
     maven("https://mvn.intellectualsites.com/content/groups/public/")
+    //FrankHeijden
+    maven("https://repo.fvdh.dev/releases")
 }
 
 dependencies {
@@ -73,6 +75,9 @@ dependencies {
 
     // NBT API
     implementation("de.tr7zw:item-nbt-api-plugin:2.8.0")
+
+    //ServerUtils
+    compileOnly("net.frankheijden.serverutils:ServerUtils:3.3.1")
 }
 
 tasks {
@@ -110,6 +115,12 @@ tasks {
         // relocate cloud and it's transitive dependencies
         reloc("cloud.commandframework")
         reloc("io.leangen.geantyref")
+        reloc("co.aikar.minecraft-timings")
+        reloc("com.typesafe")
+        reloc("de.tr7zw")
+        reloc("org.intellij")
+        reloc("org.jetbrains")
+        reloc("org.spongepowered")
     }
 }
 
