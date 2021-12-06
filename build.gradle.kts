@@ -115,7 +115,7 @@ tasks {
         // relocate cloud and it's transitive dependencies
         reloc("cloud.commandframework")
         reloc("io.leangen.geantyref")
-        reloc("co.aikar.minecraft-timings")
+        reloc("co.aikar.timings")
         reloc("com.typesafe")
         reloc("de.tr7zw")
         reloc("org.intellij")
