@@ -1,27 +1,25 @@
-// Configure Auto Relocation
-import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
-import net.minecrell.pluginyml.bukkit.BukkitPluginDescription.Permission.Default.NOT_OP
-import net.minecrell.pluginyml.bukkit.BukkitPluginDescription.Permission.Default.OP
-import net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.STARTUP
+import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 
 plugins {
-    java
-    id("xyz.jpenilla.run-paper") version "1.0.4"
+    `java-library`
+    id("io.papermc.paperweight.userdev") version "1.3.1"
+    id("xyz.jpenilla.run-paper") version "1.0.5" // Adds runServer and runMojangMappedServer tasks for testing
+    id("net.minecrell.plugin-yml.bukkit") version "0.5.1" // Generates plugin.yml
+
+    // Shades and relocates dependencies into our plugin jar. See https://imperceptiblethoughts.com/shadow/introduction/
     id("com.github.johnrengelman.shadow") version "7.1.0"
-//    id("com.palantir.git-version") version "0.12.3"
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.0"
 }
 
 group = "fr.obelouix.ultimate"
-version = "1.0-SNAPSHOT"
+version = "1.0.0-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_16
-    targetCompatibility = JavaVersion.VERSION_16
+    // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
-repositories {
 
+repositories {
     mavenCentral()
     // Paper
     maven("https://papermc.io/repo/repository/maven-public/")
@@ -50,40 +48,26 @@ repositories {
     maven("https://repo.mikeprimm.com")
     // Intellectualsites (FAWE)
     maven("https://mvn.intellectualsites.com/content/groups/public/")
+    //FrankHeijden
+    maven("https://repo.fvdh.dev/releases")
 }
 
-
 dependencies {
-    // Paper
-    compileOnly("io.papermc.paper:paper:1.17.1-R0.1-SNAPSHOT")
-    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
-    compileOnly("io.papermc.paper:paper-mojangapi:1.17.1-R0.1-SNAPSHOT")
-    implementation("io.papermc:paperlib:1.0.7")
+    paperDevBundle("1.18-R0.1-SNAPSHOT")
+    // paperweightDevBundle("com.example.paperfork", "1.18-R0.1-SNAPSHOT")
 
-    //Purpur
-    compileOnly("net.pl3x.purpur:purpur-api:1.17.1-R0.1-SNAPSHOT")
+    // You will need to manually specify the full dependency if using the groovy gradle dsl
+    // (paperDevBundle and paperweightDevBundle functions do not work in groovy)
+    // paperweightDevelopmentBundle("io.papermc.paper:dev-bundle:1.18-R0.1-SNAPSHOT")
 
-    // Luckperms
-    compileOnly("net.luckperms:api:5.3")
-
-    // ProtocolLib
-    compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
-
-    // WorldEdit
-    compileOnly("com.fastasyncworldedit:FAWE-Bukkit:1.17-268") { isTransitive = false }
-    compileOnly("com.fastasyncworldedit:FAWE-Core:1.17-268")
-
-    // WorldGuard
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-SNAPSHOT")
-
-    // Commodore (Minecraft Brigadier)
-    implementation("me.lucko:commodore:1.10")
+    // Shadow will include the runtimeClasspath by default, which implementation adds to.
+    // Dependencies you don't want to include go in the compileOnly configuration.
+    // Make sure to relocate shaded dependencies!
+    implementation("cloud.commandframework", "cloud-paper", "1.6.0")
 
     // Aikar's Timing
     implementation("co.aikar:minecraft-timings:1.0.4")
-
-    // Dynmap
-    compileOnly("us.dynmap:dynmap-api:3.2-beta-1")
+    compileOnly("net.luckperms:api:5.3")
 
     // Sponge Configurate
     implementation("org.spongepowered:configurate-core:4.1.2")
@@ -92,158 +76,58 @@ dependencies {
     // NBT API
     implementation("de.tr7zw:item-nbt-api-plugin:2.8.0")
 
-    implementation("org.apache.commons:commons-collections4:4.4")
-    implementation("com.h2database:h2:1.4.200")
-
-    //PacketListenerAPI
-    implementation("org.inventivetalent.packetlistenerapi:api:3.9.8-SNAPSHOT")
-
-    //test dependencies
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-}
-
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
+    //ServerUtils
+    compileOnly("net.frankheijden.serverutils:ServerUtils:3.3.1")
 }
 
 tasks {
-    runServer {
-        // Configure the Minecraft version for our task.
-        // This is the only required configuration besides applying the plugin.
-        // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.17.1")
+    // Configure reobfJar to run when invoking the build task
+    build {
+        dependsOn(reobfJar)
     }
 
-}
-//automatic relocation of dependencies
-tasks.create<ConfigureShadowRelocation>("relocateShadowJar") {
-    target = tasks["shadowJar"] as com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-    prefix = "fr.obelouix.libs"
-}
+    compileJava {
+        options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
 
-tasks.shadowJar {
-    //dependsOn(tasks.processResources)
-    dependsOn(tasks["relocateShadowJar"])
-    //exclude dependencies as they are included in the server jar
-    dependencies {
-        exclude(dependency("com.mojang:brigadier"))
-//        exclude(dependency("org.yaml:snakeyaml"))
+        // Set the release flag. This configures what version bytecode the compiler will emit, as well as what JDK APIs are usable.
+        // See https://openjdk.java.net/jeps/247 for more information.
+        options.release.set(17)
+    }
+    javadoc {
+        options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
+    }
+    processResources {
+        filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
+    }
+
+    /*
+    reobfJar {
+      // This is an example of how you might change the output location for reobfJar. It's recommended not to do this
+      // for a variety of reasons, however it's asked frequently enough that an example of how to do it is included here.
+      outputJar.set(layout.buildDirectory.file("libs/PaperweightTestPlugin-${project.version}.jar"))
+    }
+     */
+
+    shadowJar {
+        // helper function to relocate a package into our package
+        fun reloc(pkg: String) = relocate(pkg, "fr.obelouix.ultimate.dependency.$pkg")
+
+        // relocate cloud and it's transitive dependencies
+        reloc("cloud.commandframework")
+        reloc("io.leangen.geantyref")
+        reloc("co.aikar.timings")
+        reloc("com.typesafe")
+        reloc("de.tr7zw")
+        reloc("org.intellij")
+        reloc("org.jetbrains")
+        reloc("org.spongepowered")
     }
 }
 
-tasks.jar {
-    enabled = false
-}
-
-tasks.assemble {
-    dependsOn(tasks.shadowJar)
-}
-
+// Configure plugin.yml generation
 bukkit {
-    main = "fr.obelouix.ultimate.ObelouixUltimate"
-    apiVersion = "1.17"
-    softDepend = listOf("ProtocolLib", "LuckPerms", "FastAsyncWorldEdit", "WorldGuard")
-    load = STARTUP
-    prefix = "Obelouix Ultimate"
-    defaultPermission = OP
-
-    permissions {
-        register("bukkit.command.difficulty") {
-            description = "Allows you to run the difficulty command"
-            default = OP
-        }
-        register("bukkit.command.xp") {
-            description = "Allows you to run the xp command"
-            default = OP
-        }
-
-        register("obelouix.break.block.*") {
-            description = "Allows you to control which block players are allowed to break"
-            default = NOT_OP
-            childrenMap = mapOf(
-                "obelouix.break.block.minecraft.tnt" to false,
-                "obelouix.break.block.minecraft.lava" to false,
-                "obelouix.break.block.minecraft.bedrock" to false
-            )
-        }
-
-        register("obelouix.place.block.*") {
-            description = "Allows you to control which block players are allowed to place"
-            default = NOT_OP
-            childrenMap = mapOf(
-                "obelouix.place.block.minecraft.tnt" to false,
-                "obelouix.place.block.minecraft.bedrock" to false
-            )
-        }
-
-        register("obelouix.commands.day") {
-            description = "Allows you to run the day command"
-            default = OP
-        }
-
-        register("obelouix.commands.settings") {
-            description = "Allows you to run the settings command"
-            default = OP
-        }
-
-        register("obelouix.commands.admin") {
-            description = "Allows you to run the admin command"
-            default = OP
-        }
-
-        register("obelouix.commands.openinv") {
-            description = "Allows you to run the openinv command"
-            default = OP
-        }
-
-        register("obelouix.commands.enderchest") {
-            description = "Allows you to run the enderchest command"
-            default = OP
-            children = listOf("obelouix.commands.enderchest.others")
-        }
-
-        register("obelouix.commands.tppos") {
-            description = "Allows you to run the tppos command"
-            default = OP
-        }
-
-        register("obelouix.commands.fly") {
-            description = "Allows you to run the fly command"
-            default = OP
-            children = listOf("obelouix.commands.fly.others")
-        }
-
-        register("obelouix.commands.gamemode") {
-            description = "Allows you to run the gamemode command"
-            default = OP
-            children = listOf(
-                "obelouix.commands.gamemode.adventure",
-                "obelouix.commands.gamemode.creative",
-                "obelouix.commands.gamemode.spectator",
-                "obelouix.commands.gamemode.survival",
-                "obelouix.commands.gamemode.others.adventure",
-                "obelouix.commands.gamemode.others.creative",
-                "obelouix.commands.gamemode.others.spectator",
-                "obelouix.commands.gamemode.others.survival"
-            )
-        }
-
-        register("obelouix.admin.playerdetails") {
-            description = "Allows you to see critical information about a player when hovering his name in the chat"
-            default = OP
-        }
-
-        register("obelouix.chat.formatting") {
-            description = "Allows you to colorize and format the chat"
-            default = OP
-        }
-
-        register("obelouix.fly"){
-            description = "Allows you to fly without being kicked or banned by watchdog"
-            default = OP
-        }
-
-    }
-
+    load = BukkitPluginDescription.PluginLoadOrder.STARTUP
+    main = "fr.obelouix.obelouixultimate.ObelouixUltimate"
+    apiVersion = "1.18"
+    authors = listOf("Obelouix")
 }

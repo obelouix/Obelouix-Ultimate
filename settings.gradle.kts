@@ -1,2 +1,8 @@
-rootProject.name = "ObelouixUltimate"
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven("https://papermc.io/repo/repository/maven-public/")
+    }
+}
 
+rootProject.name = "ObelouixUltimate"
