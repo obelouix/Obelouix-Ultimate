@@ -43,7 +43,7 @@ public class MaintenanceBook extends BaseBookGui {
     }
 
     private @Nullable ClickEvent openSign(Player player) {
-        new SignGui(new String[]{"test", "", "", ""}).openFakeGui(player);
+        //new SignGui(new String[]{"test", "", "", ""}).openFakeGui(player);
         return null;
     }
 

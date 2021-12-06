@@ -18,6 +18,38 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
+
+repositories {
+    mavenCentral()
+    // Paper
+    maven("https://papermc.io/repo/repository/maven-public/")
+    // Purpur
+    maven("https://repo.pl3x.net/")
+    // Sonatype
+    maven("https://oss.sonatype.org/content/groups/public/")
+    // JitPack
+    maven("https://jitpack.io")
+    // dmulloy2 repo (ProtocolLib)
+    maven("https://repo.dmulloy2.net/repository/public/")
+    // Sponge
+    maven("https://repo.spongepowered.org/maven/")
+    // Minecraft
+    maven("https://libraries.minecraft.net/")
+    // CodeMC
+    maven("https://repo.codemc.org/repository/maven-public/")
+    maven("https://repo.codemc.io/repository/nms/")
+    // Aikar's repo
+    maven("https://repo.aikar.co/content/groups/aikar/")
+    // EngineHub
+    maven("https://maven.enginehub.org/repo/")
+    // SpigotMC
+    maven("https://hub.spigotmc.org/nexus/content/groups/public/")
+    // Mikeprimm's repo (Dynmap)
+    maven("https://repo.mikeprimm.com")
+    // Intellectualsites (FAWE)
+    maven("https://mvn.intellectualsites.com/content/groups/public/")
+}
+
 dependencies {
     paperDevBundle("1.18-R0.1-SNAPSHOT")
     // paperweightDevBundle("com.example.paperfork", "1.18-R0.1-SNAPSHOT")
@@ -30,6 +62,17 @@ dependencies {
     // Dependencies you don't want to include go in the compileOnly configuration.
     // Make sure to relocate shaded dependencies!
     implementation("cloud.commandframework", "cloud-paper", "1.6.0")
+
+    // Aikar's Timing
+    implementation("co.aikar:minecraft-timings:1.0.4")
+    compileOnly("net.luckperms:api:5.3")
+
+    // Sponge Configurate
+    implementation("org.spongepowered:configurate-core:4.1.2")
+    implementation("org.spongepowered:configurate-hocon:4.1.2")
+
+    // NBT API
+    implementation("de.tr7zw:item-nbt-api-plugin:2.8.0")
 }
 
 tasks {

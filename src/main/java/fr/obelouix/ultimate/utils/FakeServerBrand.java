@@ -1,10 +1,6 @@
 package fr.obelouix.ultimate.utils;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.config.Config;
-import io.netty.buffer.Unpooled;
-import net.minecraft.network.PacketDataSerializer;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
@@ -27,7 +23,7 @@ public class FakeServerBrand {
         if (channels != null && !channels.contains("minecraft:brand")) {
             channels.add(minecraftBrandChannel);
             plugin.getServer().getMessenger().registerOutgoingPluginChannel(plugin, minecraftBrandChannel);
-            player.sendPluginMessage(plugin, minecraftBrandChannel, new PacketDataSerializer(Unpooled.buffer()).a(ChatColor.translateAlternateColorCodes('&', Config.getCustomServerBrandName() + "&r")).array());
+            //player.sendPluginMessage(plugin, minecraftBrandChannel, new PacketDecoder(PacketFlow.SERVERBOUND).channelActive(ChatColor.translateAlternateColorCodes('&', Config.getCustomServerBrandName() + "&r")).array());
         }
     }
 
