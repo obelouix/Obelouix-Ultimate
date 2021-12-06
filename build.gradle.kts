@@ -10,7 +10,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.0"
 }
 
-group = "fr.obelouix.obelouixultimate"
+group = "fr.obelouix.ultimate"
 version = "1.0.0-SNAPSHOT"
 
 java {
@@ -110,7 +110,7 @@ tasks {
 
     shadowJar {
         // helper function to relocate a package into our package
-        fun reloc(pkg: String) = relocate(pkg, "fr.obelouix.obelouixultimate.dependency.$pkg")
+        fun reloc(pkg: String) = relocate(pkg, "fr.obelouix.ultimate.dependency.$pkg")
 
         // relocate cloud and it's transitive dependencies
         reloc("cloud.commandframework")
