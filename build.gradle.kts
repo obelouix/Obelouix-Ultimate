@@ -77,7 +77,7 @@ dependencies {
     implementation("de.tr7zw:item-nbt-api-plugin:2.9.0")
 
     //ServerUtils
-    compileOnly("net.frankheijden.serverutils:ServerUtils:3.3.1")
+    compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.0")
 }
 
 tasks {
