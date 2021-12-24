@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.events;
 
 import com.google.common.collect.ImmutableList;
+import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.i18n.I18n;
 import net.kyori.adventure.text.Component;
@@ -29,10 +30,10 @@ public class ReloadDetector implements Listener {
         for (final String match : commands) {
             if (event.getMessage().equalsIgnoreCase("/" + match) && player.hasPermission("bukkit.command.reload")) {
                 if(Config.isDisableReloadCommand()){
-                    player.sendMessage(commandDisabledMessage(player));
+                    MessageSender.sendMessage(player, commandDisabledMessage(player));
                     event.setCancelled(true);
                 } else {
-                    player.sendMessage(warnMessage(player));
+                    MessageSender.sendMessage(player, warnMessage(player));
                 }
 
                 break;
@@ -45,10 +46,10 @@ public class ReloadDetector implements Listener {
         for (final String match : commands) {
             if (event.getCommand().equalsIgnoreCase(match)) {
                 if(Config.isDisableReloadCommand()){
-                    event.getSender().sendMessage(commandDisabledMessage(event.getSender()));
+                    MessageSender.sendMessage(event.getSender(), commandDisabledMessage(event.getSender()));
                     event.setCancelled(true);
                 } else{
-                    event.getSender().sendMessage(warnMessage(event.getSender()));
+                    MessageSender.sendMessage(event.getSender(), warnMessage(event.getSender()));
                 }
                 break;
             }
