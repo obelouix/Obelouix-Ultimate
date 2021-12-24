@@ -69,7 +69,7 @@ dependencies {
     // Shadow will include the runtimeClasspath by default, which implementation adds to.
     // Dependencies you don't want to include go in the compileOnly configuration.
     // Make sure to relocate shaded dependencies!
-    implementation("cloud.commandframework", "cloud-paper", "1.6.0")
+    implementation("cloud.commandframework", "cloud-paper", "1.6.1")
 
     // Aikar's Timing
     implementation("co.aikar:minecraft-timings:1.0.4")
