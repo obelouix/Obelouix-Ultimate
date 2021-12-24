@@ -17,16 +17,6 @@ public class ObelouixUltimate extends JavaPlugin {
     private static final Logger LOGGER = Logger.getLogger("Obelouix Ultimate");
     private static ObelouixUltimate instance;
     private static TimingManager timingManager;
-    private static CommandManager commandManager;
-
-    static {
-        try {
-            commandManager = new CommandManager();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /**
      * Get an instance of {@link ObelouixUltimate ObelouixUltimate} main class
@@ -48,10 +38,6 @@ public class ObelouixUltimate extends JavaPlugin {
     @Override
     public void onDisable() {
         super.onDisable();
-    }
-
-    public static CommandManager getCommandManager() {
-        return commandManager;
     }
 
     /**
@@ -124,7 +110,7 @@ public class ObelouixUltimate extends JavaPlugin {
         });*/
         Config.loadConfig();
         try {
-            commandManager = new CommandManager();
+            new CommandManager();
         } catch (Exception e) {
             e.printStackTrace();
         }

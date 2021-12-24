@@ -6,6 +6,7 @@ import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.meta.CommandMeta;
 import com.google.common.collect.ImmutableList;
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.i18n.I18n;
 import fr.obelouix.ultimate.permissions.IPermission;
 import net.kyori.adventure.text.Component;
@@ -25,10 +26,10 @@ public class ObelouixUltimateCommand /*extends BukkitCommand*/ {
         this.setUsage("/obelouixultimate <reload | version>");
     }*/
 
-    public void register() {
+    public void register() throws Exception {
         @NonNull CommandMeta meta = CommandMeta.simple().build();
-        ObelouixUltimate.getCommandManager().command(
-                ObelouixUltimate.getCommandManager().commandBuilder("obelouixultimate")
+        CommandManager.getInstance().command(
+                CommandManager.getInstance().commandBuilder("obelouixultimate")
                         .argument(StringArgument.optional("world"), ArgumentDescription.of("world"))
                         .handler(this::execute)
                         .build()

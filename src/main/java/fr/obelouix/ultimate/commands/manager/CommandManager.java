@@ -17,6 +17,15 @@ import java.util.function.Function;
 public class CommandManager extends PaperCommandManager<CommandSender> {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
+    private static CommandManager instance = null;
+
+    static {
+        try {
+            instance = new CommandManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public CommandManager() throws Exception {
         super(
@@ -25,6 +34,7 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
                 Function.identity(),
                 Function.identity()
         );
+        instance = this;
 
         if (this.queryCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
             this.registerBrigadier();
@@ -56,7 +66,6 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
      *
      * @param command the command to register
      * @param plugin  the {@link JavaPlugin} where the command belong
-     * @throws ReflectiveOperationException
      */
     private void registerCommand(Command command, JavaPlugin plugin) throws ReflectiveOperationException, IOException {
         //Getting command map from CraftServer
@@ -70,4 +79,9 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
         //All the exceptions thrown above are due to reflection, They will be thrown if any of the above methods
         //and objects used above change location or turn private
     }
+
+    public static CommandManager getInstance() {
+        return instance;
+    }
+
 }
