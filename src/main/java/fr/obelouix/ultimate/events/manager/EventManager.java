@@ -21,6 +21,7 @@ public class EventManager {
             registerEvent(new WitherBlockDamageEvent());
         }
         registerEvent(new AdminInventory());
+        registerEvent(new CustomGoals());
     }
 
     public void registerEvent(Listener listener){

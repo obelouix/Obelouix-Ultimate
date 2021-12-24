@@ -4,12 +4,12 @@ import co.aikar.timings.lib.TimingManager;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.DataStorage;
+import fr.obelouix.ultimate.entity.EntityRegistry;
 import fr.obelouix.ultimate.events.manager.EventManager;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NonNls;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 public class ObelouixUltimate extends JavaPlugin {
@@ -17,9 +17,20 @@ public class ObelouixUltimate extends JavaPlugin {
     private static final Logger LOGGER = Logger.getLogger("Obelouix Ultimate");
     private static ObelouixUltimate instance;
     private static TimingManager timingManager;
+    private static CommandManager commandManager;
+
+    static {
+        try {
+            commandManager = new CommandManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Get an instance of {@link ObelouixUltimate ObelouixUltimate} main class
+     *
      * @return {@link ObelouixUltimate ObelouixUltimate}
      */
     public static ObelouixUltimate getInstance() {
@@ -39,24 +50,8 @@ public class ObelouixUltimate extends JavaPlugin {
         super.onDisable();
     }
 
-    @Override
-    public void onEnable() {
-        checkPaperPresence();
-        checkOfflineMode();
-        instance = this;
-        timingManager = TimingManager.of(this);
-        CompletableFuture.runAsync(() -> {
-            Config.loadConfig();
-            DataStorage.setupStorage();
-            try {
-                new CommandManager();
-            } catch (ReflectiveOperationException e) {
-                e.printStackTrace();
-            }
-            new EventManager();
-        });
-
-        LuckPermsUtils.checkForLuckPerms();
+    public static CommandManager getCommandManager() {
+        return commandManager;
     }
 
     /**
@@ -111,4 +106,32 @@ public class ObelouixUltimate extends JavaPlugin {
         }
     }
 
+    @Override
+    public void onEnable() {
+        checkPaperPresence();
+        checkOfflineMode();
+        instance = this;
+        timingManager = TimingManager.of(this);
+/*        CompletableFuture.runAsync(() -> {
+            Config.loadConfig();
+            DataStorage.setupStorage();
+            try {
+                new CommandManager();
+            } catch (ReflectiveOperationException e) {
+                System.out.println(Arrays.toString(e.getStackTrace()));
+            }
+            new EventManager();
+        });*/
+        Config.loadConfig();
+        try {
+            commandManager = new CommandManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //new EntityRegistry();
+        new EventManager();
+        new EntityRegistry();
+        DataStorage.setupStorage();
+        LuckPermsUtils.checkForLuckPerms();
+    }
 }
