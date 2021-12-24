@@ -284,4 +284,42 @@ public class MessageSender {
         audience.openBook(book);
     }
 
+    /**
+     * send a component on the action bar to every player
+     *
+     * @param component the message to send
+     * @see Audience#sendActionBar(Component)
+     */
+    public static void sendActionBar(Component component) {
+        final Audience audience = Audience.audience(Bukkit.getOnlinePlayers());
+        audience.sendActionBar(component);
+    }
+
+    /**
+     * send a component on the action bar to a player
+     *
+     * @param player    the player that will see the book
+     * @param component the message to send
+     * @see Audience#openBook(Book)
+     */
+    public static void sendActionBar(Player player, Component component) {
+        final Audience audience = Audience.audience(player);
+        audience.sendActionBar(component);
+    }
+
+    /**
+     * send a component on the action bar to every player that has the permission
+     *
+     * @param permission the permission needed for this book
+     * @param component  the message to send
+     * @see Audience#openBook(Book)
+     */
+    public static void sendActionBar(String permission, Component component) {
+        final Collection<Player> authorizedPlayers = new ArrayList<>(Collections.emptyList());
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (player.hasPermission(permission)) authorizedPlayers.add(player);
+        }
+        final Audience audience = Audience.audience(authorizedPlayers);
+        audience.sendActionBar(component);
+    }
 }
