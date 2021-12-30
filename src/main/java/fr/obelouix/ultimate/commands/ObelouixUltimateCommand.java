@@ -4,6 +4,7 @@ import cloud.commandframework.ArgumentDescription;
 import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
+import cloud.commandframework.meta.CommandMeta;
 import com.google.common.collect.ImmutableList;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.audience.MessageSender;
@@ -23,19 +24,20 @@ public class ObelouixUltimateCommand {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     private static final I18n i18n = I18n.getInstance();
-    private static final List<String> subcommands = ImmutableList.of("reload", "version");
 
     public void register() {
         CommandManager.getInstance().command(
-                CommandManager.getInstance().commandBuilder("obelouixultimate")
-                        .argument(StringArgument.single("version/reload"), ArgumentDescription.of("return the version of the plugin"))
-                        .handler(this::execute)
-                        .build()
-        ).setCommandSuggestionProcessor(this::suggestions);
+                        CommandManager.getInstance().commandBuilder("obelouixultimate")
+                                .argument(StringArgument.single("version/reload"), ArgumentDescription.of("return the version of the plugin or reload the plugin"))
+                                .handler(this::execute)
+                                .meta(CommandMeta.DESCRIPTION, "This command allow to get the plugin version or to reload it")
+                                .build()
+                )
+                .setCommandSuggestionProcessor(this::suggestions);
     }
 
     private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
-        return subcommands;
+        return ImmutableList.of("reload", "version");
     }
 
     private void execute(@NonNull CommandContext<CommandSender> context) {

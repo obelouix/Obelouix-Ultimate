@@ -4,7 +4,7 @@ import co.aikar.timings.lib.TimingManager;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.DataStorage;
-import fr.obelouix.ultimate.entity.EntityRegistry;
+import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -108,6 +108,8 @@ public class ObelouixUltimate extends JavaPlugin {
             }
             new EventManager();
         });*/
+        LuckPermsUtils.checkForLuckPerms();
+        DynmapLoader.checkForDynmap();
         Config.loadConfig();
         try {
             new CommandManager();
@@ -116,8 +118,7 @@ public class ObelouixUltimate extends JavaPlugin {
         }
         //new EntityRegistry();
         new EventManager();
-        new EntityRegistry();
+        // new EntityRegistry();
         DataStorage.setupStorage();
-        LuckPermsUtils.checkForLuckPerms();
     }
 }

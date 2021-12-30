@@ -1,9 +1,11 @@
 package fr.obelouix.ultimate.config;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
+import org.bukkit.StructureType;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
@@ -21,6 +23,7 @@ public class Config {
     private static final HoconConfigurationLoader configLoader = HoconConfigurationLoader.builder()
             .path(Path.of(plugin.getDataFolder().getPath(), "config.conf"))
             .build();
+    private static final HashMap<String, HashMap<String, Boolean>> dynmapStructureMap = new HashMap<>();
     public static Map<String, String> chatFormat = new HashMap<>();
     private static String customServerBrandName;
     private static boolean disableReloadCommand = false;
@@ -54,6 +57,15 @@ public class Config {
                 chatFormat.put(group.toString(), root.node("chat", "format", group.toString()).getString());
             }
 
+        }
+
+        if (DynmapLoader.isIsDynmapPresent()) {
+            for (final Object structure : root.node("dynmap", "structures").childrenMap().keySet()) {
+                final HashMap<String, Boolean> struct = new HashMap<>();
+                struct.put(root.node("dynmap", "structures", structure, "displayname").getString(),
+                        root.node("dynmap", "structures", structure, "show").getBoolean());
+                dynmapStructureMap.put((String) structure, struct);
+            }
         }
 
         disableWitherBlockDamage = root.node("protection", "explosions", "wither", "disable-block-damage").getBoolean();
@@ -103,6 +115,16 @@ public class Config {
                     });
                 }
             }
+
+            if (DynmapLoader.isIsDynmapPresent()) {
+                for (String structureType : StructureType.getStructureTypes().keySet()) {
+                    root.node("dynmap", "structures").act(n -> {
+                        n.node(structureType, "show").set(true);
+                        n.node(structureType, "displayname").set(structureType.replaceAll("_", " "));
+                    }).commentIfAbsent("Set the structures to show on dynmap and set their names");
+                }
+            }
+
             root.node("custom-server-brand").set("&r" + Bukkit.getName())
                     .commentIfAbsent("""
                             Allows you to fake the server brand in the F3 menu
@@ -120,6 +142,7 @@ public class Config {
             root.node("maintenance").set(false)
                     .commentIfAbsent("This allow to put the server in maintenance mode and also\n" +
                             "memorize maintenance state if you need to restart the server");
+
             /*root.node("commands").act(n -> {
                 n.commentIfAbsent("Allow you to control which commands you want on your server");
                 for (final String command : commandList) {
@@ -192,7 +215,12 @@ public class Config {
         }
     }
 
+    public static HashMap<String, HashMap<String, Boolean>> getDynmapStructureMap() {
+        return dynmapStructureMap;
+    }
+
     public static CommentedConfigurationNode getRoot() {
         return root;
     }
+
 }

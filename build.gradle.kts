@@ -70,7 +70,10 @@ dependencies {
     // Dependencies you don't want to include go in the compileOnly configuration.
     // Make sure to relocate shaded dependencies!
     compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
+
+    // Cloud Command Framework
     implementation("cloud.commandframework", "cloud-paper", "1.6.1")
+    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.6.1")
 
     // Aikar's Timing
     implementation("co.aikar:minecraft-timings:1.0.4")
@@ -95,6 +98,8 @@ dependencies {
 
     // Dynmap
     compileOnly("us.dynmap:dynmap-api:3.2-beta-1")
+    //compileOnly("us.dynmap:dynmap-core:3.0-SNAPSHOT")
+    //compileOnly("us.dynmap:dynmap-bukkit:3.0-SNAPSHOT")
 }
 
 tasks {
@@ -151,4 +156,5 @@ bukkit {
     main = "fr.obelouix.ultimate.ObelouixUltimate"
     apiVersion = "1.18"
     authors = listOf("Obelouix")
+    softDepend = listOf("dynmap")
 }

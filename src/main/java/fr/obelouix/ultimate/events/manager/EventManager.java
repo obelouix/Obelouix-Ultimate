@@ -3,6 +3,7 @@ package fr.obelouix.ultimate.events.manager;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.PlayerData;
+import fr.obelouix.ultimate.dynmap.DynmapStructures;
 import fr.obelouix.ultimate.events.*;
 import fr.obelouix.ultimate.gui.AdminInventory;
 import org.bukkit.event.Listener;
@@ -22,6 +23,7 @@ public class EventManager {
         }
         registerEvent(new AdminInventory());
         registerEvent(new CustomGoals());
+        registerEvent(new DynmapStructures());
     }
 
     public void registerEvent(Listener listener){

@@ -2,10 +2,15 @@ package fr.obelouix.ultimate.commands.manager;
 
 import cloud.commandframework.brigadier.CloudBrigadierManager;
 import cloud.commandframework.bukkit.CloudBukkitCapabilities;
+import cloud.commandframework.exceptions.InvalidSyntaxException;
 import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;
+import cloud.commandframework.minecraft.extras.AudienceProvider;
+import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.commands.*;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +23,9 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     private static CommandManager instance = null;
+    private static final Function<Exception, Component> DEFAULT_SYNTAX_ERROR =
+            e -> Component.text(String.format("/%s", ((InvalidSyntaxException) e).getCorrectSyntax()),
+                    NamedTextColor.GRAY);
 
     static {
         try {
@@ -51,6 +59,12 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
         }
 
         new ObelouixUltimateCommand().register();
+
+        new MinecraftExceptionHandler<CommandSender>()
+                .withDefaultHandlers()
+                .withDecorator(component -> Component.text().append((Component) DEFAULT_SYNTAX_ERROR)
+                        .build())
+                .apply(this, AudienceProvider.nativeAudience());
 
 //        registerCommand(new ObelouixUltimateCommand("obelouixultimate"), plugin);
         registerCommand(new DayCommand("day"), plugin);
