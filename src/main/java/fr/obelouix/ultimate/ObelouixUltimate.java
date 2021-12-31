@@ -109,7 +109,7 @@ public class ObelouixUltimate extends JavaPlugin {
             new EventManager();
         });*/
         LuckPermsUtils.checkForLuckPerms();
-        DynmapLoader.checkForDynmap();
+        new DynmapLoader().checkForDynmap();
         Config.loadConfig();
         try {
             new CommandManager();

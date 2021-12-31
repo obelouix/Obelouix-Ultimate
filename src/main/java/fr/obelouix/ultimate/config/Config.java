@@ -23,7 +23,7 @@ public class Config {
     private static final HoconConfigurationLoader configLoader = HoconConfigurationLoader.builder()
             .path(Path.of(plugin.getDataFolder().getPath(), "config.conf"))
             .build();
-    private static final HashMap<String, HashMap<String, Boolean>> dynmapStructureMap = new HashMap<>();
+    private static final HashMap<String, Boolean> dynmapStructureMap = new HashMap<>();
     public static Map<String, String> chatFormat = new HashMap<>();
     private static String customServerBrandName;
     private static boolean disableReloadCommand = false;
@@ -61,10 +61,10 @@ public class Config {
 
         if (DynmapLoader.isIsDynmapPresent()) {
             for (final Object structure : root.node("dynmap", "structures").childrenMap().keySet()) {
-                final HashMap<String, Boolean> struct = new HashMap<>();
-                struct.put(root.node("dynmap", "structures", structure, "displayname").getString(),
-                        root.node("dynmap", "structures", structure, "show").getBoolean());
-                dynmapStructureMap.put((String) structure, struct);
+                dynmapStructureMap.put(
+                        root.node("dynmap", "structures", structure, "displayname").getString(),
+                        root.node("dynmap", "structures", structure, "show").getBoolean()
+                );
             }
         }
 
@@ -119,7 +119,7 @@ public class Config {
             if (DynmapLoader.isIsDynmapPresent()) {
                 for (String structureType : StructureType.getStructureTypes().keySet()) {
                     root.node("dynmap", "structures").act(n -> {
-                        n.node(structureType, "show").set(true);
+                        n.node(structureType, "show").set(Boolean.TRUE);
                         n.node(structureType, "displayname").set(structureType.replaceAll("_", " "));
                     }).commentIfAbsent("Set the structures to show on dynmap and set their names");
                 }
@@ -215,7 +215,7 @@ public class Config {
         }
     }
 
-    public static HashMap<String, HashMap<String, Boolean>> getDynmapStructureMap() {
+    public static HashMap<String, Boolean> getDynmapStructureMap() {
         return dynmapStructureMap;
     }
 

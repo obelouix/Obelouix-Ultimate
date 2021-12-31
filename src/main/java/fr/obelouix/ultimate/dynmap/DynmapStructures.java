@@ -2,61 +2,48 @@ package fr.obelouix.ultimate.dynmap;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
-import org.bukkit.Location;
 import org.bukkit.StructureType;
-import org.bukkit.World;
 import org.bukkit.block.Biome;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.dynmap.DynmapCommonAPI;
-import org.dynmap.markers.MarkerAPI;
-import org.dynmap.markers.MarkerSet;
 
-import java.util.*;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.bukkit.StructureType.*;
 import static org.bukkit.block.Biome.*;
 
-public class DynmapStructures implements Listener {
+public class DynmapStructures {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    private static final StructureType[][] Biomes = new StructureType[Biome.values().length][];
+    static final StructureType[][] Biomes = new StructureType[Biome.values().length][];
     private static final Map<StructureType, String> labels = new HashMap<>();
     private static final List<String> enabledStructures = new ArrayList<>();
-    private static MarkerAPI markerAPI;
-    private static MarkerSet markerSet;
-
-    public DynmapStructures() {
-
-    }
 
     public DynmapStructures(DynmapCommonAPI dynmapCommonAPI) {
-        markerAPI = dynmapCommonAPI.getMarkerAPI();
-        setupBiomeStructures();
-        for (String structureType : StructureType.getStructureTypes().keySet()) {
-            labels.put(StructureType.getStructureTypes().get(structureType), structureType);
-        }
-    }
 
-    @EventHandler
-    public void onChunkLoad(ChunkLoadEvent event) {
-        if (event.getWorld().canGenerateStructures()) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    final Location location = new Location(event.getWorld(), event.getChunk().getX() << 4, 64, event.getChunk().getZ() << 4);
-                    final World world = location.getWorld();
-                    if (world != null) {
-                        Biome biome = world.getBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+        if (enabledStructures.isEmpty()) setupBiomeStructures(dynmapCommonAPI);
+
+/*        if (!enabledStructures.isEmpty()) {
+            dynmapCommonAPI.getMarkerAPI().createMarkerSet("structures", "Structures", null, true);
+            for(StructureType structureType: StructureType.getStructureTypes().values()) {
+                InputStream in = this.getClass().getResourceAsStream("/" + structureType.getName() + ".png");
+                if(in != null){
+                    if(dynmapCommonAPI.getMarkerAPI().getMarkerIcon("" + structureType.getName()) == null) {
+                        dynmapCommonAPI.getMarkerAPI().createMarkerIcon("" + structureType.getName(), structureType.getName(), in);
+                    } else {
+                        dynmapCommonAPI.getMarkerAPI().getMarkerIcon("" + structureType.getName()).setMarkerIconImage(in);
                     }
                 }
-            }.runTaskAsynchronously(plugin);
-        }
+            }
+
+        }*/
+
     }
 
-    private void setupBiomeStructures() {
+    private void setupBiomeStructures(DynmapCommonAPI dynmapCommonAPI) {
         Biomes[OCEAN.ordinal()] = new StructureType[]{BURIED_TREASURE, MINESHAFT, OCEAN_RUIN, SHIPWRECK, STRONGHOLD, RUINED_PORTAL};
         Biomes[PLAINS.ordinal()] = new StructureType[]{MINESHAFT, STRONGHOLD, VILLAGE, PILLAGER_OUTPOST, RUINED_PORTAL};
         Biomes[DESERT.ordinal()] = new StructureType[]{DESERT_PYRAMID, MINESHAFT, STRONGHOLD, VILLAGE, PILLAGER_OUTPOST, RUINED_PORTAL};
@@ -119,17 +106,22 @@ public class DynmapStructures implements Listener {
         Biomes[JAGGED_PEAKS.ordinal()] = new StructureType[]{MINESHAFT, STRONGHOLD, PILLAGER_OUTPOST, RUINED_PORTAL};
         Biomes[STONY_PEAKS.ordinal()] = new StructureType[]{MINESHAFT, STRONGHOLD, PILLAGER_OUTPOST, RUINED_PORTAL};
 
-        Config.getDynmapStructureMap().forEach((s, stringBooleanHashMap) -> {
-            if (stringBooleanHashMap.get(s.replaceAll("_", " "))) {
-                enabledStructures.add(s);
+        Config.getDynmapStructureMap().forEach((s, b) -> {
+            if (b) {
+                enabledStructures.add(s.replaceAll(" ", "_"));
             }
         });
 
-        plugin.getLogger().info(Arrays.toString(enabledStructures.toArray()));
-
-        if (!enabledStructures.isEmpty()) {
-            markerSet = markerAPI.createMarkerSet("structures", "Structures", null, true);
-            markerSet.setHideByDefault(false);
+        dynmapCommonAPI.getMarkerAPI().createMarkerSet("structures", "Structures", null, true);
+        for (StructureType structureType : StructureType.getStructureTypes().values()) {
+            InputStream in = this.getClass().getResourceAsStream("/" + structureType.getName() + ".png");
+            if (in != null) {
+                if (dynmapCommonAPI.getMarkerAPI().getMarkerIcon("" + structureType.getName()) == null) {
+                    dynmapCommonAPI.getMarkerAPI().createMarkerIcon("" + structureType.getName(), structureType.getName(), in);
+                } else {
+                    dynmapCommonAPI.getMarkerAPI().getMarkerIcon("" + structureType.getName()).setMarkerIconImage(in);
+                }
+            }
         }
 
     }
