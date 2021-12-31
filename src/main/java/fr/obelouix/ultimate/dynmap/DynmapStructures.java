@@ -2,46 +2,71 @@ package fr.obelouix.ultimate.dynmap;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
+import org.bukkit.Location;
 import org.bukkit.StructureType;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.dynmap.DynmapCommonAPI;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 import static org.bukkit.StructureType.*;
 import static org.bukkit.block.Biome.*;
 
-public class DynmapStructures {
+public class DynmapStructures implements Listener {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     static final StructureType[][] Biomes = new StructureType[Biome.values().length][];
-    private static final Map<StructureType, String> labels = new HashMap<>();
     private static final List<String> enabledStructures = new ArrayList<>();
 
     public DynmapStructures(DynmapCommonAPI dynmapCommonAPI) {
-
-        if (enabledStructures.isEmpty()) setupBiomeStructures(dynmapCommonAPI);
-
-/*        if (!enabledStructures.isEmpty()) {
-            dynmapCommonAPI.getMarkerAPI().createMarkerSet("structures", "Structures", null, true);
-            for(StructureType structureType: StructureType.getStructureTypes().values()) {
-                InputStream in = this.getClass().getResourceAsStream("/" + structureType.getName() + ".png");
-                if(in != null){
-                    if(dynmapCommonAPI.getMarkerAPI().getMarkerIcon("" + structureType.getName()) == null) {
-                        dynmapCommonAPI.getMarkerAPI().createMarkerIcon("" + structureType.getName(), structureType.getName(), in);
-                    } else {
-                        dynmapCommonAPI.getMarkerAPI().getMarkerIcon("" + structureType.getName()).setMarkerIconImage(in);
-                    }
-                }
-            }
-
-        }*/
+        if (Config.isDynmapStructuresEnabled()) {
+            plugin.getServer().getPluginManager().registerEvents(this, plugin);
+            if (enabledStructures.isEmpty()) setupBiomeStructures(dynmapCommonAPI);
+        }
 
     }
+
+    @EventHandler
+    public void onChunkLoad(ChunkLoadEvent event) {
+
+        if (event.getWorld().canGenerateStructures()) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    final Location location = new Location(event.getWorld(), event.getChunk().getX() << 4, 64, event.getChunk().getZ() << 4);
+                    final World world = location.getWorld();
+                    if (world != null) {
+                        Biome biome = world.getBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+                        for (StructureType structureType : Biomes[biome.ordinal()]) {
+                            boolean show = Config.getRoot().node("dynmap", "structures", structureType.getName(), "show").getBoolean();
+                            if (show) {
+                                Location structureLocation = location.getWorld().locateNearestStructure(location, structureType, 1, false);
+                                if (structureLocation != null) {
+                                    DynmapLoader.getDynmapAPI().getMarkerAPI().getMarkerSet(Config.getDynmapStructuresLayerName().toLowerCase(Locale.ROOT)).createMarker(
+                                            structureType.getName() + "," + structureLocation.getBlockX() + "," + structureLocation.getBlockZ(),
+                                            Config.getRoot().node("dynmap", "structures", structureType.getName(), "displayname").getString(),
+                                            world.getName(),
+                                            structureLocation.getBlockX(),
+                                            64,
+                                            structureLocation.getBlockZ(),
+                                            DynmapLoader.getDynmapAPI().getMarkerAPI().getMarkerIcon(structureType.getName()), true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }.runTaskTimer(plugin, 100, 600);
+        }
+    }
+
 
     private void setupBiomeStructures(DynmapCommonAPI dynmapCommonAPI) {
         Biomes[OCEAN.ordinal()] = new StructureType[]{BURIED_TREASURE, MINESHAFT, OCEAN_RUIN, SHIPWRECK, STRONGHOLD, RUINED_PORTAL};
@@ -112,7 +137,7 @@ public class DynmapStructures {
             }
         });
 
-        dynmapCommonAPI.getMarkerAPI().createMarkerSet("structures", "Structures", null, true);
+        dynmapCommonAPI.getMarkerAPI().createMarkerSet(Config.getDynmapStructuresLayerName().toLowerCase(Locale.ROOT), Config.getDynmapStructuresLayerName(), null, true);
         for (StructureType structureType : StructureType.getStructureTypes().values()) {
             InputStream in = this.getClass().getResourceAsStream("/" + structureType.getName() + ".png");
             if (in != null) {

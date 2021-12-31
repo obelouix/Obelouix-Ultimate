@@ -4,7 +4,6 @@ import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.coordinates.Coordinates;
 import fr.obelouix.ultimate.data.PlayerData;
-import fr.obelouix.ultimate.events.PlayerConnectionEvent;
 import fr.obelouix.ultimate.events.ReloadDetector;
 import fr.obelouix.ultimate.events.ServerListEvent;
 import fr.obelouix.ultimate.events.WitherBlockDamageEvent;
@@ -21,7 +20,7 @@ public class EventManager {
                 registerEvent(new ChatEvent());
     }*/
         registerEvent(new ReloadDetector());
-        registerEvent(new PlayerConnectionEvent());
+//        registerEvent(new PlayerConnectionEvent());
         if (Config.isWitherBlockDamageDisabled()) {
             registerEvent(new WitherBlockDamageEvent());
         }

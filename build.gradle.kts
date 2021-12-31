@@ -96,6 +96,9 @@ dependencies {
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.0.0-SNAPSHOT")
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.0.0-SNAPSHOT") { isTransitive = false }
 
+    // WorldGuard
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-20211230.194325-8")
+
     // Dynmap
     compileOnly("us.dynmap:dynmap-api:3.2-beta-1")
     //compileOnly("us.dynmap:dynmap-core:3.0-SNAPSHOT")
@@ -156,5 +159,5 @@ bukkit {
     main = "fr.obelouix.ultimate.ObelouixUltimate"
     apiVersion = "1.18"
     authors = listOf("Obelouix")
-    softDepend = listOf("dynmap")
+    softDepend = listOf("dynmap", "worldguard")
 }

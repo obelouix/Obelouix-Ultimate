@@ -1,5 +1,6 @@
 package fr.obelouix.ultimate.coordinates;
 
+import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.i18n.I18n;
 import net.kyori.adventure.text.Component;
@@ -8,14 +9,31 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.spongepowered.configurate.CommentedConfigurationNode;
+import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
+import java.nio.file.Path;
 import java.util.Locale;
 
 public class Coordinates implements Listener {
 
+    private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
+
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent playerMoveEvent) {
         Player player = playerMoveEvent.getPlayer();
+        if (!playerMoveEvent.hasChangedPosition() || playerMoveEvent.hasChangedPosition()) {
+            final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
+                    .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getName() + ".conf"))
+                    .build();
+            try {
+                final CommentedConfigurationNode root = playerFile.load();
+            } catch (ConfigurateException e) {
+                e.printStackTrace();
+            }
+        }
+
         Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
                 .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
                 .append(Component.text(" Y: ", NamedTextColor.GREEN))

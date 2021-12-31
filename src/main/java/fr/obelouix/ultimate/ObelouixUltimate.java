@@ -7,6 +7,7 @@ import fr.obelouix.ultimate.data.DataStorage;
 import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
+import fr.obelouix.ultimate.worldguard.WorldGuard;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NonNls;
 
@@ -109,6 +110,7 @@ public class ObelouixUltimate extends JavaPlugin {
             new EventManager();
         });*/
         LuckPermsUtils.checkForLuckPerms();
+        new WorldGuard().checkForWorldGuard();
         new DynmapLoader().checkForDynmap();
         Config.loadConfig();
         try {

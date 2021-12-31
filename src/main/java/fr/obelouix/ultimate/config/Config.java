@@ -3,6 +3,7 @@ package fr.obelouix.ultimate.config;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
+import fr.obelouix.ultimate.worldguard.WorldGuard;
 import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
 import org.bukkit.StructureType;
@@ -33,6 +34,10 @@ public class Config {
     private static boolean disableWitherBlockDamage = false;
     private static boolean showWitherSkullExplosionsParticles = false;
     private static boolean serverInMaintenance = false;
+    private static boolean dynmapStructuresEnabled = false;
+    private static String dynmapStructuresLayerName = "";
+    private static boolean dynmapWorldGuardEnabled = false;
+    private static String dynmapWorldGuardLayer = "";
 
     public static void loadConfig() {
         try {
@@ -49,6 +54,16 @@ public class Config {
 
         plugin.getLogger().info("Loading configuration...");
 
+        final File file = Path.of(plugin.getDataFolder().getPath(), "config.conf").toFile();
+
+        if (file.exists()) {
+            try {
+                addMissingConfigs();
+            } catch (SerializationException e) {
+                e.printStackTrace();
+            }
+        }
+
         customServerBrandName = root.node("custom-server-brand").getString();
         storageType = root.node("data-storage-type").getString();
         disableReloadCommand = root.node("disable-default-reload-command").getBoolean();
@@ -60,11 +75,23 @@ public class Config {
         }
 
         if (DynmapLoader.isIsDynmapPresent()) {
-            for (final Object structure : root.node("dynmap", "structures").childrenMap().keySet()) {
-                dynmapStructureMap.put(
-                        root.node("dynmap", "structures", structure, "displayname").getString(),
-                        root.node("dynmap", "structures", structure, "show").getBoolean()
-                );
+
+            dynmapStructuresEnabled = root.node("dynmap", "modules", "structures", "enabled").getBoolean();
+
+            if (dynmapStructuresEnabled) {
+                dynmapStructuresLayerName = root.node("dynmap", "modules", "structures", "layer_name").getString();
+
+                for (final Object structure : root.node("dynmap", "structures").childrenMap().keySet()) {
+                    dynmapStructureMap.put(
+                            root.node("dynmap", "structures", structure, "displayname").getString(),
+                            root.node("dynmap", "structures", structure, "show").getBoolean()
+                    );
+                }
+            }
+
+            if (WorldGuard.isIsWorldGuardPresent()) {
+                dynmapWorldGuardEnabled = root.node("dynmap", "modules", "worldguard", "enabled").getBoolean();
+                dynmapWorldGuardLayer = root.node("dynmap", "modules", "worldguard", "layer_name").getString();
             }
         }
 
@@ -117,12 +144,22 @@ public class Config {
             }
 
             if (DynmapLoader.isIsDynmapPresent()) {
+
+                root.node("dynmap", "modules", "structures", "enabled").set(Boolean.TRUE);
+                root.node("dynmap", "modules", "structures", "layer_name").set("Structures");
+
                 for (String structureType : StructureType.getStructureTypes().keySet()) {
                     root.node("dynmap", "structures").act(n -> {
                         n.node(structureType, "show").set(Boolean.TRUE);
                         n.node(structureType, "displayname").set(structureType.replaceAll("_", " "));
                     }).commentIfAbsent("Set the structures to show on dynmap and set their names");
                 }
+
+                if (WorldGuard.isIsWorldGuardPresent()) {
+                    root.node("dynmap", "modules", "worldguard", "enabled").set(Boolean.TRUE);
+                    root.node("dynmap", "modules", "worldguard", "layer_name").set("WorldGuard");
+                }
+
             }
 
             root.node("custom-server-brand").set("&r" + Bukkit.getName())
@@ -177,6 +214,35 @@ public class Config {
         }
     }
 
+    /**
+     * add Missing entries in the configuration if the file exist
+     *
+     * @throws SerializationException
+     */
+    private static void addMissingConfigs() throws SerializationException {
+
+        if (DynmapLoader.isIsDynmapPresent()) {
+            if (root.node("dynmap", "modules", "structures", "enabled").empty()) {
+                root.node("dynmap", "modules", "structures", "enabled").set(Boolean.TRUE);
+            }
+            if (root.node("dynmap", "modules", "structures", "layer_name").empty()) {
+                root.node("dynmap", "modules", "structures", "layer_name").set("Structures");
+//                    .commentIfAbsent("A server restart is required to change the name, a reload will not work");
+            }
+            if (WorldGuard.isIsWorldGuardPresent()) {
+                if (root.node("dynmap", "modules", "worldguard", "enabled").empty()) {
+                    root.node("dynmap", "modules", "worldguard", "enabled").set(Boolean.TRUE);
+                }
+                if (root.node("dynmap", "modules", "worldguard", "layer_name").empty()) {
+                    root.node("dynmap", "modules", "worldguard", "layer_name").set("WorldGuard");
+                }
+            }
+        }
+
+
+        save(root);
+    }
+
     public static String getStorageType() {
         return storageType;
     }
@@ -215,6 +281,18 @@ public class Config {
         }
     }
 
+    public static boolean isDynmapStructuresEnabled() {
+        return dynmapStructuresEnabled;
+    }
+
+    public static String getDynmapStructuresLayerName() {
+        return dynmapStructuresLayerName;
+    }
+
+    public static boolean isDynmapWorldGuardEnabled() {
+        return dynmapWorldGuardEnabled;
+    }
+
     public static HashMap<String, Boolean> getDynmapStructureMap() {
         return dynmapStructureMap;
     }
@@ -223,4 +301,7 @@ public class Config {
         return root;
     }
 
+    public static String getDynmapWorldGuardLayer() {
+        return dynmapWorldGuardLayer;
+    }
 }
