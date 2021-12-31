@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.commands;
 
 import com.google.common.collect.ImmutableList;
+import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.i18n.I18n;
 import fr.obelouix.ultimate.messages.PluginMessages;
@@ -11,7 +12,6 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerKickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class MaintenanceCommand extends BukkitCommand {
 
-    private I18n i18n = I18n.getInstance();
+    private final I18n i18n = I18n.getInstance();
 
     public MaintenanceCommand(String name) {
         super(name);
@@ -36,25 +36,24 @@ public class MaintenanceCommand extends BukkitCommand {
                         if (!Config.isServerInMaintenance()) {
                             Config.setServerInMaintenance(true);
                             for (Player player : Bukkit.getOnlinePlayers()) {
-                                if (!player.hasPermission("obelouix.maintenance.bypass")) {
-                                    player.kick(Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.started")), PlayerKickEvent.Cause.KICK_COMMAND);
-                                }
+                                player.hasPermission("obelouix.maintenance.bypass");//TODO: FIX THIS ->  player.kickPlayer(Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.started")));
                             }
                         } else {
-                            commandSender.sendMessage(Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.already_enabled")));
+                            MessageSender.sendMessage(commandSender, Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.already_enabled")));
                         }
                     }
                     case "off" -> {
                         if (Config.isServerInMaintenance()) {
                             Config.setServerInMaintenance(false);
                         } else {
-                            commandSender.sendMessage(Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.already_disabled")));
+
+                            MessageSender.sendMessage(commandSender, Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.already_disabled")));
                         }
                     }
-                    default -> commandSender.sendMessage(PluginMessages.wrongCommandUsage(this, commandSender));
+                    default -> MessageSender.sendMessage(commandSender, PluginMessages.wrongCommandUsage(this, commandSender));
                 }
             } else {
-                commandSender.sendMessage(PluginMessages.wrongCommandUsage(this, commandSender));
+                MessageSender.sendMessage(commandSender, PluginMessages.wrongCommandUsage(this, commandSender));
             }
         }
         return false;

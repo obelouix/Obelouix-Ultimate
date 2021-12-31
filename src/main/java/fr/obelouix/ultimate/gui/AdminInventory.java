@@ -42,7 +42,7 @@ public class AdminInventory extends BaseGUI {
      * @param player - the player that will see the inventory
      */
     public AdminInventory(Player player) {
-        inventory = Bukkit.createInventory(null, 54, title(player));
+        inventory = Bukkit.createInventory(null, 54, title(player)); //Bukkit.createInventory(null, 54, title(player));
         this.viewer = player;
         playerManagementComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.player_management"), NamedTextColor.GREEN);
         playerManagementDescriptionComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.player_management.description"), NamedTextColor.GOLD)

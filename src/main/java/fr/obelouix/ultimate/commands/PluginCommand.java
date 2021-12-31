@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.commands;
 
 import com.google.common.collect.ImmutableList;
+import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.permissions.IPermission;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
@@ -44,7 +45,7 @@ public class PluginCommand extends Command {
                 }
             }
 
-            commandSender.sendMessage(message);
+            MessageSender.sendMessage(commandSender, message);
         }
         return false;
     }

@@ -1,5 +1,6 @@
 package fr.obelouix.ultimate.commands;
 
+import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.i18n.I18n;
 import fr.obelouix.ultimate.messages.PluginMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
@@ -34,15 +35,15 @@ public class NightCommand extends BukkitCommand {
             } else if (args.length == 1) {
                 setNight(args[0]);
             } else {
-                player.sendMessage(PluginMessages.wrongCommandUsage(this, player));
+                MessageSender.sendMessage(player, PluginMessages.wrongCommandUsage(this, player));
             }
-            player.sendMessage(message);
+            MessageSender.sendMessage(commandSender, message);
         } else if (commandSender instanceof ConsoleCommandSender) {
             if (args.length == 0) {
                 commandSender.sendMessage(i18n.getTranslation(commandSender, "obelouix.command.day.console.too_few_arguments"));
             } else if (args.length == 1) {
                 setNight(args[0]);
-                commandSender.sendMessage(message);
+                MessageSender.sendMessage(commandSender, message);
             } else {
                 commandSender.sendMessage(i18n.getTranslation(commandSender, "obelouix.command.day.console.too_many_arguments"));
             }

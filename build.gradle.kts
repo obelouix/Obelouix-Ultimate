@@ -24,7 +24,7 @@ repositories {
     // Paper
     maven("https://papermc.io/repo/repository/maven-public/")
     // Purpur
-    maven("https://repo.pl3x.net/")
+    // maven("https://repo.pl3x.net/")
     // Sonatype
     maven("https://oss.sonatype.org/content/groups/public/")
     // JitPack
@@ -42,18 +42,24 @@ repositories {
     maven("https://repo.aikar.co/content/groups/aikar/")
     // EngineHub
     maven("https://maven.enginehub.org/repo/")
+    // FAWE
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     // SpigotMC
     maven("https://hub.spigotmc.org/nexus/content/groups/public/")
     // Mikeprimm's repo (Dynmap)
     maven("https://repo.mikeprimm.com")
     // Intellectualsites (FAWE)
     maven("https://mvn.intellectualsites.com/content/groups/public/")
-    //FrankHeijden
+    // FrankHeijden
     maven("https://repo.fvdh.dev/releases")
+    // EssentialsX
+    maven("https://repo.essentialsx.net/snapshots/")
+    maven("https://repo.essentialsx.net/releases/")
+
 }
 
 dependencies {
-    paperDevBundle("1.18-R0.1-SNAPSHOT")
+    paperDevBundle("1.18.1-R0.1-SNAPSHOT")
     // paperweightDevBundle("com.example.paperfork", "1.18-R0.1-SNAPSHOT")
 
     // You will need to manually specify the full dependency if using the groovy gradle dsl
@@ -63,7 +69,11 @@ dependencies {
     // Shadow will include the runtimeClasspath by default, which implementation adds to.
     // Dependencies you don't want to include go in the compileOnly configuration.
     // Make sure to relocate shaded dependencies!
-    implementation("cloud.commandframework", "cloud-paper", "1.6.0")
+    compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
+
+    // Cloud Command Framework
+    implementation("cloud.commandframework", "cloud-paper", "1.6.1")
+    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.6.1")
 
     // Aikar's Timing
     implementation("co.aikar:minecraft-timings:1.0.4")
@@ -76,11 +86,30 @@ dependencies {
     // NBT API
     implementation("de.tr7zw:item-nbt-api-plugin:2.9.0")
 
-    //ServerUtils
+    // ServerUtils
     compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.0")
+
+    // EssentialsX
+    compileOnly("net.essentialsx:EssentialsX:2.19.3-SNAPSHOT")
+
+    // FAWE
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.0.0-SNAPSHOT")
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.0.0-SNAPSHOT") { isTransitive = false }
+
+    // WorldGuard
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-20211230.194325-8")
+
+    // Dynmap
+    compileOnly("us.dynmap:dynmap-api:3.2-beta-1")
+    //compileOnly("us.dynmap:dynmap-core:3.0-SNAPSHOT")
+    //compileOnly("us.dynmap:dynmap-bukkit:3.0-SNAPSHOT")
 }
 
 tasks {
+
+    runServer {
+        minecraftVersion("1.18.1")
+    }
     // Configure reobfJar to run when invoking the build task
     build {
         dependsOn(reobfJar)
@@ -127,7 +156,8 @@ tasks {
 // Configure plugin.yml generation
 bukkit {
     load = BukkitPluginDescription.PluginLoadOrder.STARTUP
-    main = "fr.obelouix.obelouixultimate.ObelouixUltimate"
+    main = "fr.obelouix.ultimate.ObelouixUltimate"
     apiVersion = "1.18"
     authors = listOf("Obelouix")
+    softDepend = listOf("dynmap", "worldguard")
 }

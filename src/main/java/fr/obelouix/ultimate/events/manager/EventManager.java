@@ -2,9 +2,11 @@ package fr.obelouix.ultimate.events.manager;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
+import fr.obelouix.ultimate.coordinates.Coordinates;
 import fr.obelouix.ultimate.data.PlayerData;
-import fr.obelouix.ultimate.events.*;
-import fr.obelouix.ultimate.gui.AdminInventory;
+import fr.obelouix.ultimate.events.ReloadDetector;
+import fr.obelouix.ultimate.events.ServerListEvent;
+import fr.obelouix.ultimate.events.WitherBlockDamageEvent;
 import org.bukkit.event.Listener;
 
 public class EventManager {
@@ -14,13 +16,17 @@ public class EventManager {
     public EventManager() {
         registerEvent(new PlayerData());
         registerEvent(new ServerListEvent());
-        registerEvent(new ChatEvent());
+/*        if(!plugin.getServer().getPluginManager().isPluginEnabled("essentialschat")){
+                registerEvent(new ChatEvent());
+    }*/
         registerEvent(new ReloadDetector());
-        registerEvent(new PlayerConnectionEvent());
+//        registerEvent(new PlayerConnectionEvent());
         if (Config.isWitherBlockDamageDisabled()) {
             registerEvent(new WitherBlockDamageEvent());
         }
-        registerEvent(new AdminInventory());
+        registerEvent(new Coordinates());
+/*        registerEvent(new AdminInventory());
+        registerEvent(new CustomGoals());*/
     }
 
     public void registerEvent(Listener listener){

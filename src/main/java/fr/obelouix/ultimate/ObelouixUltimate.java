@@ -4,12 +4,13 @@ import co.aikar.timings.lib.TimingManager;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.DataStorage;
+import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
+import fr.obelouix.ultimate.worldguard.WorldGuard;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NonNls;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 public class ObelouixUltimate extends JavaPlugin {
@@ -20,6 +21,7 @@ public class ObelouixUltimate extends JavaPlugin {
 
     /**
      * Get an instance of {@link ObelouixUltimate ObelouixUltimate} main class
+     *
      * @return {@link ObelouixUltimate ObelouixUltimate}
      */
     public static ObelouixUltimate getInstance() {
@@ -37,26 +39,6 @@ public class ObelouixUltimate extends JavaPlugin {
     @Override
     public void onDisable() {
         super.onDisable();
-    }
-
-    @Override
-    public void onEnable() {
-        checkPaperPresence();
-        checkOfflineMode();
-        instance = this;
-        timingManager = TimingManager.of(this);
-        CompletableFuture.runAsync(() -> {
-            Config.loadConfig();
-            DataStorage.setupStorage();
-            try {
-                new CommandManager();
-            } catch (ReflectiveOperationException e) {
-                e.printStackTrace();
-            }
-            new EventManager();
-        });
-
-        LuckPermsUtils.checkForLuckPerms();
     }
 
     /**
@@ -111,4 +93,34 @@ public class ObelouixUltimate extends JavaPlugin {
         }
     }
 
+    @Override
+    public void onEnable() {
+        checkPaperPresence();
+        checkOfflineMode();
+        instance = this;
+        timingManager = TimingManager.of(this);
+/*        CompletableFuture.runAsync(() -> {
+            Config.loadConfig();
+            DataStorage.setupStorage();
+            try {
+                new CommandManager();
+            } catch (ReflectiveOperationException e) {
+                System.out.println(Arrays.toString(e.getStackTrace()));
+            }
+            new EventManager();
+        });*/
+        LuckPermsUtils.checkForLuckPerms();
+        new WorldGuard().checkForWorldGuard();
+        new DynmapLoader().checkForDynmap();
+        Config.loadConfig();
+        try {
+            new CommandManager();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //new EntityRegistry();
+        new EventManager();
+        // new EntityRegistry();
+        DataStorage.setupStorage();
+    }
 }
