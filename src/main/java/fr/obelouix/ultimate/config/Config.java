@@ -2,7 +2,6 @@ package fr.obelouix.ultimate.config;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
-import fr.obelouix.ultimate.worldguard.WorldGuard;
 import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
 import org.bukkit.StructureType;
@@ -88,7 +87,7 @@ public class Config {
                 }
             }
 
-            if (WorldGuard.isIsWorldGuardPresent()) {
+            if (plugin.isWorldGuardPresent()) {
                 dynmapWorldGuardEnabled = root.node("dynmap", "modules", "worldguard", "enabled").getBoolean();
                 dynmapWorldGuardLayer = root.node("dynmap", "modules", "worldguard", "layer_name").getString();
             }
@@ -154,7 +153,7 @@ public class Config {
                     }).commentIfAbsent("Set the structures to show on dynmap and set their names");
                 }
 
-                if (WorldGuard.isIsWorldGuardPresent()) {
+                if (plugin.isWorldGuardPresent()) {
                     root.node("dynmap", "modules", "worldguard", "enabled").set(Boolean.TRUE);
                     root.node("dynmap", "modules", "worldguard", "layer_name").set("WorldGuard");
                 }
@@ -228,7 +227,7 @@ public class Config {
                 root.node("dynmap", "modules", "structures", "layer_name").set("Structures");
 //                    .commentIfAbsent("A server restart is required to change the name, a reload will not work");
             }
-            if (WorldGuard.isIsWorldGuardPresent()) {
+            if (plugin.isWorldGuardPresent()) {
                 if (root.node("dynmap", "modules", "worldguard", "enabled").empty()) {
                     root.node("dynmap", "modules", "worldguard", "enabled").set(Boolean.TRUE);
                 }

@@ -2,7 +2,6 @@ package fr.obelouix.ultimate.dynmap;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
-import fr.obelouix.ultimate.worldguard.WorldGuard;
 import org.bukkit.event.Listener;
 import org.dynmap.DynmapCommonAPI;
 import org.dynmap.DynmapCommonAPIListener;
@@ -24,7 +23,7 @@ public class DynmapLoader implements Listener {
                 if (Config.isDynmapStructuresEnabled()) {
                     new DynmapStructures(dynmapCommonAPI);
                 }
-                if (WorldGuard.isIsWorldGuardPresent() && Config.isDynmapWorldGuardEnabled()) {
+                if (plugin.isWorldGuardPresent() && Config.isDynmapWorldGuardEnabled()) {
                     new DynmapWorldGuard(dynmapCommonAPI);
                 }
 
