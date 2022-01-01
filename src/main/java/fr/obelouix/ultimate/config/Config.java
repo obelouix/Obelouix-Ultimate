@@ -148,7 +148,7 @@ public class Config {
                 root.node("dynmap", "modules", "structures", "enabled").set(Boolean.TRUE);
                 root.node("dynmap", "modules", "structures", "layer_name").set("Structures");
 
-                for (String structureType : StructureType.getStructureTypes().keySet()) {
+                for (final String structureType : StructureType.getStructureTypes().keySet()) {
                     root.node("dynmap", "structures").act(n -> {
                         n.node(structureType, "show").set(Boolean.TRUE);
                         n.node(structureType, "displayname").set(structureType.replaceAll("_", " "));

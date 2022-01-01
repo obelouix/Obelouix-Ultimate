@@ -23,7 +23,7 @@ import static org.bukkit.block.Biome.*;
 public class DynmapStructures implements Listener {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    static final StructureType[][] Biomes = new StructureType[Biome.values().length][];
+    static final StructureType[][] Biomes = new StructureType[values().length][];
     private static final List<String> enabledStructures = new ArrayList<>();
 
     public DynmapStructures(DynmapCommonAPI dynmapCommonAPI) {
@@ -44,11 +44,11 @@ public class DynmapStructures implements Listener {
                     final Location location = new Location(event.getWorld(), event.getChunk().getX() << 4, 64, event.getChunk().getZ() << 4);
                     final World world = location.getWorld();
                     if (world != null) {
-                        Biome biome = world.getBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+                        final Biome biome = world.getBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ());
                         for (StructureType structureType : Biomes[biome.ordinal()]) {
                             boolean show = Config.getRoot().node("dynmap", "structures", structureType.getName(), "show").getBoolean();
                             if (show) {
-                                Location structureLocation = location.getWorld().locateNearestStructure(location, structureType, 1, false);
+                                final Location structureLocation = location.getWorld().locateNearestStructure(location, structureType, 1, false);
                                 if (structureLocation != null) {
                                     DynmapLoader.getDynmapAPI().getMarkerAPI().getMarkerSet(Config.getDynmapStructuresLayerName().toLowerCase(Locale.ROOT)).createMarker(
                                             structureType.getName() + "," + structureLocation.getBlockX() + "," + structureLocation.getBlockZ(),
@@ -138,8 +138,8 @@ public class DynmapStructures implements Listener {
         });
 
         dynmapCommonAPI.getMarkerAPI().createMarkerSet(Config.getDynmapStructuresLayerName().toLowerCase(Locale.ROOT), Config.getDynmapStructuresLayerName(), null, true);
-        for (StructureType structureType : StructureType.getStructureTypes().values()) {
-            InputStream in = this.getClass().getResourceAsStream("/" + structureType.getName() + ".png");
+        for (StructureType structureType : getStructureTypes().values()) {
+            final InputStream in = this.getClass().getResourceAsStream("/" + structureType.getName() + ".png");
             if (in != null) {
                 if (dynmapCommonAPI.getMarkerAPI().getMarkerIcon("" + structureType.getName()) == null) {
                     dynmapCommonAPI.getMarkerAPI().createMarkerIcon("" + structureType.getName(), structureType.getName(), in);
