@@ -27,7 +27,7 @@ public class DynmapStructures implements Listener {
     private static final List<String> enabledStructures = new ArrayList<>();
 
     public DynmapStructures(DynmapCommonAPI dynmapCommonAPI) {
-        if (Config.isDynmapStructuresEnabled()) {
+        if (plugin.isIsDynmapPresent() && Config.isDynmapStructuresEnabled()) {
             plugin.getServer().getPluginManager().registerEvents(this, plugin);
             if (enabledStructures.isEmpty()) setupBiomeStructures(dynmapCommonAPI);
         }

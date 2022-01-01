@@ -5,10 +5,14 @@ import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.i18n.I18n;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
@@ -20,7 +24,50 @@ public class Coordinates implements Listener {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
 
+    public @NotNull BukkitTask runTask(Player player) {
+        return new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
+                        .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getName() + ".conf"))
+                        .build();
+                try {
+                    final CommentedConfigurationNode root = playerFile.load();
+                } catch (ConfigurateException e) {
+                    e.printStackTrace();
+                }
+
+                Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
+                        .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
+                        .append(Component.text(" Y: ", NamedTextColor.GREEN))
+                        .append(Component.text(player.getLocation().getBlockY(), NamedTextColor.WHITE))
+                        .append(Component.text(" Z: ", NamedTextColor.DARK_BLUE))
+                        .append(Component.text(player.getLocation().getBlockZ(), NamedTextColor.WHITE))
+                        .append(Component.text(" " + parse24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
+                        .append(Component.text(" Direction: ", NamedTextColor.AQUA))
+                        .append(Component.text(getFacing(player), NamedTextColor.WHITE));
+                MessageSender.sendActionBar(player.getPlayer(), actionBar);
+
+            }
+        }.runTaskTimerAsynchronously(plugin, 0, 5);
+    }
+
     @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
+        if (!Bukkit.getOnlinePlayers().isEmpty()) {
+            if (!Bukkit.getScheduler().isCurrentlyRunning(runTask(playerJoinEvent.getPlayer()).getTaskId())) {
+                runTask(playerJoinEvent.getPlayer());
+            }
+        } else {
+            if (Bukkit.getScheduler().isCurrentlyRunning(runTask(playerJoinEvent.getPlayer()).getTaskId())) {
+                // Cancel the task if it's running and there is no player connected
+                runTask(playerJoinEvent.getPlayer()).cancel();
+            }
+        }
+    }
+
+  /*  @EventHandler
     public void onPlayerMove(PlayerMoveEvent playerMoveEvent) {
         Player player = playerMoveEvent.getPlayer();
         if (!playerMoveEvent.hasChangedPosition() || playerMoveEvent.hasChangedPosition()) {
@@ -44,7 +91,7 @@ public class Coordinates implements Listener {
                 .append(Component.text(" Direction: ", NamedTextColor.AQUA))
                 .append(Component.text(getFacing(player), NamedTextColor.WHITE));
         MessageSender.sendActionBar(playerMoveEvent.getPlayer(), actionBar);
-    }
+    }*/
 
     private String parse24(final long time) {
         long hours = time / 1000L + 6L;

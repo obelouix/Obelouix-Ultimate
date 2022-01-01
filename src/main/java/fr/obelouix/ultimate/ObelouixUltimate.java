@@ -111,7 +111,9 @@ public class ObelouixUltimate extends JavaPlugin {
         });*/
         LuckPermsUtils.checkForLuckPerms();
         new WorldGuard().checkForWorldGuard();
-        new DynmapLoader().checkForDynmap();
+        if (isIsDynmapPresent()) {
+            new DynmapLoader().init();
+        }
         Config.loadConfig();
         try {
             new CommandManager();
@@ -123,4 +125,9 @@ public class ObelouixUltimate extends JavaPlugin {
         // new EntityRegistry();
         DataStorage.setupStorage();
     }
+
+    public boolean isIsDynmapPresent() {
+        return getClass("org.dynmap.bukkit.DynmapPlugin");
+    }
+
 }

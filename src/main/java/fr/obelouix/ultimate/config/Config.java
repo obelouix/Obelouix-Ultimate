@@ -1,7 +1,6 @@
 package fr.obelouix.ultimate.config;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import fr.obelouix.ultimate.worldguard.WorldGuard;
 import net.luckperms.api.model.group.Group;
@@ -74,7 +73,7 @@ public class Config {
 
         }
 
-        if (DynmapLoader.isIsDynmapPresent()) {
+        if (plugin.isIsDynmapPresent()) {
 
             dynmapStructuresEnabled = root.node("dynmap", "modules", "structures", "enabled").getBoolean();
 
@@ -143,7 +142,7 @@ public class Config {
                 }
             }
 
-            if (DynmapLoader.isIsDynmapPresent()) {
+            if (plugin.isIsDynmapPresent()) {
 
                 root.node("dynmap", "modules", "structures", "enabled").set(Boolean.TRUE);
                 root.node("dynmap", "modules", "structures", "layer_name").set("Structures");
@@ -221,7 +220,7 @@ public class Config {
      */
     private static void addMissingConfigs() throws SerializationException {
 
-        if (DynmapLoader.isIsDynmapPresent()) {
+        if (plugin.isIsDynmapPresent()) {
             if (root.node("dynmap", "modules", "structures", "enabled").empty()) {
                 root.node("dynmap", "modules", "structures", "enabled").set(Boolean.TRUE);
             }
