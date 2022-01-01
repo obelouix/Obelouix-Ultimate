@@ -60,21 +60,17 @@ public class Coordinates implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
-        if (!Bukkit.getOnlinePlayers().isEmpty()) {
+        if (!Bukkit.getOnlinePlayers().isEmpty() && !Bukkit.getScheduler().isCurrentlyRunning(runTask().getTaskId())) {
             // Start the task if it's not already running
-            if (!Bukkit.getScheduler().isCurrentlyRunning(runTask().getTaskId())) {
-                runTask();
-            }
+            runTask();
         }
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent playerQuitEvent) {
-        if (Bukkit.getOnlinePlayers().isEmpty()) {
-            if (Bukkit.getScheduler().isCurrentlyRunning(runTask().getTaskId())) {
-                // Cancel the task if it's running and there is no player connected
-                runTask().cancel();
-            }
+        if (Bukkit.getOnlinePlayers().isEmpty() && Bukkit.getScheduler().isCurrentlyRunning(runTask().getTaskId())) {
+            // Cancel the task if it's running and there is no player connected
+            runTask().cancel();
         }
     }
 

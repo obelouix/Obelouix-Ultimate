@@ -33,23 +33,21 @@ public class DynmapWorldGuard {
 
                 // Remove WorldGuard area markers if their WorldGuard region no longer exist
                 Bukkit.getWorlds().forEach(world -> {
-                    World world1 = BukkitAdapter.adapt(world);
-                    Map<String, ProtectedRegion> region = WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1).getRegions();
+                    final World world1 = BukkitAdapter.adapt(world);
+                    final Map<String, ProtectedRegion> region = WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1).getRegions();
                     region.keySet().forEach(regionID -> {
-                        double[] x = {
+                        final double[] x = {
                                 WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1).getRegion(regionID).getMinimumPoint().getBlockX(),
                                 WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1).getRegion(regionID).getMaximumPoint().getBlockX()
                         };
-                        double[] z = {
+                        final double[] z = {
                                 WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1).getRegion(regionID).getMinimumPoint().getBlockZ(),
                                 WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1).getRegion(regionID).getMaximumPoint().getBlockZ()
                         };
                         dynmapCommonAPI.getMarkerAPI().getMarkerSet(Config.getDynmapWorldGuardLayer().toLowerCase(Locale.ROOT))
                                 .getAreaMarkers().forEach(areaMarker -> {
-                                    if (areaMarker.getUniqueMarkerID().startsWith("wg_")) {
-                                        if (!region.containsKey(areaMarker.getUniqueMarkerID().substring(3))) {
-                                            areaMarker.deleteMarker();
-                                        }
+                                    if (areaMarker.getUniqueMarkerID().startsWith("wg_") && !region.containsKey(areaMarker.getUniqueMarkerID().substring(3))) {
+                                        areaMarker.deleteMarker();
                                     }
                                 });
                         if (dynmapCommonAPI.getMarkerAPI().getMarkerSet(Config.getDynmapWorldGuardLayer().toLowerCase(Locale.ROOT)).findAreaMarker("wg_" + regionID) == null) {
