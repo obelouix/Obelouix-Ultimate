@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
@@ -60,10 +61,16 @@ public class Coordinates implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
         if (!Bukkit.getOnlinePlayers().isEmpty()) {
+            // Start the task if it's not already running
             if (!Bukkit.getScheduler().isCurrentlyRunning(runTask().getTaskId())) {
                 runTask();
             }
-        } else {
+        }
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent playerQuitEvent) {
+        if (Bukkit.getOnlinePlayers().isEmpty()) {
             if (Bukkit.getScheduler().isCurrentlyRunning(runTask().getTaskId())) {
                 // Cancel the task if it's running and there is no player connected
                 runTask().cancel();
