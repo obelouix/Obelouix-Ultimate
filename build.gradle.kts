@@ -7,7 +7,7 @@ plugins {
     id("net.minecrell.plugin-yml.bukkit") version "0.5.1" // Generates plugin.yml
 
     // Shades and relocates dependencies into our plugin jar. See https://imperceptiblethoughts.com/shadow/introduction/
-    id("com.github.johnrengelman.shadow") version "7.1.0"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "fr.obelouix.ultimate"
@@ -84,7 +84,7 @@ dependencies {
     implementation("org.spongepowered:configurate-hocon:4.1.2")
 
     // NBT API
-    implementation("de.tr7zw:item-nbt-api-plugin:2.8.0")
+    implementation("de.tr7zw:item-nbt-api-plugin:2.9.0")
 
     // ServerUtils
     compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.0")
