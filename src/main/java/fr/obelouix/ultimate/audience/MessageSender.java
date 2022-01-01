@@ -300,7 +300,7 @@ public class MessageSender {
      *
      * @param player    the player that will see the book
      * @param component the message to send
-     * @see Audience#openBook(Book)
+     * @see Audience#sendActionBar(Component)
      */
     public static void sendActionBar(Player player, Component component) {
         final Audience audience = Audience.audience(player);
@@ -312,7 +312,7 @@ public class MessageSender {
      *
      * @param permission the permission needed for this book
      * @param component  the message to send
-     * @see Audience#openBook(Book)
+     * @see Audience#sendActionBar(Component)
      */
     public static void sendActionBar(String permission, Component component) {
         final Collection<Player> authorizedPlayers = new ArrayList<>(Collections.emptyList());

@@ -7,7 +7,6 @@ import fr.obelouix.ultimate.data.DataStorage;
 import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
-import fr.obelouix.ultimate.worldguard.WorldGuard;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NonNls;
 
@@ -99,19 +98,14 @@ public class ObelouixUltimate extends JavaPlugin {
         checkOfflineMode();
         instance = this;
         timingManager = TimingManager.of(this);
-/*        CompletableFuture.runAsync(() -> {
-            Config.loadConfig();
-            DataStorage.setupStorage();
-            try {
-                new CommandManager();
-            } catch (ReflectiveOperationException e) {
-                System.out.println(Arrays.toString(e.getStackTrace()));
-            }
-            new EventManager();
-        });*/
         LuckPermsUtils.checkForLuckPerms();
-        new WorldGuard().checkForWorldGuard();
-        new DynmapLoader().checkForDynmap();
+        if (isWorldGuardPresent()) {
+            getLogger().info("Found WorldGuard");
+//            new WorldGuard();
+        }
+        if (isIsDynmapPresent()) {
+            new DynmapLoader().init();
+        }
         Config.loadConfig();
         try {
             new CommandManager();
@@ -122,5 +116,13 @@ public class ObelouixUltimate extends JavaPlugin {
         new EventManager();
         // new EntityRegistry();
         DataStorage.setupStorage();
+    }
+
+    public boolean isIsDynmapPresent() {
+        return getClass("org.dynmap.bukkit.DynmapPlugin");
+    }
+
+    public boolean isWorldGuardPresent() {
+        return getClass("com.sk89q.worldguard.WorldGuard");
     }
 }
