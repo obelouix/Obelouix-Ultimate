@@ -36,6 +36,7 @@ public class Config {
     private static String dynmapStructuresLayerName = "";
     private static boolean dynmapWorldGuardEnabled = false;
     private static String dynmapWorldGuardLayer = "";
+    private static boolean isAnvilInfiniteRepairEnabled = false;
 
     public static void loadConfig() {
         try {
@@ -93,6 +94,7 @@ public class Config {
             }
         }
 
+        isAnvilInfiniteRepairEnabled = root.node("anvil", "infinite-repair").getBoolean();
         disableWitherBlockDamage = root.node("protection", "explosions", "wither", "disable-block-damage").getBoolean();
         showWitherSkullExplosionsParticles = root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").getBoolean();
         serverInMaintenance = root.node("maintenance").getBoolean();
@@ -200,6 +202,8 @@ public class Config {
                 n.node("matches-before-action").set(3);
             });*/
 
+            root.node("anvil", "infinite-repair").set(Boolean.TRUE);
+
             save(root);
         }
     }
@@ -237,6 +241,9 @@ public class Config {
             }
         }
 
+        if (root.node("anvil", "infinite-repair").empty()) {
+            root.node("anvil", "infinite-repair").set(Boolean.TRUE);
+        }
 
         save(root);
     }
@@ -301,5 +308,9 @@ public class Config {
 
     public static String getDynmapWorldGuardLayer() {
         return dynmapWorldGuardLayer;
+    }
+
+    public static boolean isIsAnvilInfiniteRepairEnabled() {
+        return isAnvilInfiniteRepairEnabled;
     }
 }

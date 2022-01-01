@@ -5,6 +5,7 @@ import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.i18n.I18n;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,7 +20,6 @@ import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
 import java.nio.file.Path;
-import java.util.Locale;
 
 public class Coordinates implements Listener {
 
@@ -109,28 +109,28 @@ public class Coordinates implements Listener {
         final double yaw = p.getLocation().getYaw();
 
         if (yaw >= 337.5 || yaw <= 22.5 && yaw >= 0.0 || yaw >= -22.5 && yaw <= 0.0 || yaw <= -337.5) {
-            return I18n.getInstance().getTranslation(p, "obelouix.direction.south").toUpperCase(Locale.ROOT);
+            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.south"));
         }
         if (yaw >= 22.5 && yaw <= 67.5 || yaw <= -292.5) {
-            return I18n.getInstance().getTranslation(p, "obelouix.direction.southwest").toUpperCase(Locale.ROOT);
+            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.southwest"));
         }
         if (yaw >= 67.5 && yaw <= 112.5 || yaw <= -247.5) {
-            return I18n.getInstance().getTranslation(p, "obelouix.direction.west").toUpperCase(Locale.ROOT);
+            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.west"));
         }
         if (yaw >= 112.5 && yaw <= 157.5 || yaw <= -202.5) {
-            return I18n.getInstance().getTranslation(p, "obelouix.direction.northwest").toUpperCase(Locale.ROOT);
+            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.northwest"));
         }
         if (yaw >= 157.5 && yaw <= 202.5 || yaw <= -157.5) {
-            return I18n.getInstance().getTranslation(p, "obelouix.direction.north").toUpperCase(Locale.ROOT);
+            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.north"));
         }
         if (yaw >= 202.5 && yaw <= 247.5 || yaw <= -112.5) {
-            return I18n.getInstance().getTranslation(p, "obelouix.direction.northeast").toUpperCase(Locale.ROOT);
+            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.northeast"));
         }
         if (yaw >= 247.5 && yaw <= 292.5 || yaw <= -67.5) {
-            return I18n.getInstance().getTranslation(p, "obelouix.direction.east").toUpperCase(Locale.ROOT);
+            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.east"));
         }
         if (yaw >= 292.5 || yaw <= -22.5) {
-            return I18n.getInstance().getTranslation(p, "obelouix.direction.southeast").toUpperCase(Locale.ROOT);
+            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.southeast"));
         }
         return "error";
     }

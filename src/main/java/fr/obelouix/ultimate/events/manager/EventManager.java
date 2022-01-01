@@ -4,6 +4,7 @@ import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.coordinates.Coordinates;
 import fr.obelouix.ultimate.data.PlayerData;
+import fr.obelouix.ultimate.events.AnvilEvents;
 import fr.obelouix.ultimate.events.ReloadDetector;
 import fr.obelouix.ultimate.events.ServerListEvent;
 import fr.obelouix.ultimate.events.WitherBlockDamageEvent;
@@ -25,6 +26,10 @@ public class EventManager {
             registerEvent(new WitherBlockDamageEvent());
         }
         registerEvent(new Coordinates());
+        if (Config.isIsAnvilInfiniteRepairEnabled()) {
+            registerEvent(new AnvilEvents());
+        }
+
 /*        registerEvent(new AdminInventory());
         registerEvent(new CustomGoals());*/
     }
