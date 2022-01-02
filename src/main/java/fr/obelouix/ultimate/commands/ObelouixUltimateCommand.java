@@ -58,6 +58,9 @@ public class ObelouixUltimateCommand {
                 if (Config.isConfigReloaded()) {
                     MessageSender.sendMessage(sender, Component.text(i18n.getTranslation(sender, "obelouix.command.obelouixultimate.reload"))
                             .color(NamedTextColor.AQUA));
+                    // Temporary will be modified later
+                    MessageSender.broadcast(Component.text("[Obelouix Ultimate Plugin] ", NamedTextColor.GREEN)
+                            .append(Component.text(" Le plugin a été rechargé, pour réactiver la barre de coordonnée (si elle ne fonctionne plus), 1 SEUL joueur doit déco reco", NamedTextColor.RED)));
                 } else {
                     MessageSender.sendMessage(sender, Component.text(i18n.getTranslation(sender, "obelouix.command.obelouixultimate.reload.failed"))
                             .color(NamedTextColor.DARK_RED));
