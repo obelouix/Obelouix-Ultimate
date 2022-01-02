@@ -55,6 +55,8 @@ repositories {
     // EssentialsX
     maven("https://repo.essentialsx.net/snapshots/")
     maven("https://repo.essentialsx.net/releases/")
+    // fren_gor
+    maven("https://nexus.frengor.com/repository/public/")
 
 }
 
@@ -103,6 +105,8 @@ dependencies {
     compileOnly("us.dynmap:dynmap-api:3.2-beta-1")
     //compileOnly("us.dynmap:dynmap-core:3.0-SNAPSHOT")
     //compileOnly("us.dynmap:dynmap-bukkit:3.0-SNAPSHOT")
+
+    implementation("com.frengor:ultimateadvancementapi:2.0.5")
 }
 
 tasks {
@@ -150,6 +154,7 @@ tasks {
         reloc("org.intellij")
         reloc("org.jetbrains")
         reloc("org.spongepowered")
+        reloc("com.fren_gor.ultimateAdvancementAPI")
     }
 }
 
