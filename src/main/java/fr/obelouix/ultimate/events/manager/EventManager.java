@@ -8,6 +8,8 @@ import fr.obelouix.ultimate.events.AnvilEvents;
 import fr.obelouix.ultimate.events.ReloadDetector;
 import fr.obelouix.ultimate.events.ServerListEvent;
 import fr.obelouix.ultimate.events.WitherBlockDamageEvent;
+import fr.obelouix.ultimate.fastleafdecay.FastLeafDecay;
+import fr.obelouix.ultimate.recipes.RecipeDiscoverer;
 import org.bukkit.event.Listener;
 
 public class EventManager {
@@ -26,9 +28,15 @@ public class EventManager {
             registerEvent(new WitherBlockDamageEvent());
         }
         registerEvent(new Coordinates());
-        if (Config.isIsAnvilInfiniteRepairEnabled()) {
+        if (Config.isAnvilInfiniteRepairEnabled()) {
             registerEvent(new AnvilEvents());
         }
+
+        if (Config.isFastLeafDecayEnabled()) {
+            registerEvent(new FastLeafDecay());
+        }
+
+        registerEvent(new RecipeDiscoverer());
 
 /*        registerEvent(new AdminInventory());
         registerEvent(new CustomGoals());*/
