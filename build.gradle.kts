@@ -106,7 +106,8 @@ dependencies {
     //compileOnly("us.dynmap:dynmap-core:3.0-SNAPSHOT")
     //compileOnly("us.dynmap:dynmap-bukkit:3.0-SNAPSHOT")
 
-    implementation("com.frengor:ultimateadvancementapi:2.0.5")
+    //UltimateAdvancementAPI
+    implementation("com.frengor:ultimateadvancementapi-shadeable:2.0.5")
 }
 
 tasks {
