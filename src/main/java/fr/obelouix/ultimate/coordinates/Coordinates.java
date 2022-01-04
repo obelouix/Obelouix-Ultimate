@@ -39,7 +39,7 @@ public class Coordinates implements Listener {
                         root = playerFile.load();
                         if (!root.node("language").empty()) {
 
-                            Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
+                            final Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
                                     .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
                                     .append(Component.text(" Y: ", NamedTextColor.GREEN))
                                     .append(Component.text(player.getLocation().getBlockY(), NamedTextColor.WHITE))

@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +26,13 @@ public class MessageSender {
      * @see Audience#sendMessage(Component)
      */
     public static void sendMessage(@NotNull CommandSender sender, Component message) {
-        final Audience audience = Audience.audience(Objects.requireNonNull(Bukkit.getPlayer(sender.getName())));
+        final Audience audience;
+        if (sender instanceof Player player)
+            audience = Audience.audience(Objects.requireNonNull(Bukkit.getPlayer(player.getName())));
+        else {
+            ConsoleCommandSender consoleCommandSender = (ConsoleCommandSender) sender;
+            audience = Audience.audience(consoleCommandSender);
+        }
         audience.sendMessage(message);
     }
 

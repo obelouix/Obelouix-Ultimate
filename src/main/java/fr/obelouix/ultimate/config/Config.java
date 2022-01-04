@@ -37,6 +37,7 @@ public class Config {
     private static boolean dynmapWorldGuardEnabled = false;
     private static String dynmapWorldGuardLayer = "";
     private static boolean isAnvilInfiniteRepairEnabled = false;
+    private static boolean isFastLeafDecayEnabled = false;
 
     public static void loadConfig() {
         try {
@@ -98,6 +99,7 @@ public class Config {
         disableWitherBlockDamage = root.node("protection", "explosions", "wither", "disable-block-damage").getBoolean();
         showWitherSkullExplosionsParticles = root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").getBoolean();
         serverInMaintenance = root.node("maintenance").getBoolean();
+        isFastLeafDecayEnabled = root.node("fast-leaf-decay", "enabled").getBoolean();
         plugin.getLogger().info("Configuration loaded");
 
     }
@@ -148,7 +150,7 @@ public class Config {
                 root.node("dynmap", "modules", "structures", "enabled").set(Boolean.TRUE);
                 root.node("dynmap", "modules", "structures", "layer_name").set("Structures");
 
-                for (String structureType : StructureType.getStructureTypes().keySet()) {
+                for (final String structureType : StructureType.getStructureTypes().keySet()) {
                     root.node("dynmap", "structures").act(n -> {
                         n.node(structureType, "show").set(Boolean.TRUE);
                         n.node(structureType, "displayname").set(structureType.replaceAll("_", " "));
@@ -203,6 +205,7 @@ public class Config {
             });*/
 
             root.node("anvil", "infinite-repair").set(Boolean.TRUE);
+            root.node("fast-leaf-decay", "enabled").set(Boolean.TRUE);
 
             save(root);
         }
@@ -243,6 +246,10 @@ public class Config {
 
         if (root.node("anvil", "infinite-repair").empty()) {
             root.node("anvil", "infinite-repair").set(Boolean.TRUE);
+        }
+
+        if (root.node("fast-leaf-decay", "enabled").empty()) {
+            root.node("fast-leaf-decay", "enabled").set(Boolean.TRUE);
         }
 
         save(root);
@@ -310,7 +317,11 @@ public class Config {
         return dynmapWorldGuardLayer;
     }
 
-    public static boolean isIsAnvilInfiniteRepairEnabled() {
+    public static boolean isFastLeafDecayEnabled() {
+        return isFastLeafDecayEnabled;
+    }
+
+    public static boolean isAnvilInfiniteRepairEnabled() {
         return isAnvilInfiniteRepairEnabled;
     }
 }

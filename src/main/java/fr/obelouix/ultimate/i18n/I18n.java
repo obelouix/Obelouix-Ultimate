@@ -1,7 +1,6 @@
 package fr.obelouix.ultimate.i18n;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.data.PlayerData;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -38,7 +37,6 @@ public class I18n {
      * @return the @param message
      */
     public String getTranslation(CommandSender commandSender, String message) {
-        final PlayerData playerData = new PlayerData();
         ResourceBundle playerMessages;
         if (commandSender instanceof Player) {
             CommentedConfigurationNode root = null;

@@ -1,11 +1,14 @@
 package fr.obelouix.ultimate;
 
 import co.aikar.timings.lib.TimingManager;
+import fr.obelouix.ultimate.api.UltimateAdvancementAPI;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.DataStorage;
 import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
+import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
+import fr.obelouix.ultimate.recipes.CustomFurnaceRecipes;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NonNls;
@@ -116,6 +119,9 @@ public class ObelouixUltimate extends JavaPlugin {
         new EventManager();
         // new EntityRegistry();
         DataStorage.setupStorage();
+        UltimateAdvancementAPI.init();
+        new CustomFurnaceRecipes();
+        new CustomCraftingTableRecipes();
     }
 
     public boolean isIsDynmapPresent() {
