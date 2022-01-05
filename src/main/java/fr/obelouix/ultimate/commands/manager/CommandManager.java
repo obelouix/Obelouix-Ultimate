@@ -46,7 +46,7 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
 
         if (this.queryCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
             this.registerBrigadier();
-            plugin.getLogger().info("Using Native Brigadier");
+            //plugin.getLogger().info("Using Native Brigadier");
             final CloudBrigadierManager<?, ?> brigadierManager = this.brigadierManager();
             if (brigadierManager != null) {
                 brigadierManager.setNativeNumberSuggestions(false);
@@ -54,7 +54,7 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
         }
 
         if (this.queryCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
-            plugin.getLogger().info("Registered Async Completions");
+            //plugin.getLogger().info("Registered Async Completions");
             this.registerAsynchronousCompletions();
         }
 
