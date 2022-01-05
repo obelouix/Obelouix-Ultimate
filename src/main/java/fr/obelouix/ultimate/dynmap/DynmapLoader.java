@@ -21,7 +21,8 @@ public class DynmapLoader implements Listener {
             @Override
             public void apiEnabled(DynmapCommonAPI dynmapCommonAPI) {
                 if (Config.isDynmapStructuresEnabled()) {
-                    new DynmapStructures(dynmapCommonAPI);
+                    plugin.getLogger().info("Dynmap Structures is disabled until a working fix is found as it cause a huge amoung of lag");
+                    //new DynmapStructures(dynmapCommonAPI);
                 }
                 if (plugin.isWorldGuardPresent() && Config.isDynmapWorldGuardEnabled()) {
                     new DynmapWorldGuard(dynmapCommonAPI);
