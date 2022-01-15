@@ -95,7 +95,7 @@ dependencies {
     compileOnly("net.essentialsx:EssentialsX:2.20.0-SNAPSHOT")
 
     // FAWE
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.0.0-SNAPSHOT")
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.0.0")
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.0.0-SNAPSHOT") { isTransitive = false }
 
     // WorldGuard
