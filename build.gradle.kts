@@ -3,7 +3,7 @@ import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 plugins {
     `java-library`
     idea //force Intellij to generate project file, cause i don't know why it refuse to import dependencies
-    id("io.papermc.paperweight.userdev") version "1.3.3"
+    id("io.papermc.paperweight.userdev") version "1.3.4"
     id("xyz.jpenilla.run-paper") version "1.0.6" // Adds runServer and runMojangMappedServer tasks for testing
     id("net.minecrell.plugin-yml.bukkit") version "0.5.1" // Generates plugin.yml
 
@@ -87,17 +87,17 @@ dependencies {
     implementation("org.spongepowered:configurate-hocon:4.1.2")
 
     // NBT API
-    implementation("de.tr7zw:item-nbt-api-plugin:2.9.0")
+    implementation("de.tr7zw:item-nbt-api-plugin:2.9.1")
 
     // ServerUtils
     compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.0")
 
     // EssentialsX
-    compileOnly("net.essentialsx:EssentialsX:2.19.3-SNAPSHOT")
+    compileOnly("net.essentialsx:EssentialsX:2.20.0-SNAPSHOT")
 
     // FAWE
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.0.0-SNAPSHOT")
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.0.0-SNAPSHOT") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.0.0")
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.0.2-SNAPSHOT") { isTransitive = false }
 
     // WorldGuard
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-20211230.194325-8")
