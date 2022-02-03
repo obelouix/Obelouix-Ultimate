@@ -49,8 +49,6 @@ repositories {
     maven("https://hub.spigotmc.org/nexus/content/groups/public/")
     // Mikeprimm's repo (Dynmap)
     maven("https://repo.mikeprimm.com")
-    // Intellectualsites (FAWE)
-    maven("https://mvn.intellectualsites.com/content/groups/public/")
     // FrankHeijden
     maven("https://repo.fvdh.dev/releases")
     // EssentialsX
@@ -107,8 +105,13 @@ dependencies {
     //compileOnly("us.dynmap:dynmap-core:3.0-SNAPSHOT")
     //compileOnly("us.dynmap:dynmap-bukkit:3.0-SNAPSHOT")
 
-    //UltimateAdvancementAPI
+    // UltimateAdvancementAPI
     implementation("com.frengor:ultimateadvancementapi-shadeable:2.0.5")
+
+    //PacketAPI Listener
+    implementation("org.inventivetalent.packetlistenerapi:api:3.9.9-SNAPSHOT")
+    // GlowAPI
+    implementation("com.github.InventivetalentDev:GlowAPI:1.5.2-SNAPSHOT")
 }
 
 tasks {
@@ -157,6 +160,8 @@ tasks {
         reloc("org.jetbrains")
         reloc("org.spongepowered")
         reloc("com.fren_gor.ultimateAdvancementAPI")
+        reloc("com.github.inventivetalentDev")
+        reloc("org.inventivetalent")
     }
 }
 
