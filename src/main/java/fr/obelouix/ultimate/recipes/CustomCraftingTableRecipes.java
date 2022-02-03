@@ -1,18 +1,20 @@
 package fr.obelouix.ultimate.recipes;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CustomCraftingTableRecipes {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
+    private static final List<Recipe> recipeList = new ArrayList<>();
 
     public CustomCraftingTableRecipes() {
         final HashMap<Character, ItemStack> repairableAnvilIngredients = new HashMap<>();
@@ -32,7 +34,11 @@ public class CustomCraftingTableRecipes {
     }
 
     private void register(ShapedRecipe shapedRecipe) {
-        plugin.getServer().addRecipe(shapedRecipe);
+        try {
+            plugin.getServer().addRecipe(shapedRecipe);
+        } catch (IllegalStateException ignored){
+
+        }
     }
 
 }

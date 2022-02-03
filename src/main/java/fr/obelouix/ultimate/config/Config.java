@@ -79,14 +79,16 @@ public class Config {
             dynmapStructuresEnabled = root.node("dynmap", "modules", "structures", "enabled").getBoolean();
 
             if (dynmapStructuresEnabled) {
-                dynmapStructuresLayerName = root.node("dynmap", "modules", "structures", "layer_name").getString();
+                dynmapStructuresEnabled = false;
+                plugin.getLogger().info("Dynmap Structures is disabled until the lag it cause is resolved");
+/*                dynmapStructuresLayerName = root.node("dynmap", "modules", "structures", "layer_name").getString();
 
                 for (final Object structure : root.node("dynmap", "structures").childrenMap().keySet()) {
                     dynmapStructureMap.put(
                             root.node("dynmap", "structures", structure, "displayname").getString(),
                             root.node("dynmap", "structures", structure, "show").getBoolean()
                     );
-                }
+                }*/
             }
 
             if (plugin.isWorldGuardPresent()) {

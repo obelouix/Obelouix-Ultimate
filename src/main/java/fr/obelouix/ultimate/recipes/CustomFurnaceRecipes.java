@@ -26,7 +26,11 @@ public class CustomFurnaceRecipes {
     }
 
     private void register(FurnaceRecipe furnaceRecipe) {
-        plugin.getServer().addRecipe(furnaceRecipe);
+        try{
+            plugin.getServer().addRecipe(furnaceRecipe);
+        } catch (IllegalStateException ignored){
+
+        }
     }
 
 }
