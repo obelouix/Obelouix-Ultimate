@@ -56,7 +56,6 @@ repositories {
     maven("https://repo.essentialsx.net/releases/")
     // fren_gor
     maven("https://nexus.frengor.com/repository/public/")
-
 }
 
 dependencies {
@@ -108,10 +107,12 @@ dependencies {
     // UltimateAdvancementAPI
     implementation("com.frengor:ultimateadvancementapi-shadeable:2.0.5")
 
+    implementation("org.bstats:bstats-bukkit:2.2.1")
+    implementation("org.inventivetalent:reflectionhelper:1.18.7-SNAPSHOT")
     //PacketAPI Listener
     implementation("org.inventivetalent.packetlistenerapi:api:3.9.9-SNAPSHOT")
     // GlowAPI
-    implementation("com.github.InventivetalentDev:GlowAPI:1.5.2-SNAPSHOT")
+    //implementation("com.github.InventivetalentDev:GlowAPI:master-SNAPSHOT")
 }
 
 tasks {
