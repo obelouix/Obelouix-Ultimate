@@ -86,7 +86,7 @@ dependencies {
     implementation("org.spongepowered:configurate-hocon:4.1.2")
 
     // NBT API
-    implementation("de.tr7zw:item-nbt-api-plugin:2.9.0")
+    implementation("de.tr7zw:item-nbt-api-plugin:2.9.1")
 
     // ServerUtils
     compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.0")
