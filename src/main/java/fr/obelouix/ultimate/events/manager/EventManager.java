@@ -4,10 +4,7 @@ import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.coordinates.Coordinates;
 import fr.obelouix.ultimate.data.PlayerData;
-import fr.obelouix.ultimate.events.AnvilEvents;
-import fr.obelouix.ultimate.events.ReloadDetector;
-import fr.obelouix.ultimate.events.ServerListEvent;
-import fr.obelouix.ultimate.events.WitherBlockDamageEvent;
+import fr.obelouix.ultimate.events.*;
 import fr.obelouix.ultimate.fastleafdecay.FastLeafDecay;
 import fr.obelouix.ultimate.recipes.RecipeDiscoverer;
 import org.bukkit.event.Listener;
@@ -23,7 +20,7 @@ public class EventManager {
                 registerEvent(new ChatEvent());
     }*/
         registerEvent(new ReloadDetector());
-//        registerEvent(new PlayerConnectionEvent());
+        registerEvent(new PlayerConnectionEvent());
         if (Config.isWitherBlockDamageDisabled()) {
             registerEvent(new WitherBlockDamageEvent());
         }

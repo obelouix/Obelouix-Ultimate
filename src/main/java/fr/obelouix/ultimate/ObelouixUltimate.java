@@ -5,6 +5,7 @@ import fr.obelouix.ultimate.api.UltimateAdvancementAPI;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.DataStorage;
+import fr.obelouix.ultimate.data.MultiverseMigrator;
 import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
 import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
@@ -101,6 +102,9 @@ public class ObelouixUltimate extends JavaPlugin {
         checkOfflineMode();
         instance = this;
         timingManager = TimingManager.of(this);
+
+        new MultiverseMigrator();
+
         LuckPermsUtils.checkForLuckPerms();
         if (isWorldGuardPresent()) {
             getLogger().info("Found WorldGuard");
