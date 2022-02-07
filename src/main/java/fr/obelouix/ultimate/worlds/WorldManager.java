@@ -4,12 +4,15 @@ import fr.obelouix.ultimate.ObelouixUltimate;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
 
 public class WorldManager {
 
@@ -56,6 +59,17 @@ public class WorldManager {
         } catch (ConfigurateException e) {
             e.printStackTrace();
         }
+    }
+
+    public static @NotNull Runnable unloadEmptyWorlds() {
+        return () -> {
+            for (World world : Bukkit.getWorlds()) {
+                if (world.getPlayerCount() == 0 && !Bukkit.getWorlds().get(0).equals(world)) {
+                    Bukkit.unloadWorld(world, true);
+                    plugin.getLogger().info("Unloaded chunks of world " + world.getName() + "(reason: no player currently in this world)");
+                }
+            }
+        };
     }
 
 }

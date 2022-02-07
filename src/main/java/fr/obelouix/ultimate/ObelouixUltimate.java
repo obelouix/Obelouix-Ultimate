@@ -12,6 +12,7 @@ import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
 import fr.obelouix.ultimate.recipes.CustomFurnaceRecipes;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import fr.obelouix.ultimate.worlds.WorldManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NonNls;
 
@@ -106,6 +107,7 @@ public class ObelouixUltimate extends JavaPlugin {
 
         new MultiverseMigrator();
         WorldManager.loadWorlds();
+        Bukkit.getServer().getScheduler().runTaskTimer(this, WorldManager.unloadEmptyWorlds(), 300, 1200);
 
         LuckPermsUtils.checkForLuckPerms();
         if (isWorldGuardPresent()) {
