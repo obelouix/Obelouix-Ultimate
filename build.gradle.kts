@@ -169,7 +169,7 @@ tasks {
 
 // Configure plugin.yml generation
 bukkit {
-    load = BukkitPluginDescription.PluginLoadOrder.STARTUP
+    load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     main = "fr.obelouix.ultimate.ObelouixUltimate"
     apiVersion = "1.18"
     authors = listOf("Obelouix")
