@@ -66,7 +66,7 @@ public class WorldManager {
             for (World world : Bukkit.getWorlds()) {
                 if (world.getPlayerCount() == 0 && !Bukkit.getWorlds().get(0).equals(world)) {
                     Bukkit.unloadWorld(world, true);
-                    plugin.getLogger().info("Unloaded chunks of world " + world.getName() + "(reason: no player currently in this world)");
+                    plugin.getLogger().info("Unloaded world '" + world.getName() + "' (reason: no player currently in this world)");
                 }
             }
         };
