@@ -38,6 +38,7 @@ public class Config {
     private static String dynmapWorldGuardLayer = "";
     private static boolean isAnvilInfiniteRepairEnabled = false;
     private static boolean isFastLeafDecayEnabled = false;
+    private static boolean unloadEmptyWorlds = false;
 
     public static void loadConfig() {
         try {
@@ -103,6 +104,8 @@ public class Config {
         serverInMaintenance = root.node("maintenance").getBoolean();
         isFastLeafDecayEnabled = root.node("fast-leaf-decay", "enabled").getBoolean();
         plugin.getLogger().info("Configuration loaded");
+
+        unloadEmptyWorlds = root.node("worlds", "unload_if_empty").getBoolean();
 
     }
 
@@ -208,7 +211,11 @@ public class Config {
 
             root.node("anvil", "infinite-repair").set(Boolean.TRUE);
             root.node("fast-leaf-decay", "enabled").set(Boolean.TRUE);
-
+            root.node("worlds", "unload_if_empty").set(Boolean.FALSE)
+                    .commentIfAbsent("""
+                            This allow the server to unload every world with no player in it
+                            (The main world from server.properties will never be unloaded)
+                            """);
             save(root);
         }
     }
@@ -224,7 +231,6 @@ public class Config {
     /**
      * add Missing entries in the configuration if the file exist
      *
-     * @throws SerializationException
      */
     private static void addMissingConfigs() throws SerializationException {
 
@@ -252,6 +258,14 @@ public class Config {
 
         if (root.node("fast-leaf-decay", "enabled").empty()) {
             root.node("fast-leaf-decay", "enabled").set(Boolean.TRUE);
+        }
+
+        if (root.node("worlds", "unload_if_empty").empty()) {
+            root.node("worlds", "unload_if_empty").set(Boolean.FALSE)
+                    .commentIfAbsent("""
+                            This allow the server to unload every world with no player in it
+                            (The main world from server.properties will never be unloaded)
+                            """);
         }
 
         save(root);
@@ -325,5 +339,9 @@ public class Config {
 
     public static boolean isAnvilInfiniteRepairEnabled() {
         return isAnvilInfiniteRepairEnabled;
+    }
+
+    public static boolean shouldUnloadEmptyWorlds() {
+        return unloadEmptyWorlds;
     }
 }

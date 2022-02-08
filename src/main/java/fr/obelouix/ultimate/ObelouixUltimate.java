@@ -107,7 +107,9 @@ public class ObelouixUltimate extends JavaPlugin {
 
         new MultiverseMigrator();
         WorldManager.loadWorlds();
-        Bukkit.getServer().getScheduler().runTaskTimer(this, WorldManager.unloadEmptyWorlds(), 300, 1200);
+        if (Config.shouldUnloadEmptyWorlds()) {
+            Bukkit.getServer().getScheduler().runTaskTimer(this, WorldManager.unloadEmptyWorlds(), 300, 1200);
+        }
 
         LuckPermsUtils.checkForLuckPerms();
         if (isWorldGuardPresent()) {
