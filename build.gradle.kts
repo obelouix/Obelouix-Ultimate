@@ -77,7 +77,7 @@ dependencies {
 
     // Aikar's Timing
     implementation("co.aikar:minecraft-timings:1.0.4")
-    compileOnly("net.luckperms:api:5.3")
+    compileOnly("net.luckperms:api:5.4")
 
     // Sponge Configurate
     implementation("org.spongepowered:configurate-core:4.1.2")
