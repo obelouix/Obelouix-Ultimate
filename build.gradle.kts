@@ -88,7 +88,7 @@ dependencies {
     implementation("de.tr7zw:item-nbt-api-plugin:2.9.1")
 
     // ServerUtils
-    compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.0")
+    compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.1")
 
     // EssentialsX
     compileOnly("net.essentialsx:EssentialsX:2.20.0-SNAPSHOT")
