@@ -85,7 +85,7 @@ dependencies {
     implementation("org.spongepowered:configurate-yaml:4.1.2")
 
     // NBT API
-    implementation("de.tr7zw:item-nbt-api-plugin:2.9.1")
+    implementation("de.tr7zw:item-nbt-api-plugin:2.9.2")
 
     // ServerUtils
     compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.0")
