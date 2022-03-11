@@ -95,7 +95,7 @@ dependencies {
 
     // FAWE
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.0.1")
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.0.2-SNAPSHOT") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.1.1-SNAPSHOT") { isTransitive = false }
 
     // WorldGuard
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-20211230.194325-8")
