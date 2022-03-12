@@ -102,8 +102,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-20211230.194325-8")
 
     // Dynmap
-    compileOnly("us.dynmap:dynmap-api:3.4-beta-2")
-    //compileOnly("us.dynmap:dynmap-core:3.0-SNAPSHOT")
+    compileOnly("us.dynmap:dynmap-api:3.1-beta-2")
     //compileOnly("us.dynmap:dynmap-bukkit:3.0-SNAPSHOT")
 
     // UltimateAdvancementAPI
@@ -120,7 +119,7 @@ dependencies {
 tasks {
 
     runServer {
-        minecraftVersion("1.18.1")
+        minecraftVersion("1.18.2")
     }
     // Configure reobfJar to run when invoking the build task
     build {
