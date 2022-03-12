@@ -59,7 +59,7 @@ repositories {
 }
 
 dependencies {
-    paperDevBundle("1.18.1-R0.1-SNAPSHOT")
+    paperDevBundle("1.18.2-R0.1-SNAPSHOT")
     // paperweightDevBundle("com.example.paperfork", "1.18-R0.1-SNAPSHOT")
 
     // You will need to manually specify the full dependency if using the groovy gradle dsl
@@ -72,8 +72,8 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
 
     // Cloud Command Framework
-    implementation("cloud.commandframework", "cloud-paper", "1.6.1")
-    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.6.1")
+    implementation("cloud.commandframework", "cloud-paper", "1.6.2")
+    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.6.2")
 
     // Aikar's Timing
     implementation("co.aikar:minecraft-timings:1.0.4")
@@ -102,12 +102,12 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-20211230.194325-8")
 
     // Dynmap
-    compileOnly("us.dynmap:dynmap-api:3.2-beta-1")
+    compileOnly("us.dynmap:dynmap-api:3.4-beta-2")
     //compileOnly("us.dynmap:dynmap-core:3.0-SNAPSHOT")
     //compileOnly("us.dynmap:dynmap-bukkit:3.0-SNAPSHOT")
 
     // UltimateAdvancementAPI
-    implementation("com.frengor:ultimateadvancementapi-shadeable:2.0.5")
+    implementation("com.frengor:ultimateadvancementapi-shadeable:2.1.2")
 
     implementation("org.bstats:bstats-bukkit:3.0.0")
     implementation("org.inventivetalent:reflectionhelper:1.18.7-SNAPSHOT")
@@ -172,7 +172,7 @@ tasks {
 bukkit {
     load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     main = "fr.obelouix.ultimate.ObelouixUltimate"
-    apiVersion = "1.18"
+    apiVersion = "1.18.2"
     authors = listOf("Obelouix")
     softDepend = listOf("dynmap", "worldguard")
 }
