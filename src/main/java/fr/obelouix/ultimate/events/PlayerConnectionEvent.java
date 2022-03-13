@@ -32,9 +32,9 @@ public class PlayerConnectionEvent implements Listener {
     /**
      * Just for testing purposes
      */
-    @EventHandler
+    /*@EventHandler
     public void onPlayerMove(final PlayerMoveEvent playerMoveEvent){
         Bukkit.getScheduler().runTaskLater(plugin, () -> GlowAPI.setGlowing(playerMoveEvent.getPlayer(), GlowAPI.Color.WHITE, playerMoveEvent.getPlayer()), 10);
-    }
+    }*/
 
 }
