@@ -109,7 +109,7 @@ dependencies {
     implementation("com.frengor:ultimateadvancementapi-shadeable:2.1.2")
 
     implementation("org.bstats:bstats-bukkit:3.0.0")
-    implementation("org.inventivetalent:reflectionhelper:1.18.7-SNAPSHOT")
+    implementation("org.inventivetalent:reflectionhelper:1.18.9-SNAPSHOT")
     //PacketAPI Listener
     implementation("org.inventivetalent.packetlistenerapi:api:3.9.9-SNAPSHOT")
     // GlowAPI
