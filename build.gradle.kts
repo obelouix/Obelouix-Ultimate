@@ -111,7 +111,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.0")
     implementation("org.inventivetalent:reflectionhelper:1.18.7-SNAPSHOT")
     //PacketAPI Listener
-    implementation("org.inventivetalent.packetlistenerapi:api:3.9.9-SNAPSHOT")
+    implementation("org.inventivetalent.packetlistenerapi:api:3.9.10-SNAPSHOT")
     // GlowAPI
     //implementation("com.github.InventivetalentDev:GlowAPI:master-SNAPSHOT")
 }
