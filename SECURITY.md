@@ -2,8 +2,8 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+Only the last version of Paper or Paper forks will be supported
+
 
 | Version | Supported          |
 | ------- | ------------------ |
