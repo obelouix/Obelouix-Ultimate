@@ -6,8 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-import java.io.IOException;
-
 public class PlayerConnectionEvent implements Listener {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
@@ -17,7 +15,7 @@ public class PlayerConnectionEvent implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerLoginEvent event) throws IOException {
+    public void onPlayerJoin(PlayerLoginEvent event) {
         final Player player = event.getPlayer();
 /*
         if (!player.hasPermission("obelouix.maintenance.bypass")) {

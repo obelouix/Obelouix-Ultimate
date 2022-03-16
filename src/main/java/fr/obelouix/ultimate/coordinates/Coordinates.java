@@ -3,6 +3,7 @@ package fr.obelouix.ultimate.coordinates;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.config.Config;
+import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.i18n.I18n;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -32,7 +33,7 @@ public class Coordinates implements Listener {
             @Override
             public void run() {
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    if (!Config.getCoordinatesBlacklist().contains(player.getWorld())) {
+                    if (!Config.getCoordinatesBlacklist().contains(player.getWorld()) && PlayerData.isShowCoordinates(player)) {
                         final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
                                 .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getName() + ".conf"))
                                 .build();

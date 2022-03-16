@@ -42,7 +42,7 @@ public class Config {
     private static int maxPing;
     private static boolean nightSkipSystemEnabled;
     private static boolean EssentialsAFKHook;
-    private static Set<World> coordinatesBlacklist = new HashSet<>();
+    private static final Set<World> coordinatesBlacklist = new HashSet<>();
 
     public static void loadConfig() {
         try {
