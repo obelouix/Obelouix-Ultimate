@@ -21,7 +21,7 @@ public class CoordsCommand extends BaseCommand {
                         .build());
     }
 
-    private void execute(@NonNull CommandContext<CommandSender> context) {
+    protected void execute(@NonNull CommandContext<CommandSender> context) {
         final CommandSender sender = context.getSender();
         if ((sender instanceof Player player) && IPermission.hasPermission(sender, "obelouix.command.coords")) {
             boolean showCoords = PlayerData.isShowCoordinates(player);
