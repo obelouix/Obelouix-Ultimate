@@ -13,7 +13,6 @@ public class AdminCommand extends BaseCommand {
     public AdminCommand() {
     }
 
-    @Override
     public void register() {
         CommandManager.getInstance().command(
                 CommandManager.getInstance()
@@ -22,7 +21,6 @@ public class AdminCommand extends BaseCommand {
                         .build());
     }
 
-    @Override
     protected void execute(@NonNull CommandContext<CommandSender> context) {
         final CommandSender sender = context.getSender();
         if (sender instanceof Player player && IPermission.hasPermission(sender, "obelouix.command.admin")) {
