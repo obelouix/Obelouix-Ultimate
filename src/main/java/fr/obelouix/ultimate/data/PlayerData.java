@@ -25,7 +25,7 @@ public class PlayerData implements Listener {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     private static String playerLocale;
-    private static Map<Player, Boolean> showCoordinates = new HashMap<>();
+    private static final Map<Player, Boolean> showCoordinates = new HashMap<>();
 
     /**
      * This method allow to get the client locale of a player
@@ -38,6 +38,21 @@ public class PlayerData implements Listener {
 
     public static boolean isShowCoordinates(Player player) {
         return showCoordinates.get(player);
+    }
+
+    public static void setShowCoordinates(Player player, boolean show) {
+        showCoordinates.replace(player, show);
+        final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
+                .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getName() + ".conf"))
+                .build();
+        try {
+            final CommentedConfigurationNode root = playerFile.load();
+            root.node("show-coordinates").set(show);
+            playerFile.save(root);
+        } catch (ConfigurateException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @EventHandler

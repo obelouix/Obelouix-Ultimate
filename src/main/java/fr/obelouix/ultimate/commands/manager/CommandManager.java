@@ -57,8 +57,8 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
             //plugin.getLogger().info("Registered Async Completions");
             this.registerAsynchronousCompletions();
         }
-
         new ObelouixUltimateCommand().register();
+        new CoordsCommand().register();
 
         new MinecraftExceptionHandler<CommandSender>()
                 .withDefaultHandlers()
