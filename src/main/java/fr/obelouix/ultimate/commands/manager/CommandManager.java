@@ -62,7 +62,8 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
                 new ObelouixUltimateCommand(),
                 new CoordsCommand(),
                 new AdminCommand(),
-                new DayCommand()
+                new DayCommand(),
+                new MiddayCommand()
         ).forEach(BaseCommand::register);
 
 
