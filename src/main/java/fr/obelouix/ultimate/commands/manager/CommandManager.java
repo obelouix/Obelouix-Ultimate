@@ -17,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.function.Function;
 
 public class CommandManager extends PaperCommandManager<CommandSender> {
@@ -57,10 +58,13 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
             //plugin.getLogger().info("Registered Async Completions");
             this.registerAsynchronousCompletions();
         }
-        new ObelouixUltimateCommand().register();
-        new CoordsCommand().register();
-        new AdminCommand().register();
-        new DayCommand().register();
+        List.of(
+                new ObelouixUltimateCommand(),
+                new CoordsCommand(),
+                new AdminCommand(),
+                new DayCommand()
+        ).forEach(BaseCommand::register);
+
 
         new MinecraftExceptionHandler<CommandSender>()
                 .withDefaultHandlers()
@@ -74,6 +78,7 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
         //   registerCommand(new MiddayCommand("midday"), plugin);
         registerCommand(new PluginCommand("plugins"), plugin);
         registerCommand(new MaintenanceCommand("maintenance"), plugin);
+
     }
 
     /**
