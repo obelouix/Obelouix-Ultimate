@@ -1,34 +1,33 @@
 package fr.obelouix.ultimate.commands;
 
+import cloud.commandframework.arguments.standard.StringArgument;
+import cloud.commandframework.context.CommandContext;
+import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
+import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.audience.MessageSender;
-import fr.obelouix.ultimate.i18n.I18n;
+import fr.obelouix.ultimate.commands.manager.BaseCommand;
+import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.messages.PluginMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class DayCommand extends BukkitCommand {
+public class DayCommand extends BaseCommand {
 
-    private static final I18n i18n = I18n.getInstance();
     private static Component message;
     private static CommandSender sender;
 
-    public DayCommand(String name) {
-        super(name);
-        this.setUsage("/day [world]");
-    }
 
-    @Override
+    /*@Override
     public boolean execute(@NotNull CommandSender commandSender, @NotNull String label, @NotNull String[] args) {
         sender = commandSender;
         if (commandSender instanceof Player player && IPermission.hasPermission(commandSender, "obelouix.command.day")) {
@@ -86,5 +85,69 @@ public class DayCommand extends BukkitCommand {
             message = PluginMessages.nonExistentWorldMessage(sender, world);
         }
 
+    }*/
+
+    @Override
+    public void register() {
+        CommandManager.getInstance().command(
+                        CommandManager.getInstance()
+                                .commandBuilder("day")
+                                .argument(StringArgument.optional("world"))
+                                .handler(this::execute)
+                                .build())
+                .setCommandSuggestionProcessor(this::suggestions);
     }
+
+    private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
+        final CommandSender sender = commandSenderCommandPreprocessingContext.getCommandContext().getSender();
+        if (sender.hasPermission("obelouix.command.day")) {
+            Bukkit.getWorlds().forEach(world -> {
+                if (world.getEnvironment().equals(World.Environment.NORMAL)) {
+                    strings.add(world.getName());
+                }
+            });
+        }
+        return strings;
+    }
+
+    @Override
+    protected void execute(@NonNull CommandContext<CommandSender> context) {
+        final CommandSender sender = context.getSender();
+        String world = null;
+        if (IPermission.hasPermission(sender, "obelouix.command.day")) {
+            if (context.getOptional("world").isPresent()) {
+                world = (String) context.getOptional("world").get();
+            }
+            if (world != null) {
+                if (Bukkit.getWorld(world) != null) {
+                    setDay(world);
+                    MessageSender.sendMessage(sender, PluginMessages.playerTimeMessage(sender, world, 0));
+                }
+            } else {
+                if (sender instanceof Player player) {
+                    setDay(player.getWorld().getName());
+                    MessageSender.sendMessage(player, PluginMessages.playerTimeMessage(player, player.getWorld().getName(), 0));
+
+                } else {
+                    MessageSender.sendMessage(sender,
+                            Component.text(i18n.getTranslation(sender, "obelouix.command.day.console.too_few_arguments"), NamedTextColor.DARK_RED));
+                }
+            }
+        }
+    }
+
+    /**
+     * We can't set the day asynchronously, so we need to run this method
+     *
+     * @param world world name
+     */
+    private void setDay(String world) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Objects.requireNonNull(Bukkit.getWorld(world)).setTime(0);
+            }
+        }.runTask(ObelouixUltimate.getInstance());
+    }
+
 }

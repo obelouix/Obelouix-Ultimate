@@ -54,7 +54,7 @@ public class NightCommand extends BukkitCommand {
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
         if (sender.hasPermission("obelouix.command.night") && args.length == 1) {
-            return DayCommand.getNormalWorlds();
+            return null;//DayCommand.getNormalWorlds();
         }
         return super.tabComplete(sender, alias, args);
     }
@@ -63,7 +63,7 @@ public class NightCommand extends BukkitCommand {
         if (Bukkit.getWorld(world) != null) {
             Objects.requireNonNull(Bukkit.getWorld(world)).setTime(13188);
             if (sender instanceof Player player) {
-                message = PluginMessages.playerTimeMessage(player, 13188);
+                message = PluginMessages.playerTimeMessage(player, world, 13188);
             } else {
                 message = PluginMessages.playerTimeMessage(sender, world, 13188);
             }
