@@ -63,7 +63,8 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
                 new CoordsCommand(),
                 new AdminCommand(),
                 new DayCommand(),
-                new MiddayCommand()
+                new MiddayCommand(),
+                new NightCommand()
         ).forEach(BaseCommand::register);
 
 
