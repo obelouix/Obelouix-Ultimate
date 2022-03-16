@@ -58,6 +58,8 @@ public class DayCommand extends BaseCommand {
                 if (Bukkit.getWorld(world) != null) {
                     setDay(world);
                     MessageSender.sendMessage(sender, PluginMessages.playerTimeMessage(sender, world, 0));
+                } else {
+                    MessageSender.sendMessage(sender, PluginMessages.nonExistentWorldMessage(sender, world));
                 }
             } else {
                 if (sender instanceof Player player) {
