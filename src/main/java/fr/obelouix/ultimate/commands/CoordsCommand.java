@@ -1,7 +1,9 @@
-package fr.obelouix.ultimate.commands.manager;
+package fr.obelouix.ultimate.commands;
 
 import cloud.commandframework.context.CommandContext;
 import fr.obelouix.ultimate.audience.MessageSender;
+import fr.obelouix.ultimate.commands.manager.BaseCommand;
+import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.permissions.IPermission;
 import net.kyori.adventure.text.Component;
