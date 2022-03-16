@@ -16,7 +16,6 @@ public abstract class BaseCommand {
 
     /**
      * Method to tell what the command should do
-     *
      * @param context context of the command
      */
     protected abstract void execute(@NonNull CommandContext<CommandSender> context);

@@ -31,7 +31,7 @@ public class MessageSender {
         if (sender instanceof Player player)
             audience = Audience.audience(Objects.requireNonNull(Bukkit.getPlayer(player.getName())));
         else {
-            ConsoleCommandSender consoleCommandSender = (ConsoleCommandSender) sender;
+            final ConsoleCommandSender consoleCommandSender = (ConsoleCommandSender) sender;
             audience = Audience.audience(consoleCommandSender);
         }
         audience.sendMessage(message);
@@ -57,7 +57,7 @@ public class MessageSender {
      */
     public static void broadcast(String permission, Component message) {
         final Collection<Player> authorizedPlayers = new ArrayList<>(Collections.emptyList());
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             if (player.hasPermission(permission)) authorizedPlayers.add(player);
         }
         final Audience audience = Audience.audience(authorizedPlayers);
@@ -119,7 +119,7 @@ public class MessageSender {
      */
     public static void showBossBar(String permission, BossBar bossBar) {
         final Collection<Player> authorizedPlayers = new ArrayList<>(Collections.emptyList());
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             if (player.hasPermission(permission)) authorizedPlayers.add(player);
         }
         final Audience audience = Audience.audience(authorizedPlayers);
@@ -135,7 +135,7 @@ public class MessageSender {
      */
     public static void hideBossBar(String permission, BossBar bossBar) {
         final Collection<Player> authorizedPlayers = new ArrayList<>(Collections.emptyList());
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             if (player.hasPermission(permission)) authorizedPlayers.add(player);
         }
         final Audience audience = Audience.audience(authorizedPlayers);
@@ -195,7 +195,7 @@ public class MessageSender {
      */
     public static void showTitle(String permission, Title title) {
         final Collection<Player> authorizedPlayers = new ArrayList<>(Collections.emptyList());
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             if (player.hasPermission(permission)) authorizedPlayers.add(player);
         }
         final Audience audience = Audience.audience(authorizedPlayers);
@@ -210,7 +210,7 @@ public class MessageSender {
      */
     public static void clearTitle(String permission) {
         final Collection<Player> authorizedPlayers = new ArrayList<>(Collections.emptyList());
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             if (player.hasPermission(permission)) authorizedPlayers.add(player);
         }
         final Audience audience = Audience.audience(authorizedPlayers);
@@ -236,10 +236,10 @@ public class MessageSender {
      */
     public static void resetTitle(String permission) {
         final Collection<Player> authorizedPlayers = new ArrayList<>(Collections.emptyList());
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             if (player.hasPermission(permission)) authorizedPlayers.add(player);
         }
-        Audience audience = Audience.audience(authorizedPlayers);
+        final Audience audience = Audience.audience(authorizedPlayers);
         audience.resetTitle();
     }
 
@@ -285,7 +285,7 @@ public class MessageSender {
      */
     public static void openBook(String permission, Book book) {
         final Collection<Player> authorizedPlayers = new ArrayList<>(Collections.emptyList());
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             if (player.hasPermission(permission)) authorizedPlayers.add(player);
         }
         final Audience audience = Audience.audience(authorizedPlayers);
@@ -324,7 +324,7 @@ public class MessageSender {
      */
     public static void sendActionBar(String permission, Component component) {
         final Collection<Player> authorizedPlayers = new ArrayList<>(Collections.emptyList());
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (final Player player : Bukkit.getOnlinePlayers()) {
             if (player.hasPermission(permission)) authorizedPlayers.add(player);
         }
         final Audience audience = Audience.audience(authorizedPlayers);
