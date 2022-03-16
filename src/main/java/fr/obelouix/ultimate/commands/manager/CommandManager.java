@@ -59,6 +59,7 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
         }
         new ObelouixUltimateCommand().register();
         new CoordsCommand().register();
+        new AdminCommand().register();
 
         new MinecraftExceptionHandler<CommandSender>()
                 .withDefaultHandlers()
@@ -71,7 +72,6 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
         registerCommand(new NightCommand("night"), plugin);
         registerCommand(new MiddayCommand("midday"), plugin);
         registerCommand(new PluginCommand("plugins"), plugin);
-        registerCommand(new AdminCommand("admin"), plugin);
         registerCommand(new MaintenanceCommand("maintenance"), plugin);
     }
 

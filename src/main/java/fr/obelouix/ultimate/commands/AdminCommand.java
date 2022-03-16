@@ -1,22 +1,32 @@
 package fr.obelouix.ultimate.commands;
 
+import cloud.commandframework.context.CommandContext;
+import fr.obelouix.ultimate.commands.manager.BaseCommand;
+import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.gui.AdminInventory;
 import fr.obelouix.ultimate.permissions.IPermission;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class AdminCommand extends BukkitCommand {
-    public AdminCommand(String name) {
-        super(name);
+public class AdminCommand extends BaseCommand {
+    public AdminCommand() {
     }
 
     @Override
-    public boolean execute(@NotNull CommandSender commandSender, @NotNull String string, @NotNull String[] strings) {
-        if (commandSender instanceof Player player && IPermission.hasPermission(commandSender, "obelouix.command.admin")) {
+    public void register() {
+        CommandManager.getInstance().command(
+                CommandManager.getInstance()
+                        .commandBuilder("admin")
+                        .handler(this::execute)
+                        .build());
+    }
+
+    @Override
+    protected void execute(@NonNull CommandContext<CommandSender> context) {
+        final CommandSender sender = context.getSender();
+        if (sender instanceof Player player && IPermission.hasPermission(sender, "obelouix.command.admin")) {
             new AdminInventory(player);
         }
-        return false;
     }
 }
