@@ -92,6 +92,9 @@ dependencies {
 
     // EssentialsX
     compileOnly("net.essentialsx:EssentialsX:2.20.0-SNAPSHOT")
+    compileOnly("net.essentialsx:EssentialsXSpawn:2.20.0-SNAPSHOT")
+    compileOnly("net.essentialsx:EssentialsXProtect:2.20.0-SNAPSHOT")
+    compileOnly("net.essentialsx:EssentialsXDiscord:2.20.0-SNAPSHOT")
 
     // FAWE
 
@@ -171,7 +174,7 @@ tasks {
 bukkit {
     load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     main = "fr.obelouix.ultimate.ObelouixUltimate"
-    apiVersion = "1.18.2"
+    apiVersion = "1.18"
     authors = listOf("Obelouix")
     softDepend = listOf("dynmap", "worldguard")
 }

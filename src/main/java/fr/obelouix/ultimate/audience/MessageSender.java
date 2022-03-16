@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -329,4 +330,17 @@ public class MessageSender {
         final Audience audience = Audience.audience(authorizedPlayers);
         audience.sendActionBar(component);
     }
+
+    /**
+     * This allow you to kick a player with a message in his language
+     * (this message must be defined in language properties files)
+     *
+     * @param player    the player to kick
+     * @param component the component to send to the player
+     * @param reason    the kick reason
+     */
+    public static void sendKickMessage(final Player player, final Component component, final PlayerKickEvent.Cause reason) {
+        player.kick(component, reason);
+    }
+
 }

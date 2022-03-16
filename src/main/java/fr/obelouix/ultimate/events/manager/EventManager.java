@@ -35,6 +35,10 @@ public class EventManager {
 
         registerEvent(new RecipeDiscoverer());
 
+        if (Config.isDisconnectOnHighPing()) registerEvent(new PingChecker());
+
+        if (Config.isNightSkipSystemEnabled()) registerEvent(new NightSkipEvent());
+
 /*        registerEvent(new AdminInventory());
         registerEvent(new CustomGoals());*/
     }

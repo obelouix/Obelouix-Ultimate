@@ -54,7 +54,9 @@ public class PlayerData implements Listener {
             if (root.node("language").getString() == null || !Objects.requireNonNull(root.node("language").getString()).equalsIgnoreCase(playerLocale)) {
                 root.node("language").set(playerLocale);
             }
-            // root.node("IP").set(Objects.requireNonNull(event.getPlayer().getAddress()));
+            if (root.node("show-coordinates").empty()) {
+                root.node("show-coordinates").set(true);
+            }
             playerFile.save(root);
         }
 
