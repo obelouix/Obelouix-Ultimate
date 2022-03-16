@@ -27,10 +27,6 @@ public class Coordinates implements Listener {
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
 
     public @NotNull BukkitTask runTask() {
-        if (!Config.getCoordinatesBlacklist().isEmpty()) {
-            plugin.getLogger().info("Coordinates is disabled in the following world(s): "
-                    + Config.getCoordinatesBlacklist());
-        }
         return new BukkitRunnable() {
 
             @Override

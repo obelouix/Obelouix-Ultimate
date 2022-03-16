@@ -42,7 +42,7 @@ public class Config {
     private static int maxPing;
     private static boolean nightSkipSystemEnabled;
     private static boolean EssentialsAFKHook;
-    private static Set<World> coordinatesBlacklist;
+    private static Set<World> coordinatesBlacklist = new HashSet<>();
 
     public static void loadConfig() {
         try {
@@ -128,15 +128,16 @@ public class Config {
             } catch (SerializationException e) {
                 e.printStackTrace();
             }
-
-            try {
-                Objects.requireNonNull(root.node("coordinates", "world", "blacklist").getList(String.class)).forEach(
-                        s -> coordinatesBlacklist.add(Bukkit.getWorld(s)));
-            } catch (SerializationException e) {
-                e.printStackTrace();
-            }
-            save(root);
         }
+
+        try {
+            Objects.requireNonNull(root.node("coordinates", "world", "blacklist").getList(String.class)).forEach(
+                    s -> coordinatesBlacklist.add(Bukkit.getWorld(s)));
+        } catch (SerializationException e) {
+            e.printStackTrace();
+        }
+
+        save(root);
     }
 
     private static void createFile() throws ConfigurateException {
