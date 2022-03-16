@@ -82,7 +82,7 @@ public class MiddayCommand extends BaseCommand {
         new BukkitRunnable() {
             @Override
             public void run() {
-                Objects.requireNonNull(Bukkit.getWorld(world)).setTime(0);
+                Objects.requireNonNull(Bukkit.getWorld(world)).setTime(6000);
             }
         }.runTask(ObelouixUltimate.getInstance());
     }
