@@ -2,14 +2,13 @@ package fr.obelouix.ultimate.dynmap;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
+import io.papermc.paper.event.world.StructuresLocateEvent;
 import org.bukkit.Location;
 import org.bukkit.StructureType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.dynmap.DynmapCommonAPI;
 
 import java.io.InputStream;
@@ -34,7 +33,33 @@ public class DynmapStructures implements Listener {
 
     }
 
+    // Just for testing
     @EventHandler
+    public void onLocateStructures(StructuresLocateEvent event) {
+        final Location location = new Location(event.getWorld(), event.getOrigin().getX(), 64, event.getOrigin().getZ());
+        final World world = location.getWorld();
+        if (world != null) {
+            final Biome biome = world.getBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+            for (StructureType structureType : Biomes[biome.ordinal()]) {
+                boolean show = Config.getRoot().node("dynmap", "structures", structureType.getName(), "show").getBoolean();
+                if (show) {
+                    final Location structureLocation = location.getWorld().locateNearestStructure(location, structureType, 1, false);
+                    if (structureLocation != null) {
+                        DynmapLoader.getDynmapAPI().getMarkerAPI().getMarkerSet(Config.getDynmapStructuresLayerName().toLowerCase(Locale.ROOT)).createMarker(
+                                structureType.getName() + "," + structureLocation.getBlockX() + "," + structureLocation.getBlockZ(),
+                                Config.getRoot().node("dynmap", "structures", structureType.getName(), "displayname").getString(),
+                                world.getName(),
+                                structureLocation.getBlockX(),
+                                64,
+                                structureLocation.getBlockZ(),
+                                DynmapLoader.getDynmapAPI().getMarkerAPI().getMarkerIcon(structureType.getName()), true);
+                    }
+                }
+            }
+        }
+    }
+
+   /* @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
 
         if (event.getWorld().canGenerateStructures()) {
@@ -65,7 +90,7 @@ public class DynmapStructures implements Listener {
                 }
             }.runTaskTimer(plugin, 100, 600);
         }
-    }
+    }*/
 
 
     private void setupBiomeStructures(DynmapCommonAPI dynmapCommonAPI) {
