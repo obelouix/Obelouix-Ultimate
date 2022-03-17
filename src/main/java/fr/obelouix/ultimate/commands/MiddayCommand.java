@@ -74,7 +74,7 @@ public class MiddayCommand extends BaseCommand {
     }
 
     /**
-     * We can't set the day asynchronously, so we need to run this method
+     * We can't set the midday asynchronously, so we need to run this method
      *
      * @param world world name
      */

@@ -76,7 +76,7 @@ public class NightCommand extends BaseCommand {
     }
 
     /**
-     * We can't set the day asynchronously, so we need to run this method
+     * We can't set the night asynchronously, so we need to run this method
      *
      * @param world world name
      */
