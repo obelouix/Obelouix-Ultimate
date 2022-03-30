@@ -4,6 +4,8 @@ import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
 import org.bukkit.event.Listener;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Set;
 public abstract class Events {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    protected Set<Listener> eventsSet;
+    private final Set<Listener> eventsSet = new HashSet<>();
 
     /**
      * register all events from the events set
@@ -24,5 +26,24 @@ public abstract class Events {
                 plugin.getLogger().info("Registered " + listener.getClass().getSimpleName() + " event");
         });
     }
+
+    /**
+     * add a list of event into the set that will register all of this
+     *
+     * @param eventList a list of events
+     */
+    public void addEvents(Collection<Listener> eventList) {
+        eventsSet.addAll(eventList);
+    }
+
+    /**
+     * add an event into the set that will register it
+     *
+     * @param listener an event
+     */
+    public void addEvent(Listener listener) {
+        eventsSet.add(listener);
+    }
+
 
 }

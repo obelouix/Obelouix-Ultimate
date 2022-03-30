@@ -7,37 +7,35 @@ import fr.obelouix.ultimate.events.*;
 import fr.obelouix.ultimate.fastleafdecay.FastLeafDecay;
 import fr.obelouix.ultimate.recipes.RecipeDiscoverer;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.List;
 
 public class EventManager extends Events {
 
     public EventManager() {
-        eventsSet = Stream.of(
-                new PlayerData(),
+
+        addEvents(List.of(new PlayerData(),
                 new ServerListEvent(),
                 new ServerListEvent(),
                 new ReloadDetector(),
                 new PlayerConnectionEvent(),
                 new Coordinates(),
-                new RecipeDiscoverer()
-        ).collect(Collectors.toSet());
+                new RecipeDiscoverer()));
 
         if (Config.isWitherBlockDamageDisabled()) {
-            eventsSet.add(new WitherBlockDamageEvent());
+            addEvent(new WitherBlockDamageEvent());
         }
 
         if (Config.isAnvilInfiniteRepairEnabled()) {
-            eventsSet.add(new AnvilEvents());
+            addEvent(new AnvilEvents());
         }
 
         if (Config.isFastLeafDecayEnabled()) {
-            eventsSet.add(new FastLeafDecay());
+            addEvent(new FastLeafDecay());
         }
 
-        if (Config.isDisconnectOnHighPing()) eventsSet.add(new PingChecker());
+        if (Config.isDisconnectOnHighPing()) addEvent(new PingChecker());
 
-        if (Config.isNightSkipSystemEnabled()) eventsSet.add(new NightSkipEvent());
+        if (Config.isNightSkipSystemEnabled()) addEvent(new NightSkipEvent());
 
         registerEvents();
 
