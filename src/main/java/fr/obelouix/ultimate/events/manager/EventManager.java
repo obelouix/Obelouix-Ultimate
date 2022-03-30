@@ -1,49 +1,46 @@
 package fr.obelouix.ultimate.events.manager;
 
-import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.coordinates.Coordinates;
 import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.events.*;
 import fr.obelouix.ultimate.fastleafdecay.FastLeafDecay;
 import fr.obelouix.ultimate.recipes.RecipeDiscoverer;
-import org.bukkit.event.Listener;
 
-public class EventManager {
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-    private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
+public class EventManager extends Events {
 
     public EventManager() {
-        registerEvent(new PlayerData());
-        registerEvent(new ServerListEvent());
-/*        if(!plugin.getServer().getPluginManager().isPluginEnabled("essentialschat")){
-                registerEvent(new ChatEvent());
-    }*/
-        registerEvent(new ReloadDetector());
-        registerEvent(new PlayerConnectionEvent());
+        eventsSet = Stream.of(
+                new PlayerData(),
+                new ServerListEvent(),
+                new ServerListEvent(),
+                new ReloadDetector(),
+                new PlayerConnectionEvent(),
+                new Coordinates(),
+                new RecipeDiscoverer()
+        ).collect(Collectors.toSet());
+
         if (Config.isWitherBlockDamageDisabled()) {
-            registerEvent(new WitherBlockDamageEvent());
+            eventsSet.add(new WitherBlockDamageEvent());
         }
-        registerEvent(new Coordinates());
+
         if (Config.isAnvilInfiniteRepairEnabled()) {
-            registerEvent(new AnvilEvents());
+            eventsSet.add(new AnvilEvents());
         }
 
         if (Config.isFastLeafDecayEnabled()) {
-            registerEvent(new FastLeafDecay());
+            eventsSet.add(new FastLeafDecay());
         }
 
-        registerEvent(new RecipeDiscoverer());
+        if (Config.isDisconnectOnHighPing()) eventsSet.add(new PingChecker());
 
-        if (Config.isDisconnectOnHighPing()) registerEvent(new PingChecker());
+        if (Config.isNightSkipSystemEnabled()) eventsSet.add(new NightSkipEvent());
 
-        if (Config.isNightSkipSystemEnabled()) registerEvent(new NightSkipEvent());
+        registerEvents();
 
-/*        registerEvent(new AdminInventory());
-        registerEvent(new CustomGoals());*/
     }
 
-    public void registerEvent(Listener listener){
-        plugin.getServer().getPluginManager().registerEvents(listener, plugin);
-    }
 }

@@ -21,6 +21,8 @@ public class Config {
     private static final HoconConfigurationLoader configLoader = HoconConfigurationLoader.builder()
             .path(Path.of(plugin.getDataFolder().getPath(), "config.conf"))
             .build();
+
+    private static boolean debugMode;
     private static final HashMap<String, Boolean> dynmapStructureMap = new HashMap<>();
     public static Map<String, String> chatFormat = new HashMap<>();
     private static String customServerBrandName;
@@ -73,6 +75,9 @@ public class Config {
         } catch (SerializationException e) {
             e.printStackTrace();
         }
+
+        debugMode = root.node("debug").getBoolean();
+
         customServerBrandName = root.node("custom-server-brand").getString();
         storageType = root.node("data-storage-type").getString();
         disableReloadCommand = root.node("disable-default-reload-command").getBoolean();
@@ -197,6 +202,12 @@ public class Config {
      *
      */
     private static void addMissingConfigs() throws SerializationException {
+
+        if (root.node("debug").empty()) {
+            root.node("debug").set(false)
+                    .commentIfAbsent("Enable this only if you want to see the debug logs of the plugin.\n"
+                            + "Be aware that this will be spammy");
+        }
 
         if (root.node("data-storage-type").empty()) {
             root.node("data-storage-type").set("file")
@@ -328,6 +339,10 @@ public class Config {
         }
 
         save(root);
+    }
+
+    public static boolean isDebugMode() {
+        return debugMode;
     }
 
     public static String getStorageType() {
