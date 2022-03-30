@@ -21,10 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class PlayerData implements Listener {
+public class PlayerData extends fr.obelouix.ultimate.data.player.Player implements Listener {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    private static String playerLocale;
     private static final Map<Player, Boolean> showCoordinates = new HashMap<>();
 
     /**
@@ -66,8 +65,8 @@ public class PlayerData implements Listener {
                 final CommentedConfigurationNode root;
                 try {
                     root = playerFile.load();
-                    playerLocale = getPlayerLocaleString(event.getPlayer());
-                    root.node("language").set(playerLocale);
+                    setLocale(getPlayerLocaleString(event.getPlayer()));
+                    root.node("language").set(getLocale());
                     playerFile.save(root);
                 } catch (ConfigurateException e) {
                     e.printStackTrace();
@@ -85,7 +84,7 @@ public class PlayerData implements Listener {
         final BukkitRunnable bukkitRunnable = new BukkitRunnable() {
             @Override
             public void run() {
-                playerLocale = getPlayerLocaleString(event.getPlayer());
+                setLocale(getPlayerLocaleString(event.getPlayer()));
             }
         };
         //execute the task 10 ticks ( = 500 ms) after player logged in
@@ -99,8 +98,8 @@ public class PlayerData implements Listener {
                     .build();
             final CommentedConfigurationNode root = playerFile.load();
             root.node("uuid").set(event.getPlayer().getUniqueId());
-            if (root.node("language").getString() == null || !Objects.requireNonNull(root.node("language").getString()).equalsIgnoreCase(playerLocale)) {
-                root.node("language").set(playerLocale);
+            if (root.node("language").getString() == null || !Objects.requireNonNull(root.node("language").getString()).equalsIgnoreCase(getLocale())) {
+                root.node("language").set(getLocale());
             }
             if (root.node("show-coordinates").empty()) {
                 root.node("show-coordinates").set(true);
@@ -110,10 +109,6 @@ public class PlayerData implements Listener {
             playerFile.save(root);
         }
 
-    }
-
-    public String getPlayerLocale() {
-        return playerLocale != null ? playerLocale : "en_US";
     }
 
     @EventHandler

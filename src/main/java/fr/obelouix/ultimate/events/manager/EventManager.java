@@ -19,7 +19,8 @@ public class EventManager extends Events {
                 new ReloadDetector(),
                 new PlayerConnectionEvent(),
                 new Coordinates(),
-                new RecipeDiscoverer()));
+                new RecipeDiscoverer())
+        );
 
         if (Config.isWitherBlockDamageDisabled()) {
             addEvent(new WitherBlockDamageEvent());

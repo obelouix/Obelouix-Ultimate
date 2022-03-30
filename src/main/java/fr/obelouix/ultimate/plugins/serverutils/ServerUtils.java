@@ -9,7 +9,6 @@ public class ServerUtils extends net.frankheijden.serverutils.bukkit.ServerUtils
     }
 
     public void checkForPlugin(String plugin) {
-        //serverUtilsPlugin.
     }
 
 }
