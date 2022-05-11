@@ -13,6 +13,7 @@ import fr.obelouix.ultimate.plugins.serverutils.ServerUtils;
 import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
 import fr.obelouix.ultimate.recipes.CustomFurnaceRecipes;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
+import fr.obelouix.ultimate.utils.Updater;
 import fr.obelouix.ultimate.worlds.WorldManager;
 import net.essentialsx.discord.EssentialsDiscord;
 import org.bukkit.Bukkit;
@@ -180,6 +181,7 @@ public class ObelouixUltimate extends JavaPlugin {
         UltimateAdvancementAPI.init();
         new CustomFurnaceRecipes();
         new CustomCraftingTableRecipes();
+        new Updater();
     }
 
     public boolean isEssentialsXPresent() {
