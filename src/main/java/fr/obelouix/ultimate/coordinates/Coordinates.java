@@ -2,6 +2,8 @@ package fr.obelouix.ultimate.coordinates;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.audience.MessageSender;
+import fr.obelouix.ultimate.config.Config;
+import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.i18n.I18n;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -31,27 +33,31 @@ public class Coordinates implements Listener {
             @Override
             public void run() {
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
-                            .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getName() + ".conf"))
-                            .build();
-                    final CommentedConfigurationNode root;
-                    try {
-                        root = playerFile.load();
-                        if (!root.node("language").empty()) {
+                    if (!Config.getCoordinatesBlacklist().contains(player.getWorld()) && PlayerData.isShowCoordinates(player)) {
+                        final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
+                                .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getName() + ".conf"))
+                                .build();
+                        final CommentedConfigurationNode root;
+                        try {
+                            root = playerFile.load();
+                            if (root.node("show-coordinates").getBoolean()) {
+                                if (!root.node("language").empty()) {
 
-                            final Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
-                                    .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
-                                    .append(Component.text(" Y: ", NamedTextColor.GREEN))
-                                    .append(Component.text(player.getLocation().getBlockY(), NamedTextColor.WHITE))
-                                    .append(Component.text(" Z: ", NamedTextColor.DARK_BLUE))
-                                    .append(Component.text(player.getLocation().getBlockZ(), NamedTextColor.WHITE))
-                                    .append(Component.text(" " + parseTo24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
-                                    .append(Component.text(" Direction: ", NamedTextColor.AQUA))
-                                    .append(Component.text(getFacing(player), NamedTextColor.WHITE));
-                            MessageSender.sendActionBar(player.getPlayer(), actionBar);
+                                    final Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
+                                            .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
+                                            .append(Component.text(" Y: ", NamedTextColor.GREEN))
+                                            .append(Component.text(player.getLocation().getBlockY(), NamedTextColor.WHITE))
+                                            .append(Component.text(" Z: ", NamedTextColor.DARK_BLUE))
+                                            .append(Component.text(player.getLocation().getBlockZ(), NamedTextColor.WHITE))
+                                            .append(Component.text(" " + parseTo24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
+                                            .append(Component.text(" Direction: ", NamedTextColor.AQUA))
+                                            .append(Component.text(getFacing(player), NamedTextColor.WHITE));
+                                    MessageSender.sendActionBar(player.getPlayer(), actionBar);
+                                }
+                            }
+                        } catch (ConfigurateException e) {
+                            e.printStackTrace();
                         }
-                    } catch (ConfigurateException e) {
-                        e.printStackTrace();
                     }
                 });
             }

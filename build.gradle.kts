@@ -3,7 +3,7 @@ import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 plugins {
     `java-library`
     idea //force Intellij to generate project file, cause i don't know why it refuse to import dependencies
-    id("io.papermc.paperweight.userdev") version "1.3.4"
+    id("io.papermc.paperweight.userdev") version "1.3.6"
     id("xyz.jpenilla.run-paper") version "1.0.6" // Adds runServer and runMojangMappedServer tasks for testing
     id("net.minecrell.plugin-yml.bukkit") version "0.5.1" // Generates plugin.yml
 
@@ -49,8 +49,6 @@ repositories {
     maven("https://hub.spigotmc.org/nexus/content/groups/public/")
     // Mikeprimm's repo (Dynmap)
     maven("https://repo.mikeprimm.com")
-    // Intellectualsites (FAWE)
-    maven("https://mvn.intellectualsites.com/content/groups/public/")
     // FrankHeijden
     maven("https://repo.fvdh.dev/releases")
     // EssentialsX
@@ -58,11 +56,10 @@ repositories {
     maven("https://repo.essentialsx.net/releases/")
     // fren_gor
     maven("https://nexus.frengor.com/repository/public/")
-
 }
 
 dependencies {
-    paperDevBundle("1.18.1-R0.1-SNAPSHOT")
+    paperDevBundle("1.18.2-R0.1-SNAPSHOT")
     // paperweightDevBundle("com.example.paperfork", "1.18-R0.1-SNAPSHOT")
 
     // You will need to manually specify the full dependency if using the groovy gradle dsl
@@ -72,49 +69,60 @@ dependencies {
     // Shadow will include the runtimeClasspath by default, which implementation adds to.
     // Dependencies you don't want to include go in the compileOnly configuration.
     // Make sure to relocate shaded dependencies!
-    compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
 
     // Cloud Command Framework
-    implementation("cloud.commandframework", "cloud-paper", "1.6.1")
-    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.6.1")
+    implementation("cloud.commandframework", "cloud-paper", "1.6.2")
+    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.6.2")
 
     // Aikar's Timing
     implementation("co.aikar:minecraft-timings:1.0.4")
-    compileOnly("net.luckperms:api:5.3")
+    compileOnly("net.luckperms:api:5.4")
 
     // Sponge Configurate
     implementation("org.spongepowered:configurate-core:4.1.2")
     implementation("org.spongepowered:configurate-hocon:4.1.2")
+    implementation("org.spongepowered:configurate-yaml:4.1.2")
 
     // NBT API
-    implementation("de.tr7zw:item-nbt-api-plugin:2.9.1")
+    implementation("de.tr7zw:item-nbt-api-plugin:2.9.2")
 
     // ServerUtils
-    compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.0")
+    compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.4")
 
     // EssentialsX
     compileOnly("net.essentialsx:EssentialsX:2.20.0-SNAPSHOT")
+    compileOnly("net.essentialsx:EssentialsXSpawn:2.20.0-SNAPSHOT")
+    compileOnly("net.essentialsx:EssentialsXProtect:2.20.0-SNAPSHOT")
+    compileOnly("net.essentialsx:EssentialsXDiscord:2.20.0-SNAPSHOT")
 
     // FAWE
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Core:2.0.0")
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.0.2-SNAPSHOT") { isTransitive = false }
+
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.1.3-SNAPSHOT") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.1.3-SNAPSHOT") { isTransitive = false }
 
     // WorldGuard
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-20211230.194325-8")
 
     // Dynmap
-    compileOnly("us.dynmap:dynmap-api:3.2-beta-1")
-    //compileOnly("us.dynmap:dynmap-core:3.0-SNAPSHOT")
+    compileOnly("us.dynmap:dynmap-api:3.1-beta-2")
     //compileOnly("us.dynmap:dynmap-bukkit:3.0-SNAPSHOT")
 
-    //UltimateAdvancementAPI
-    implementation("com.frengor:ultimateadvancementapi-shadeable:2.0.5")
+    // UltimateAdvancementAPI
+    implementation("com.frengor:ultimateadvancementapi-shadeable:2.1.2")
+
+    implementation("org.bstats:bstats-bukkit:3.0.0")
+    implementation("org.inventivetalent:reflectionhelper:1.18.10-SNAPSHOT")
+    //PacketAPI Listener
+    implementation("org.inventivetalent.packetlistenerapi:api:3.9.10-SNAPSHOT")
+    // GlowAPI
+    //implementation("com.github.InventivetalentDev:GlowAPI:master-SNAPSHOT")
 }
 
 tasks {
 
     runServer {
-        minecraftVersion("1.18.1")
+        minecraftVersion("1.18.2")
     }
     // Configure reobfJar to run when invoking the build task
     build {
@@ -157,12 +165,14 @@ tasks {
         reloc("org.jetbrains")
         reloc("org.spongepowered")
         reloc("com.fren_gor.ultimateAdvancementAPI")
+        reloc("com.github.inventivetalentDev")
+        reloc("org.inventivetalent")
     }
 }
 
 // Configure plugin.yml generation
 bukkit {
-    load = BukkitPluginDescription.PluginLoadOrder.STARTUP
+    load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     main = "fr.obelouix.ultimate.ObelouixUltimate"
     apiVersion = "1.18"
     authors = listOf("Obelouix")
