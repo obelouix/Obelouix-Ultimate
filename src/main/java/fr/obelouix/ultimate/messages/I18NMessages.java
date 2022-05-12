@@ -13,9 +13,17 @@ public enum I18NMessages {
     COMMAND_COORDS_DISABLED("obelouix.command.coords.disabled"),
     COMMAND_NO_PERMISSION("no_permission"),
     /**
+     * The message that show when there are not enough arguments provided to a command
+     */
+    COMMAND_NOT_ENOUGH_ARGS("obelouix.command.day.console.too_few_arguments"),
+    /**
      * The message that tell the user behind the console that this command can only be run as a player
      */
     COMMAND_ONLY_FOR_PLAYER("obelouix.commands.not_for_console"),
+    /**
+     * The message that tell the command sender that he used the command badly
+     */
+    COMMAND_WRONG_USAGE("obelouix.wrong_command_usage"),
     DIRECTION("obelouix.direction"),
     DIRECTION_NORTH("obelouix.direction.north"),
     DIRECTION_NORTH_EAST("obelouix.direction.northeast"),
