@@ -19,6 +19,10 @@ public enum I18NMessages {
     DIRECTION_SOUTH_WEST("obelouix.direction.southwest"),
     DIRECTION_EAST("obelouix.direction.east"),
     DIRECTION_WEST("obelouix.direction.west"),
+    /**
+     * The message that tell the plugin version
+     */
+    PLUGIN_VERSION("obelouix.plugin.version"),
     UPDATE_CHECK("obelouix.update.check"),
     UP_TO_DATE("obelouix.update.up_to_date");
 
