@@ -24,7 +24,7 @@ public class Config {
 
     private static boolean debugMode;
     private static final HashMap<String, Boolean> dynmapStructureMap = new HashMap<>();
-    public static Map<String, String> chatFormat = new HashMap<>();
+    public static final Map<String, String> chatFormat = new HashMap<>();
     private static String customServerBrandName;
     private static boolean disableReloadCommand = false;
     private static String storageType;
@@ -34,7 +34,6 @@ public class Config {
     private static boolean showWitherSkullExplosionsParticles = false;
     private static boolean serverInMaintenance = false;
     private static boolean dynmapStructuresEnabled = false;
-    private static String dynmapStructuresLayerName = "";
     private static boolean dynmapWorldGuardEnabled = false;
     private static String dynmapWorldGuardLayer = "";
     private static boolean isAnvilInfiniteRepairEnabled = false;
@@ -63,13 +62,6 @@ public class Config {
 
         final File file = Path.of(plugin.getDataFolder().getPath(), "config.conf").toFile();
 
-        /*if (file.exists()) {
-            try {
-                addMissingConfigs();
-            } catch (SerializationException e) {
-                e.printStackTrace();
-            }
-        }*/
         try {
             addMissingConfigs();
         } catch (SerializationException e) {
@@ -95,14 +87,6 @@ public class Config {
             if (dynmapStructuresEnabled) {
                 dynmapStructuresEnabled = false;
                 plugin.getLogger().info("Dynmap Structures is disabled until the lag it cause is resolved");
-/*                dynmapStructuresLayerName = root.node("dynmap", "modules", "structures", "layer_name").getString();
-
-                for (final Object structure : root.node("dynmap", "structures").childrenMap().keySet()) {
-                    dynmapStructureMap.put(
-                            root.node("dynmap", "structures", structure, "displayname").getString(),
-                            root.node("dynmap", "structures", structure, "show").getBoolean()
-                    );
-                }*/
             }
 
             if (plugin.isWorldGuardPresent()) {
@@ -145,45 +129,12 @@ public class Config {
         save(root);
     }
 
-    private static void createFile() throws ConfigurateException {
+    private static void createFile() {
         final File file = Path.of(plugin.getDataFolder().getPath(), "config.conf").toFile();
 
         if (!file.exists()) {
             plugin.getLogger().info("Creating configuration file...");
 
-
-
-            /*root.node("commands").act(n -> {
-                n.commentIfAbsent("Allow you to control which commands you want on your server");
-                for (final String command : commandList) {
-                    n.node(command).raw(true);
-                }
-            });
-
-            root.node("tablist").act(n -> n.node("show-player-ping").raw(true));
-
-            root.node("watchdog", "enabled").raw(true);
-            root.node("watchdog", "fly").act(
-                    n -> {
-                        n.node("protect-creative-mode").raw(true);
-                        n.node("action").set(String.class, "ban");
-                        n.node("tempban").raw(false);
-                    }
-            );
-
-            root.node("watchdog", "antispam").act(n -> {
-                n.node("matches-before-action").set(3);
-            });*/
-
-
-
-            /*root.node("night-skipper", "enabled").set(Boolean.TRUE);
-
-            if(plugin.isEssentialsXPresent()) {
-                root.node("night-skipper", "essentials-hook").set(Boolean.TRUE);
-            } else {
-                root.node("night-skipper", "essentials-hook").set(Boolean.FALSE);
-            }*/
 
             save(root);
         }
@@ -388,6 +339,7 @@ public class Config {
     }
 
     public static String getDynmapStructuresLayerName() {
+        String dynmapStructuresLayerName = "";
         return dynmapStructuresLayerName;
     }
 

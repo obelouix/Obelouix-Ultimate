@@ -15,7 +15,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.function.Function;
@@ -75,10 +74,6 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
                         .build())
                 .apply(this, AudienceProvider.nativeAudience());
 
-//        registerCommand(new ObelouixUltimateCommand("obelouixultimate"), plugin);
-        //registerCommand(new DayCommand("day"), plugin);
-        //   registerCommand(new NightCommand("night"), plugin);
-        //   registerCommand(new MiddayCommand("midday"), plugin);
         registerCommand(new PluginCommand("plugins"), plugin);
         registerCommand(new MaintenanceCommand("maintenance"), plugin);
 
@@ -90,7 +85,7 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
      * @param command the command to register
      * @param plugin  the {@link JavaPlugin} where the command belong
      */
-    private void registerCommand(Command command, JavaPlugin plugin) throws ReflectiveOperationException, IOException {
+    private void registerCommand(Command command, JavaPlugin plugin) throws ReflectiveOperationException {
         //Getting command map from CraftServer
         final Method commandMap = plugin.getServer().getClass().getMethod("getCommandMap", (Class<?>[]) null);
         //Invoking the method and getting the returned object (SimpleCommandMap)

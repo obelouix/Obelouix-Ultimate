@@ -1,6 +1,5 @@
 package fr.obelouix.ultimate.utils;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import fr.obelouix.ultimate.ObelouixUltimate;
@@ -28,9 +27,9 @@ public class Updater {
 
             @Override
             public void run() {
-                BufferedReader reader = null;
-                Gson gson = new Gson();
+                BufferedReader reader;
                 final JsonPrimitive result;
+
                 try {
                     InputStream inputStream = new URL("https://api.github.com/repos/obelouix/Obelouix-Ultimate/releases/latest").openStream();
                     reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
@@ -39,7 +38,7 @@ public class Updater {
                     result = JsonParser.parseReader(reader).getAsJsonObject().getAsJsonPrimitive("tag_name");
 
                     if (updateAvailable(plugin.getDescription().getVersion().replace("-SNAPSHOT", ""), result.getAsString().replace("-SNAPSHOT", ""))) {
-                        boolean isBothSnapshot = plugin.getDescription().getVersion().contains("-SNAPSHOT") && result.getAsString().contains("-SNAPSHOT");
+                        final boolean isBothSnapshot = plugin.getDescription().getVersion().contains("-SNAPSHOT") && result.getAsString().contains("-SNAPSHOT");
                         if (isBothSnapshot) {
                             plugin.getLogger().info("A new snapshot is available, download it here: https://github.com/obelouix/Obelouix-Ultimate/releases/latest");
                         } else {
@@ -59,8 +58,8 @@ public class Updater {
     }
 
     private boolean updateAvailable(String pluginVersion, String githubPluginVersion) {
-        String[] pVersion = pluginVersion.split("\\.");
-        String[] gVersion = githubPluginVersion.split("\\.");
+        final String[] pVersion = pluginVersion.split("\\.");
+        final String[] gVersion = githubPluginVersion.split("\\.");
         for (int i = 0; i < 3; i++) {
             if (Integer.parseInt(gVersion[i]) > Integer.parseInt(pVersion[i])) return true;
         }

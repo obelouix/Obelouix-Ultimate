@@ -23,9 +23,8 @@ public class AdminInventory extends BaseGUI {
     private static Component playerManagementComponent;
     private static Component playerManagementDescriptionComponent;
     // title of the item that will show the inventory that manage server worlds
-    private static @NotNull Component worldManagementComponent;
-    private static Component worldManagementDescriptionComponent;
-    private static @NotNull Component maintenanceComponent;
+    private static Component worldManagementComponent;
+    private static Component maintenanceComponent;
     private static Component maintenanceDescComponent;
     // the player who see the inventory
     private Player viewer;
@@ -48,7 +47,7 @@ public class AdminInventory extends BaseGUI {
         playerManagementDescriptionComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.player_management.description"), NamedTextColor.GOLD)
                 .decoration(TextDecoration.ITALIC, false);
         worldManagementComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.world_management"), NamedTextColor.GOLD);
-        worldManagementDescriptionComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.world_management.description"))
+        Component worldManagementDescriptionComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.world_management.description"))
                 .decoration(TextDecoration.ITALIC, false);
 
         maintenanceComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.maintenance_center"), NamedTextColor.AQUA);
@@ -96,7 +95,7 @@ public class AdminInventory extends BaseGUI {
         final ItemStack clickedItem = event.getCurrentItem();
         final Player clicker = (Player) event.getWhoClicked();
         if (clickedItem != null) {
-            final String clickedItemTitle = PlainTextComponentSerializer.plainText().serialize(clickedItem.getItemMeta().displayName());
+            final String clickedItemTitle = PlainTextComponentSerializer.plainText().serialize(Objects.requireNonNull(clickedItem.getItemMeta().displayName()));
             if (clickedItemTitle.equals(PlainTextComponentSerializer.plainText().serialize(Objects.requireNonNull(clickedItem.getItemMeta().displayName())))) {
 //                new SignGui(new String[]{"",  "^^^^^^^^^^^^^^^", "date de debut", "format: jj/mm/aaaa"}).openFakeGui((Player) event.getWhoClicked());
                 clicker.openBook(new MaintenanceBook(clicker).show());

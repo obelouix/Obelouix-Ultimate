@@ -160,14 +160,6 @@ public class ObelouixUltimate extends JavaPlugin {
             e.printStackTrace();
         }
 
-        /*if(isEssentialsXPresent()){
-            getLogger().info("Found EssentialsX");
-            setEssentialsPlugin(new Essentials());
-            if(isEssentialsXDiscordPresent()){
-              setEssentialsXDiscordPlugin(new EssentialsDiscord());;
-            }
-        }*/
-
         //new EntityRegistry();
         new EventManager();
         // new EntityRegistry();

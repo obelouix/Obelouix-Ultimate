@@ -59,39 +59,6 @@ public class DynmapStructures implements Listener {
         }
     }
 
-   /* @EventHandler
-    public void onChunkLoad(ChunkLoadEvent event) {
-
-        if (event.getWorld().canGenerateStructures()) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    final Location location = new Location(event.getWorld(), event.getChunk().getX() << 4, 64, event.getChunk().getZ() << 4);
-                    final World world = location.getWorld();
-                    if (world != null) {
-                        final Biome biome = world.getBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ());
-                        for (StructureType structureType : Biomes[biome.ordinal()]) {
-                            boolean show = Config.getRoot().node("dynmap", "structures", structureType.getName(), "show").getBoolean();
-                            if (show) {
-                                final Location structureLocation = location.getWorld().locateNearestStructure(location, structureType, 1, false);
-                                if (structureLocation != null) {
-                                    DynmapLoader.getDynmapAPI().getMarkerAPI().getMarkerSet(Config.getDynmapStructuresLayerName().toLowerCase(Locale.ROOT)).createMarker(
-                                            structureType.getName() + "," + structureLocation.getBlockX() + "," + structureLocation.getBlockZ(),
-                                            Config.getRoot().node("dynmap", "structures", structureType.getName(), "displayname").getString(),
-                                            world.getName(),
-                                            structureLocation.getBlockX(),
-                                            64,
-                                            structureLocation.getBlockZ(),
-                                            DynmapLoader.getDynmapAPI().getMarkerAPI().getMarkerIcon(structureType.getName()), true);
-                                }
-                            }
-                        }
-                    }
-                }
-            }.runTaskTimer(plugin, 100, 600);
-        }
-    }*/
-
 
     private void setupBiomeStructures(DynmapCommonAPI dynmapCommonAPI) {
         Biomes[OCEAN.ordinal()] = new StructureType[]{BURIED_TREASURE, MINESHAFT, OCEAN_RUIN, SHIPWRECK, STRONGHOLD, RUINED_PORTAL};

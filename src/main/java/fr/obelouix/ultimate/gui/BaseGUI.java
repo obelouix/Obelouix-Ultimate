@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class BaseGUI implements Listener {
 
     protected static ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    protected static I18n i18n = I18n.getInstance();
+    protected static final I18n i18n = I18n.getInstance();
     protected Inventory inventory;
 
     public BaseGUI() {

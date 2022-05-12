@@ -29,8 +29,8 @@ public class ChatEvent implements Listener {
 
         // If the message sender doesn't have the permission to format his message, remove all formatting codes
         if (!player.hasPermission("obelouix.chat.formatting")) {
-            msg = msg.replaceText(standardColor -> standardColor.match(Pattern.compile("(&)?&([0-9a-fk-orA-FK-OR])")).replacement(""))
-                    .replaceText(hexColor -> hexColor.match(Pattern.compile("(&)?&#([0-9a-fA-F]{6})")).replacement(""));
+            msg = msg.replaceText(standardColor -> standardColor.match(Pattern.compile("(&)?&([\\da-fk-orA-FK-OR])")).replacement(""))
+                    .replaceText(hexColor -> hexColor.match(Pattern.compile("(&)?&#([\\da-fA-F]{6})")).replacement(""));
         }
 
         if (LuckPermsUtils.getLuckPermsAPI() != null) {

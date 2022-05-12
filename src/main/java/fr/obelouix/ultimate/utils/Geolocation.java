@@ -20,7 +20,7 @@ public class Geolocation {
         try {
             try {
                 URLConnection urlConnection = new URL("http://ip-api.com/json/"
-                        + Objects.requireNonNull(Bukkit.getPlayer(player.getUniqueId()).getAddress())
+                        + Objects.requireNonNull(Objects.requireNonNull(Bukkit.getPlayer(player.getUniqueId())).getAddress())
                         + "?fields=country")
                         .openConnection();
 

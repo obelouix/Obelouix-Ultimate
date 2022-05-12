@@ -5,14 +5,14 @@ A multi purpose plugin
 
 -----------
 
-|  available languages 	|
-|---------------------	|
-|   Deutsch (🇩🇪)        |
-|   English (🇺🇸 🇬🇧) 	  |
-|   Español (🇪🇸)        |
-|   Français (🇫🇷 🇨🇦) 	  |
-|   Italiano (🇮🇹)       |
-|   日本 (🇯🇵)           |
+| available languages      |
+|:----------------------:|
+|     Deutsch (🇩🇪)     |
+| English (🇺🇸 🇬🇧)      |
+|     Español (🇪🇸)     |
+| Français (🇫🇷 🇨🇦)     |
+|    Italiano (🇮🇹)     |
+|       日本 (🇯🇵)        |
 |   Nederlands (🇳🇱)    |
-|   Português (🇧🇷 🇵🇹)   |
+| Português (🇧🇷 🇵🇹)  |
 

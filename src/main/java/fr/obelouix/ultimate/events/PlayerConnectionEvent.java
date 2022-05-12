@@ -17,21 +17,6 @@ public class PlayerConnectionEvent implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerLoginEvent event) {
         final Player player = event.getPlayer();
-/*
-        if (!player.hasPermission("obelouix.maintenance.bypass")) {
-            event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, Component.text("Server in maintenance"));
-        }*/
-        //GlowingAPI.setPlayerGlowing(player, PotionEffectType.GLOWING);
-        //CustomVillager.create(player.getLocation(), "", false);
-        //Bukkit.getScheduler().runTaskLater(plugin, () -> GlowAPI.setGlowing(event.getPlayer(), GlowAPI.Color.DARK_RED, Bukkit.getOnlinePlayers()), 10);
     }
-
-    /**
-     * Just for testing purposes
-     */
-    /*@EventHandler
-    public void onPlayerMove(final PlayerMoveEvent playerMoveEvent){
-        Bukkit.getScheduler().runTaskLater(plugin, () -> GlowAPI.setGlowing(playerMoveEvent.getPlayer(), GlowAPI.Color.WHITE, playerMoveEvent.getPlayer()), 10);
-    }*/
 
 }

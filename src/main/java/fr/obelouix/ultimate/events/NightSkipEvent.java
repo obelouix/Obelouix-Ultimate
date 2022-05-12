@@ -54,13 +54,6 @@ public class NightSkipEvent implements Listener {
                 }
             }
 
-            /*for (World world: Bukkit.getWorlds()){
-                if(sleepingPlayerCount.containsKey(world)){
-                    if (sleepingPlayerCount.get(world) == onlinePlayers / 2){
-
-                    }
-                }
-            }*/
         }
 
 
