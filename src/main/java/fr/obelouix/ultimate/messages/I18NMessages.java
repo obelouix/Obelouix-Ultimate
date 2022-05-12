@@ -9,7 +9,13 @@ public enum I18NMessages {
     /**
      * Indicate to a player that he's not allowed to run the command he tried to execute
      */
+    COMMAND_COORDS_ENABLED("obelouix.command.coords.enabled"),
+    COMMAND_COORDS_DISABLED("obelouix.command.coords.disabled"),
     COMMAND_NO_PERMISSION("no_permission"),
+    /**
+     * The message that tell the user behind the console that this command can only be run as a player
+     */
+    COMMAND_ONLY_FOR_PLAYER("obelouix.commands.not_for_console"),
     DIRECTION("obelouix.direction"),
     DIRECTION_NORTH("obelouix.direction.north"),
     DIRECTION_NORTH_EAST("obelouix.direction.northeast"),
@@ -23,7 +29,13 @@ public enum I18NMessages {
      * The message that tell the plugin version
      */
     PLUGIN_VERSION("obelouix.plugin.version"),
+    /**
+     * The message when the plugin check if it has updates
+     */
     UPDATE_CHECK("obelouix.update.check"),
+    /**
+     * The message when there is no update available
+     */
     UP_TO_DATE("obelouix.update.up_to_date");
 
     private final String translation;

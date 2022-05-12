@@ -5,6 +5,7 @@ import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.data.PlayerData;
+import fr.obelouix.ultimate.messages.I18NMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -31,13 +32,13 @@ public class CoordsCommand extends BaseCommand {
             showCoords = !showCoords;
             if (showCoords) {
                 MessageSender.sendMessage(player, Component.text(
-                        StringUtils.capitalize(i18n.getTranslation(player, "obelouix.command.coords.enabled")), NamedTextColor.GREEN));
+                        StringUtils.capitalize(I18NMessages.COMMAND_COORDS_ENABLED.getTranslation(player)), NamedTextColor.GREEN));
             } else {
                 MessageSender.sendMessage(player, Component.text(
-                        StringUtils.capitalize(i18n.getTranslation(player, "obelouix.command.coords.disabled")), NamedTextColor.DARK_RED));
+                        StringUtils.capitalize(I18NMessages.COMMAND_COORDS_DISABLED.getTranslation(player)), NamedTextColor.DARK_RED));
             }
         } else if (sender instanceof ConsoleCommandSender console) {
-            MessageSender.sendMessage(console, Component.text("Only a player can run this command", NamedTextColor.DARK_RED));
+            MessageSender.sendMessage(console, Component.text(I18NMessages.COMMAND_ONLY_FOR_PLAYER.getSystemTranslation(), NamedTextColor.DARK_RED));
         }
     }
 }
