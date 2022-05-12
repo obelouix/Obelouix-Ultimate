@@ -72,4 +72,16 @@ public class I18n {
 
         return playerMessages.getString(message);
     }
+
+    public String getTranslation(Locale locale, String message) {
+        ResourceBundle translationBundle;
+        try {
+            translationBundle = ResourceBundle.getBundle("messages_" + locale.toLanguageTag().replaceAll("-", "_"));
+
+        } catch (MissingResourceException e) {
+            translationBundle = ResourceBundle.getBundle("messages_en_US");
+        }
+        return translationBundle.getString(message);
+    }
+
 }

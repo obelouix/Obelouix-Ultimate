@@ -64,7 +64,8 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
                 new AdminCommand(),
                 new DayCommand(),
                 new MiddayCommand(),
-                new NightCommand()
+                new NightCommand(),
+                new MapImageCommand()
         ).forEach(BaseCommand::register);
 
 

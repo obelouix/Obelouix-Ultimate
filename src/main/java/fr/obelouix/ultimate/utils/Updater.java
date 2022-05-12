@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.messages.I18NMessages;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.BufferedReader;
@@ -34,7 +35,7 @@ public class Updater {
                     InputStream inputStream = new URL("https://api.github.com/repos/obelouix/Obelouix-Ultimate/releases/latest").openStream();
                     reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
 
-                    plugin.getLogger().info("Checking for updates...");
+                    plugin.getLogger().info(I18NMessages.UPDATE_CHECK.getSystemTranslation());
                     result = JsonParser.parseReader(reader).getAsJsonObject().getAsJsonPrimitive("tag_name");
 
                     if (updateAvailable(plugin.getDescription().getVersion().replace("-SNAPSHOT", ""), result.getAsString().replace("-SNAPSHOT", ""))) {
@@ -44,10 +45,10 @@ public class Updater {
                         } else {
                             if (!isBothSnapshot) {
                                 plugin.getLogger().info("A new update available, download it here: https://github.com/obelouix/Obelouix-Ultimate/releases/latest");
-                            } else plugin.getLogger().info("We are up-to-date!");
+                            } else plugin.getLogger().info(I18NMessages.UP_TO_DATE.getSystemTranslation());
                         }
 
-                    } else plugin.getLogger().info("We are up-to-date!");
+                    } else plugin.getLogger().info(I18NMessages.UP_TO_DATE.getSystemTranslation());
 
 
                 } catch (IOException e) {

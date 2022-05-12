@@ -9,7 +9,6 @@ import fr.obelouix.ultimate.data.DataStorage;
 import fr.obelouix.ultimate.data.MultiverseMigrator;
 import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
-import fr.obelouix.ultimate.plugins.serverutils.ServerUtils;
 import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
 import fr.obelouix.ultimate.recipes.CustomFurnaceRecipes;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
@@ -130,11 +129,6 @@ public class ObelouixUltimate extends JavaPlugin {
         checkOfflineMode();
         instance = this;
         timingManager = TimingManager.of(this);
-
-        if (isServerUtilsPresent()) {
-            getLogger().info("Hooking into ServerUtils...");
-            new ServerUtils((ServerUtils) Bukkit.getPluginManager().getPlugin("ServerUtils"));
-        }
 
         new MultiverseMigrator();
         WorldManager.loadWorlds();

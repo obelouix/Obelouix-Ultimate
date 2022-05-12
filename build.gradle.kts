@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "fr.obelouix.ultimate"
-version = "1.0.0-SNAPSHOT"
+version = "1.0.1-SNAPSHOT"
 
 java {
     // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
@@ -117,6 +117,8 @@ dependencies {
     implementation("org.inventivetalent.packetlistenerapi:api:3.9.10-SNAPSHOT")
     // GlowAPI
     //implementation("com.github.InventivetalentDev:GlowAPI:master-SNAPSHOT")
+    // Interfaces (inventory)
+    implementation("com.github.Incendo.interfaces:interfaces-paper:-SNAPSHOT")
 }
 
 tasks {
@@ -155,18 +157,25 @@ tasks {
         // helper function to relocate a package into our package
         fun reloc(pkg: String) = relocate(pkg, "fr.obelouix.ultimate.dependency.$pkg")
 
-        // relocate cloud and it's transitive dependencies
-        reloc("cloud.commandframework")
-        reloc("io.leangen.geantyref")
-        reloc("co.aikar.timings")
-        reloc("com.typesafe")
-        reloc("de.tr7zw")
-        reloc("org.intellij")
-        reloc("org.jetbrains")
-        reloc("org.spongepowered")
-        reloc("com.fren_gor.ultimateAdvancementAPI")
-        reloc("com.github.inventivetalentDev")
-        reloc("org.inventivetalent")
+        val deps = listOf(
+            "cloud.commandframework",
+            "io.leangen.geantyref",
+            "co.aikar.timings",
+            "com.typesafe",
+            "de.tr7zw",
+            "org.intellij",
+            "org.jetbrains",
+            "org.spongepowered",
+            "com.fren_gor.ultimateAdvancementAPI",
+            "com.github.inventivetalentDev",
+            "org.inventivetalent",
+            "com.github.Incendo.interfaces"
+        )
+
+        //relocate every dependencies
+        deps.forEach {
+            reloc(it)
+        }
     }
 }
 
