@@ -7,6 +7,7 @@ import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
+import fr.obelouix.ultimate.messages.I18NMessages;
 import fr.obelouix.ultimate.messages.PluginMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
 import net.kyori.adventure.text.Component;
@@ -67,7 +68,7 @@ public class MiddayCommand extends BaseCommand {
 
                 } else {
                     MessageSender.sendMessage(sender,
-                            Component.text(i18n.getTranslation(sender, "obelouix.command.day.console.too_few_arguments"), NamedTextColor.DARK_RED));
+                            Component.text(I18NMessages.COMMAND_NOT_ENOUGH_ARGS.getSystemTranslation(), NamedTextColor.DARK_RED));
                 }
             }
         }

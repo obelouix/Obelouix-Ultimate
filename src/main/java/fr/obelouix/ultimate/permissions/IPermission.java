@@ -2,7 +2,7 @@ package fr.obelouix.ultimate.permissions;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.audience.MessageSender;
-import fr.obelouix.ultimate.i18n.I18n;
+import fr.obelouix.ultimate.messages.I18NMessages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.CommandSender;
@@ -13,8 +13,9 @@ public interface IPermission {
     ObelouixUltimate plugin = ObelouixUltimate.getInstance();
 
     static boolean hasPermission(@NotNull CommandSender sender, @NotNull String permission){
-        if(!sender.hasPermission(permission)){
-            final Component message = Component.text(I18n.getInstance().getTranslation(sender, "no_permission")).color(TextColor.color(183, 0, 0));
+        if(!sender.hasPermission(permission)) {
+            final Component message = Component.text(I18NMessages.COMMAND_NO_PERMISSION.getTranslation(sender))
+                    .color(TextColor.color(183, 0, 0));
             MessageSender.sendMessage(sender, message);
             plugin.getLogger().info("Refused command to " + sender.getName());
             return false;
