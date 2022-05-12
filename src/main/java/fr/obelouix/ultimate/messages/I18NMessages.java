@@ -6,6 +6,10 @@ import org.bukkit.command.CommandSender;
 import java.util.Locale;
 
 public enum I18NMessages {
+    /**
+     * Indicate to a player that he's not allowed to run the command he tried to execute
+     */
+    COMMAND_NO_PERMISSION("no_permission"),
     DIRECTION("obelouix.direction"),
     DIRECTION_NORTH("obelouix.direction.north"),
     DIRECTION_NORTH_EAST("obelouix.direction.northeast"),
