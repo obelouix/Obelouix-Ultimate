@@ -4,7 +4,9 @@ import com.fren_gor.ultimateAdvancementAPI.AdvancementMain;
 import com.fren_gor.ultimateAdvancementAPI.events.PlayerLoadingCompletedEvent;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.advancements.tabs.MinecraftTab;
+import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.List;
 
 public class UltimateAdvancementAPI {
@@ -17,11 +19,14 @@ public class UltimateAdvancementAPI {
         return advancementAPI;
     }
 
+    public static void updateProgression(Player player) {
+        advancementAPI.updatePlayer(player);
+    }
+
     public synchronized void init() {
         AdvancementMain advancementMain = new AdvancementMain(plugin);
         advancementMain.load();
-        advancementMain.enableInMemory();
-
+        advancementMain.enableSQLite(new File(plugin.getDataFolder() + "/Advancements.db"));
         advancementAPI = com.fren_gor.ultimateAdvancementAPI.UltimateAdvancementAPI.getInstance(plugin);
         advancementAPI.disableVanillaAdvancements();
 
@@ -34,4 +39,5 @@ public class UltimateAdvancementAPI {
                         advancementTab, PlayerLoadingCompletedEvent.class, event -> advancementTab.showTab(event.getPlayer())
                 ));
     }
+
 }

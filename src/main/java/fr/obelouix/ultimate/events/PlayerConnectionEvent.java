@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.events;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.api.UltimateAdvancementAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +18,7 @@ public class PlayerConnectionEvent implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerLoginEvent event) {
         final Player player = event.getPlayer();
+        UltimateAdvancementAPI.updateProgression(player);
     }
 
 }

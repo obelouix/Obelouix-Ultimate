@@ -17,7 +17,7 @@ public class MinecraftTab {
                     AdvancementFrameType.TASK,
                     true,
                     true,
-                    2,
+                    1,
                     0,
                     ""),
             MinecraftRootAdvancement.getRootAdvancement(), 3);
@@ -29,7 +29,7 @@ public class MinecraftTab {
                     AdvancementFrameType.TASK,
                     true,
                     true,
-                    4,
+                    2,
                     0,
                     ""),
             GETTING_WOOD, 1);
@@ -41,8 +41,8 @@ public class MinecraftTab {
                     AdvancementFrameType.TASK,
                     true,
                     true,
-                    4,
-                    0,
+                    2,
+                    1,
                     ""),
             CRAFTING_BASE, 1);
 
@@ -54,7 +54,7 @@ public class MinecraftTab {
                     true,
                     true,
                     4,
-                    0,
+                    1,
                     ""),
             FIRST_PICKAXE, 1);
 
@@ -65,8 +65,8 @@ public class MinecraftTab {
                     AdvancementFrameType.TASK,
                     true,
                     true,
-                    4,
-                    0,
+                    2,
+                    2,
                     ""),
             FIRST_PICKAXE, 1);
 
