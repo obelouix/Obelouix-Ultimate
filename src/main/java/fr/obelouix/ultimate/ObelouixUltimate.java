@@ -164,7 +164,8 @@ public class ObelouixUltimate extends JavaPlugin {
         new EventManager();
         // new EntityRegistry();
         DataStorage.setupStorage();
-        UltimateAdvancementAPI.init();
+        UltimateAdvancementAPI advancementAPI = new UltimateAdvancementAPI();
+        advancementAPI.init();
         new CustomFurnaceRecipes();
         new CustomCraftingTableRecipes();
         new Updater();

@@ -6,6 +6,8 @@ import org.bukkit.command.CommandSender;
 import java.util.Locale;
 
 public enum I18NMessages {
+    ADVANCEMENTS_ROOT("obelouix.advancements.root.title"),
+    ADVANCEMENTS_ROOT_DESC("obelouix.advancements.root.description"),
     /**
      * Indicate to a player that he's not allowed to run the command he tried to execute
      */
