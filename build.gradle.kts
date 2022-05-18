@@ -36,9 +36,6 @@ repositories {
     maven("https://repo.spongepowered.org/maven/")
     // Minecraft
     maven("https://libraries.minecraft.net/")
-    // CodeMC
-    maven("https://repo.codemc.org/repository/maven-public/")
-    maven("https://repo.codemc.io/repository/nms/")
     // Aikar's repo
     maven("https://repo.aikar.co/content/groups/aikar/")
     // EngineHub
@@ -56,6 +53,9 @@ repositories {
     maven("https://repo.essentialsx.net/releases/")
     // fren_gor
     maven("https://nexus.frengor.com/repository/public/")
+    // CodeMC
+    maven("https://repo.codemc.org/repository/maven-public/")
+    maven("https://repo.codemc.io/repository/nms/")
 }
 
 dependencies {
