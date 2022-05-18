@@ -20,7 +20,6 @@ public class StoneAgeAdvancement extends BaseAdvancement implements ParentGrante
 
         registerEvent(BlockBreakEvent.class, e -> {
             if (isVisible(e.getPlayer()) && requirements.contains(e.getBlock().getType())) {
-
                 incrementProgression(e.getPlayer());
             }
         });

@@ -41,8 +41,8 @@ public class MinecraftTab {
                     AdvancementFrameType.TASK,
                     true,
                     true,
+                    2.5f,
                     2,
-                    1,
                     ""),
             CRAFTING_BASE, 1);
 
@@ -54,21 +54,63 @@ public class MinecraftTab {
                     true,
                     true,
                     4,
-                    1,
+                    3,
                     ""),
             FIRST_PICKAXE, 1);
 
-    private static final GettingAnUpgradeAdvancement GETTING_AN_UPGRADE = new GettingAnUpgradeAdvancement("upgrade_tools_stone",
+    private static final GettingAnUpgradeAdvancement.StonePickaxeUpgrade GETTING_AN_UPGRADE = new GettingAnUpgradeAdvancement.StonePickaxeUpgrade("upgrade_tools_stone",
             new AdvancementDisplay(
                     Material.STONE_PICKAXE,
                     "",
                     AdvancementFrameType.TASK,
                     true,
                     true,
-                    2,
-                    2,
+                    2.5f,
+                    3,
                     ""),
             FIRST_PICKAXE, 1);
+
+    private static final GettingAnUpgradeAdvancement.IronPickaxeUpgrade IRON_PICKAXE_UPGRADE = new GettingAnUpgradeAdvancement.IronPickaxeUpgrade(
+            "upgrade_tools_iron",
+            new AdvancementDisplay(
+                    Material.IRON_PICKAXE,
+                    "",
+                    AdvancementFrameType.TASK,
+                    true,
+                    true,
+                    2.5f,
+                    4,
+                    ""),
+            GETTING_AN_UPGRADE, 1
+    );
+
+    private static final GettingAnUpgradeAdvancement.GoldPickaxeUpgrade GOLD_PICKAXE_UPGRADE = new GettingAnUpgradeAdvancement.GoldPickaxeUpgrade(
+            "upgrade_tools_gold",
+            new AdvancementDisplay(
+                    Material.GOLDEN_PICKAXE,
+                    "",
+                    AdvancementFrameType.TASK,
+                    true,
+                    true,
+                    2.5f,
+                    4,
+                    ""),
+            IRON_PICKAXE_UPGRADE, 1
+    );
+
+    private static final GettingAnUpgradeAdvancement.DiamondPickaxeUpgrade DIAMOND_PICKAXE_UPGRADE = new GettingAnUpgradeAdvancement.DiamondPickaxeUpgrade(
+            "upgrade_tools_diamond",
+            new AdvancementDisplay(
+                    Material.DIAMOND_PICKAXE,
+                    "",
+                    AdvancementFrameType.TASK,
+                    true,
+                    true,
+                    2.5f,
+                    4,
+                    ""),
+            IRON_PICKAXE_UPGRADE, 1
+    );
 
     /**
      * @return the advancement tab
@@ -87,7 +129,10 @@ public class MinecraftTab {
                 CRAFTING_BASE,
                 FIRST_PICKAXE,
                 STONE_AGE,
-                GETTING_AN_UPGRADE
+                GETTING_AN_UPGRADE,
+                IRON_PICKAXE_UPGRADE,
+                GOLD_PICKAXE_UPGRADE,
+                DIAMOND_PICKAXE_UPGRADE
         );
     }
 
