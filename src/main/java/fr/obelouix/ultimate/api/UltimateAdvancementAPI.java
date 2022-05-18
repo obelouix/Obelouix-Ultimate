@@ -33,10 +33,5 @@ public class UltimateAdvancementAPI {
                 .forEach(advancementTab -> advancementTab.getEventManager().register(
                         advancementTab, PlayerLoadingCompletedEvent.class, event -> advancementTab.showTab(event.getPlayer())
                 ));
-
-        /*advancementTab.getEventManager().register(advancementTab, PlayerLoadingCompletedEvent.class, event -> {
-            advancementTab.showTab(event.getPlayer());
-            updateAdvancements(event.getPlayer());
-        });*/
     }
 }
