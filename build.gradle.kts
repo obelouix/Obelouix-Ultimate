@@ -23,7 +23,7 @@ java {
 repositories {
     mavenCentral()
     // Paper
-    maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://repo.papermc.io/repository/maven-public/")
     // Purpur
     // maven("https://repo.pl3x.net/")
     // Sonatype
