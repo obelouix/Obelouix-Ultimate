@@ -1,9 +1,10 @@
 package fr.obelouix.ultimate.commands;
 
 import com.google.common.collect.ImmutableList;
+import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.api.TranslationAPI;
 import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.config.Config;
-import fr.obelouix.ultimate.i18n.I18n;
 import fr.obelouix.ultimate.messages.PluginMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
 import net.kyori.adventure.text.Component;
@@ -20,7 +21,7 @@ import java.util.Locale;
 
 public class MaintenanceCommand extends BukkitCommand {
 
-    private final I18n i18n = I18n.getInstance();
+    protected final TranslationAPI translationAPI = ObelouixUltimate.getInstance().getTranslationAPI();
 
     public MaintenanceCommand(String name) {
         super(name);
@@ -39,7 +40,7 @@ public class MaintenanceCommand extends BukkitCommand {
                                 player.hasPermission("obelouix.maintenance.bypass");//TODO: FIX THIS ->  player.kickPlayer(Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.started")));
                             }
                         } else {
-                            MessageSender.sendMessage(commandSender, Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.already_enabled")));
+                            MessageSender.sendMessage(commandSender, Component.text(translationAPI.getTranslation(commandSender, "obelouix.maintenance.already_enabled")));
                         }
                     }
                     case "off" -> {
@@ -47,7 +48,7 @@ public class MaintenanceCommand extends BukkitCommand {
                             Config.setServerInMaintenance(false);
                         } else {
 
-                            MessageSender.sendMessage(commandSender, Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.already_disabled")));
+                            MessageSender.sendMessage(commandSender, Component.text(translationAPI.getTranslation(commandSender, "obelouix.maintenance.already_disabled")));
                         }
                     }
                     default -> MessageSender.sendMessage(commandSender, PluginMessages.wrongCommandUsage(this, commandSender));

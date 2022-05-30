@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.gui;
 
-import fr.obelouix.ultimate.i18n.I18n;
+import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.api.TranslationAPI;
 import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
@@ -9,7 +10,7 @@ import java.util.Collection;
 
 public abstract class BaseBookGui {
 
-    protected final I18n i18n = I18n.getInstance();
+    protected static final TranslationAPI translationAPI = ObelouixUltimate.getInstance().getTranslationAPI();
     protected Book book;
 
     public BaseBookGui() {

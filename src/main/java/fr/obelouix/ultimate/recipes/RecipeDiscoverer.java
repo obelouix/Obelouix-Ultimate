@@ -1,7 +1,7 @@
 package fr.obelouix.ultimate.recipes;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.i18n.I18n;
+import fr.obelouix.ultimate.api.TranslationAPI;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ import java.util.Objects;
 public class RecipeDiscoverer implements Listener {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    private static final I18n i18n = I18n.getInstance();
+    private static final TranslationAPI translationAPI = plugin.getTranslationAPI();
 
     @EventHandler
     public void onPlayerPickupItem(EntityPickupItemEvent entityPickupItemEvent) {

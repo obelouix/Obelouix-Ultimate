@@ -1,9 +1,9 @@
 package fr.obelouix.ultimate.events;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.api.TranslationAPI;
 import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.config.Config;
-import fr.obelouix.ultimate.i18n.I18n;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -20,7 +20,7 @@ import org.bukkit.scheduler.BukkitTask;
 public class PingChecker implements Listener {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    private static final I18n i18n = I18n.getInstance();
+    private static final TranslationAPI translationAPI = plugin.getTranslationAPI();
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void checkOnPlayerJoin(PlayerJoinEvent event) {
@@ -32,7 +32,7 @@ public class PingChecker implements Listener {
             @Override
             public void run() {
                 if (player.getPing() >= Config.getMaxPing()) {
-                    final Component message = Component.text(i18n.getTranslation(player, "obelouix.message.ping.toohigh"))
+                    final Component message = Component.text(translationAPI.getTranslation(player, "obelouix.message.ping.toohigh"))
                             .replaceText(builder ->
                                     builder.match("(%s")
                                             .replacement(

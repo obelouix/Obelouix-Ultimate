@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.messages;
 
-import fr.obelouix.ultimate.i18n.I18n;
+import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.api.TranslationAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -12,7 +13,7 @@ import java.text.DecimalFormat;
 
 public class PluginMessages {
 
-    private static final I18n i18n = I18n.getInstance();
+    private static final TranslationAPI translationAPI = ObelouixUltimate.getInstance().getTranslationAPI();
     private static final DecimalFormat format = new DecimalFormat("00");
     private static long worldHour;
     private static long worldMinute;
@@ -44,7 +45,7 @@ public class PluginMessages {
         final Player player = (Player) sender;
         calculateTime(time);
 
-        return Component.text(i18n.getTranslation(player, "obelouix.command.time.set"))
+        return Component.text(translationAPI.getTranslation(player, "obelouix.command.time.set"))
                 .color(NamedTextColor.GOLD)
                 .replaceText(TextReplacementConfig.builder()
                         .matchLiteral("{0}")
@@ -69,7 +70,7 @@ public class PluginMessages {
     public static Component playerTimeMessage(CommandSender sender, String world, int time) {
         calculateTime(time);
 
-        return Component.text(i18n.getTranslation(sender, "obelouix.command.time.set"))
+        return Component.text(translationAPI.getTranslation(sender, "obelouix.command.time.set"))
                 .color(NamedTextColor.GOLD)
                 .replaceText(TextReplacementConfig.builder()
                         .matchLiteral("{0}")
@@ -98,7 +99,7 @@ public class PluginMessages {
     }
 
     public static Component nonExistentWorldMessage(CommandSender sender, String world) {
-        return Component.text(i18n.getTranslation(sender, "obelouix.command.day.world_non_existent"))
+        return Component.text(translationAPI.getTranslation(sender, "obelouix.command.day.world_non_existent"))
                 .color(NamedTextColor.DARK_RED)
                 .replaceText(TextReplacementConfig.builder()
                         .matchLiteral("{0}")

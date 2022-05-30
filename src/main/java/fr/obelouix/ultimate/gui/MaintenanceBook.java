@@ -19,7 +19,7 @@ public class MaintenanceBook extends BaseBookGui {
 
     @Override
     protected Component bookTitle(Player player) {
-        return Component.text(i18n.getTranslation(player, "obelouix.book.maintenance.title"));
+        return Component.text(translationAPI.getTranslation(player, "obelouix.book.maintenance.title"));
     }
 
     @Override
@@ -29,7 +29,7 @@ public class MaintenanceBook extends BaseBookGui {
 
     @Override
     protected Collection<Component> bookPages(Player player) {
-        final Component index = Component.text(">" + i18n.getTranslation(player, "obelouix.book.maintenance.schedule"), NamedTextColor.DARK_AQUA, TextDecoration.UNDERLINED)
+        final Component index = Component.text(">" + translationAPI.getTranslation(player, "obelouix.book.maintenance.schedule"), NamedTextColor.DARK_AQUA, TextDecoration.UNDERLINED)
                 .clickEvent(ClickEvent.changePage(2));
         final Component schedulePage = Component.text("start date:\n")
                 .clickEvent(openSign(player))

@@ -43,15 +43,15 @@ public class AdminInventory extends BaseGUI {
     public AdminInventory(Player player) {
         inventory = Bukkit.createInventory(null, 54, title(player)); //Bukkit.createInventory(null, 54, title(player));
         this.viewer = player;
-        playerManagementComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.player_management"), NamedTextColor.GREEN);
-        playerManagementDescriptionComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.player_management.description"), NamedTextColor.GOLD)
+        playerManagementComponent = Component.text(translationAPI.getTranslation(player, "obelouix.inventory.admin_center.player_management"), NamedTextColor.GREEN);
+        playerManagementDescriptionComponent = Component.text(translationAPI.getTranslation(player, "obelouix.inventory.admin_center.player_management.description"), NamedTextColor.GOLD)
                 .decoration(TextDecoration.ITALIC, false);
-        worldManagementComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.world_management"), NamedTextColor.GOLD);
-        Component worldManagementDescriptionComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center.world_management.description"))
+        worldManagementComponent = Component.text(translationAPI.getTranslation(player, "obelouix.inventory.admin_center.world_management"), NamedTextColor.GOLD);
+        Component worldManagementDescriptionComponent = Component.text(translationAPI.getTranslation(player, "obelouix.inventory.admin_center.world_management.description"))
                 .decoration(TextDecoration.ITALIC, false);
 
-        maintenanceComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.maintenance_center"), NamedTextColor.AQUA);
-        maintenanceDescComponent = Component.text(i18n.getTranslation(player, "obelouix.inventory.maintenance_center.description"))
+        maintenanceComponent = Component.text(translationAPI.getTranslation(player, "obelouix.inventory.maintenance_center"), NamedTextColor.AQUA);
+        maintenanceDescComponent = Component.text(translationAPI.getTranslation(player, "obelouix.inventory.maintenance_center.description"))
                 .decoration(TextDecoration.ITALIC, false);
 
         setupInventory();
@@ -60,7 +60,7 @@ public class AdminInventory extends BaseGUI {
 
     @Override
     protected Component title(Player player) {
-        return Component.text(i18n.getTranslation(player, "obelouix.inventory.admin_center"), NamedTextColor.DARK_RED);
+        return Component.text(translationAPI.getTranslation(player, "obelouix.inventory.admin_center"), NamedTextColor.DARK_RED);
     }
 
     protected void setupInventory() {
