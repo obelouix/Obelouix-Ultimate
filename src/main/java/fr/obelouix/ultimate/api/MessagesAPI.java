@@ -1,4 +1,4 @@
-package fr.obelouix.ultimate.audience;
+package fr.obelouix.ultimate.api;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 
-public class MessageSender {
+public class MessagesAPI {
 
     /**
      * Send a message to a command sender

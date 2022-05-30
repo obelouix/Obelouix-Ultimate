@@ -2,8 +2,8 @@ package fr.obelouix.ultimate.commands;
 
 import com.google.common.collect.ImmutableList;
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.api.TranslationAPI;
-import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.messages.PluginMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
@@ -40,7 +40,7 @@ public class MaintenanceCommand extends BukkitCommand {
                                 player.hasPermission("obelouix.maintenance.bypass");//TODO: FIX THIS ->  player.kickPlayer(Component.text(i18n.getTranslation(commandSender, "obelouix.maintenance.started")));
                             }
                         } else {
-                            MessageSender.sendMessage(commandSender, Component.text(translationAPI.getTranslation(commandSender, "obelouix.maintenance.already_enabled")));
+                            MessagesAPI.sendMessage(commandSender, Component.text(translationAPI.getTranslation(commandSender, "obelouix.maintenance.already_enabled")));
                         }
                     }
                     case "off" -> {
@@ -48,13 +48,14 @@ public class MaintenanceCommand extends BukkitCommand {
                             Config.setServerInMaintenance(false);
                         } else {
 
-                            MessageSender.sendMessage(commandSender, Component.text(translationAPI.getTranslation(commandSender, "obelouix.maintenance.already_disabled")));
+                            MessagesAPI.sendMessage(commandSender, Component.text(translationAPI.getTranslation(commandSender, "obelouix.maintenance.already_disabled")));
                         }
                     }
-                    default -> MessageSender.sendMessage(commandSender, PluginMessages.wrongCommandUsage(this, commandSender));
+                    default ->
+                            MessagesAPI.sendMessage(commandSender, PluginMessages.wrongCommandUsage(this, commandSender));
                 }
             } else {
-                MessageSender.sendMessage(commandSender, PluginMessages.wrongCommandUsage(this, commandSender));
+                MessagesAPI.sendMessage(commandSender, PluginMessages.wrongCommandUsage(this, commandSender));
             }
         }
         return false;

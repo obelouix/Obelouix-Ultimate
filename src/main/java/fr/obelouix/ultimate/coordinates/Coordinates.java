@@ -1,7 +1,7 @@
 package fr.obelouix.ultimate.coordinates;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.audience.MessageSender;
+import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.messages.I18NMessages;
@@ -52,7 +52,7 @@ public class Coordinates implements Listener {
                                             .append(Component.text(" " + parseTo24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
                                             .append(Component.text(StringUtils.capitalize(I18NMessages.DIRECTION.getTranslation(player)) + ": ", NamedTextColor.AQUA))
                                             .append(Component.text(getFacing(player), NamedTextColor.WHITE));
-                                    MessageSender.sendActionBar(player.getPlayer(), actionBar);
+                                    MessagesAPI.sendActionBar(player.getPlayer(), actionBar);
                                 }
                             }
                         } catch (ConfigurateException e) {

@@ -1,8 +1,8 @@
 package fr.obelouix.ultimate.events;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.api.TranslationAPI;
-import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.config.Config;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -39,7 +39,7 @@ public class PingChecker implements Listener {
                                                     Component.text("(" + player.getPing() + " ms)", NamedTextColor.DARK_RED)
                                             ));
 
-                    MessageSender.sendKickMessage(player, message, PlayerKickEvent.Cause.TIMEOUT);
+                    MessagesAPI.sendKickMessage(player, message, PlayerKickEvent.Cause.TIMEOUT);
                 }
             }
         }.runTaskTimer(plugin, 20, 6000);

@@ -4,7 +4,7 @@ import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.audience.MessageSender;
+import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.messages.I18NMessages;
@@ -58,17 +58,17 @@ public class DayCommand extends BaseCommand {
             if (world != null) {
                 if (Bukkit.getWorld(world) != null) {
                     setDay(world);
-                    MessageSender.sendMessage(sender, PluginMessages.playerTimeMessage(sender, world, 0));
+                    MessagesAPI.sendMessage(sender, PluginMessages.playerTimeMessage(sender, world, 0));
                 } else {
-                    MessageSender.sendMessage(sender, PluginMessages.nonExistentWorldMessage(sender, world));
+                    MessagesAPI.sendMessage(sender, PluginMessages.nonExistentWorldMessage(sender, world));
                 }
             } else {
                 if (sender instanceof Player player) {
                     setDay(player.getWorld().getName());
-                    MessageSender.sendMessage(player, PluginMessages.playerTimeMessage(player, player.getWorld().getName(), 0));
+                    MessagesAPI.sendMessage(player, PluginMessages.playerTimeMessage(player, player.getWorld().getName(), 0));
 
                 } else {
-                    MessageSender.sendMessage(sender,
+                    MessagesAPI.sendMessage(sender,
                             Component.text(I18NMessages.COMMAND_NOT_ENOUGH_ARGS.getSystemTranslation(), NamedTextColor.DARK_RED));
                 }
             }

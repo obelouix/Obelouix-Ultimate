@@ -1,7 +1,7 @@
 package fr.obelouix.ultimate.commands;
 
 import cloud.commandframework.context.CommandContext;
-import fr.obelouix.ultimate.audience.MessageSender;
+import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.data.PlayerData;
@@ -31,14 +31,14 @@ public class CoordsCommand extends BaseCommand {
             PlayerData.setShowCoordinates(player, !showCoords);
             showCoords = !showCoords;
             if (showCoords) {
-                MessageSender.sendMessage(player, Component.text(
+                MessagesAPI.sendMessage(player, Component.text(
                         StringUtils.capitalize(I18NMessages.COMMAND_COORDS_ENABLED.getTranslation(player)), NamedTextColor.GREEN));
             } else {
-                MessageSender.sendMessage(player, Component.text(
+                MessagesAPI.sendMessage(player, Component.text(
                         StringUtils.capitalize(I18NMessages.COMMAND_COORDS_DISABLED.getTranslation(player)), NamedTextColor.DARK_RED));
             }
         } else if (sender instanceof ConsoleCommandSender console) {
-            MessageSender.sendMessage(console, Component.text(I18NMessages.COMMAND_ONLY_FOR_PLAYER.getSystemTranslation(), NamedTextColor.DARK_RED));
+            MessagesAPI.sendMessage(console, Component.text(I18NMessages.COMMAND_ONLY_FOR_PLAYER.getSystemTranslation(), NamedTextColor.DARK_RED));
         }
     }
 }

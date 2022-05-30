@@ -4,7 +4,7 @@ import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.audience.MessageSender;
+import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.permissions.IPermission;
@@ -43,7 +43,7 @@ public class MapImageCommand extends BaseCommand {
     @Override
     protected void execute(@NonNull CommandContext<CommandSender> context) {
         if (context.getSender() instanceof ConsoleCommandSender consoleCommandSender) {
-            MessageSender.sendMessage(consoleCommandSender, Component.text(
+            MessagesAPI.sendMessage(consoleCommandSender, Component.text(
                     translationAPI.getTranslation(consoleCommandSender, "obelouix.commands.not_for_console"),
                     NamedTextColor.DARK_RED));
         } else if (context.getSender() instanceof Player player) {
