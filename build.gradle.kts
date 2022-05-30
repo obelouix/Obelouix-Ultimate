@@ -118,7 +118,7 @@ dependencies {
     // GlowAPI
     //implementation("com.github.InventivetalentDev:GlowAPI:master-SNAPSHOT")
     // Interfaces (inventory)
-    implementation("com.github.Incendo.interfaces:interfaces-paper:-SNAPSHOT")
+    implementation("com.github.Incendo.interfaces:interfaces-paper:ee352a5c8b")
 }
 
 tasks {
