@@ -7,7 +7,6 @@ import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
-import fr.obelouix.ultimate.i18n.I18n;
 import fr.obelouix.ultimate.permissions.IPermission;
 import fr.obelouix.ultimate.renderer.ImageMapRenderder;
 import net.kyori.adventure.text.Component;
@@ -45,7 +44,7 @@ public class MapImageCommand extends BaseCommand {
     protected void execute(@NonNull CommandContext<CommandSender> context) {
         if (context.getSender() instanceof ConsoleCommandSender consoleCommandSender) {
             MessageSender.sendMessage(consoleCommandSender, Component.text(
-                    I18n.getInstance().getTranslation(consoleCommandSender, "obelouix.commands.not_for_console"),
+                    translationAPI.getTranslation(consoleCommandSender, "obelouix.commands.not_for_console"),
                     NamedTextColor.DARK_RED));
         } else if (context.getSender() instanceof Player player) {
             if (IPermission.hasPermission(context.getSender(), "obelouix.command.mapimg")) {

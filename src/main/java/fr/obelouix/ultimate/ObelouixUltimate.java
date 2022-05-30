@@ -2,6 +2,7 @@ package fr.obelouix.ultimate;
 
 import co.aikar.timings.lib.TimingManager;
 import com.earth2me.essentials.Essentials;
+import fr.obelouix.ultimate.api.TranslationAPI;
 import fr.obelouix.ultimate.api.UltimateAdvancementAPI;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
@@ -25,6 +26,8 @@ public class ObelouixUltimate extends JavaPlugin {
 
     private static final Logger LOGGER = Logger.getLogger("Obelouix Ultimate");
     private static ObelouixUltimate instance;
+    private static TranslationAPI translationAPI;
+
     private static TimingManager timingManager;
     private static Essentials essentials;
     private static EssentialsDiscord essentialsXDiscordPlugin;
@@ -128,6 +131,8 @@ public class ObelouixUltimate extends JavaPlugin {
         checkPaperPresence();
         checkOfflineMode();
         instance = this;
+        translationAPI = new TranslationAPI();
+        translationAPI.setResourceBundleBaseName("lang_");
         timingManager = TimingManager.of(this);
 
         new MultiverseMigrator();
@@ -169,6 +174,10 @@ public class ObelouixUltimate extends JavaPlugin {
         new CustomFurnaceRecipes();
         new CustomCraftingTableRecipes();
         new Updater();
+    }
+
+    public TranslationAPI getTranslationAPI() {
+        return translationAPI;
     }
 
     public boolean isEssentialsXPresent() {

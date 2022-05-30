@@ -1,9 +1,10 @@
 package fr.obelouix.ultimate.events;
 
 import com.google.common.collect.ImmutableList;
+import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.api.TranslationAPI;
 import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.config.Config;
-import fr.obelouix.ultimate.i18n.I18n;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class ReloadDetector implements Listener {
 
-    private static final I18n i18n = I18n.getInstance();
+    private static final TranslationAPI translationAPI = ObelouixUltimate.getInstance().getTranslationAPI();
     private final List<String> commands = ImmutableList.of("reload", "reload confirm", "rl", "rl confirm");
 
     @EventHandler
@@ -57,7 +58,7 @@ public class ReloadDetector implements Listener {
     }
 
     private Component warnMessage(CommandSender sender) {
-        return Component.text(i18n.getTranslation(sender, "obelouix.reload_cmd_is_bad"))
+        return Component.text(translationAPI.getTranslation(sender, "obelouix.reload_cmd_is_bad"))
                 .color(NamedTextColor.DARK_RED)
                 .replaceText(TextReplacementConfig.builder()
                         .matchLiteral("{0}")
@@ -68,7 +69,7 @@ public class ReloadDetector implements Listener {
     }
 
     private Component commandDisabledMessage(CommandSender sender){
-        return Component.text(i18n.getTranslation(sender, "obelouix.command.bukkit.reload.disabled"))
+        return Component.text(translationAPI.getTranslation(sender, "obelouix.command.bukkit.reload.disabled"))
                 .color(NamedTextColor.GREEN)
                 .replaceText(TextReplacementConfig.builder()
                         .matchLiteral("{0}")

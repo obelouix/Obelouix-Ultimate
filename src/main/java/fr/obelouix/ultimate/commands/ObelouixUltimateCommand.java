@@ -7,6 +7,7 @@ import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext
 import cloud.commandframework.meta.CommandMeta;
 import com.google.common.collect.ImmutableList;
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.api.TranslationAPI;
 import fr.obelouix.ultimate.audience.MessageSender;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
@@ -24,6 +25,7 @@ import java.util.List;
 public class ObelouixUltimateCommand extends BaseCommand {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
+    private static final TranslationAPI translationAPI = plugin.getTranslationAPI();
 
     public void register() {
         CommandManager.getInstance().command(
@@ -56,13 +58,13 @@ public class ObelouixUltimateCommand extends BaseCommand {
             } else if (argument.equalsIgnoreCase("reload")) {
                 Config.loadConfig();
                 if (Config.isConfigReloaded()) {
-                    MessageSender.sendMessage(sender, Component.text(i18n.getTranslation(sender, "obelouix.command.obelouixultimate.reload"))
+                    MessageSender.sendMessage(sender, Component.text(translationAPI.getTranslation(sender, "obelouix.command.obelouixultimate.reload"))
                             .color(NamedTextColor.AQUA));
                     // Temporary will be modified later
                     MessageSender.broadcast(Component.text("[Obelouix Ultimate Plugin] ", NamedTextColor.GREEN)
                             .append(Component.text(" Le plugin a été rechargé, pour réactiver la barre de coordonnée (si elle ne fonctionne plus), 1 SEUL joueur doit déco reco", NamedTextColor.RED)));
                 } else {
-                    MessageSender.sendMessage(sender, Component.text(i18n.getTranslation(sender, "obelouix.command.obelouixultimate.reload.failed"))
+                    MessageSender.sendMessage(sender, Component.text(translationAPI.getTranslation(sender, "obelouix.command.obelouixultimate.reload.failed"))
                             .color(NamedTextColor.DARK_RED));
                 }
             }

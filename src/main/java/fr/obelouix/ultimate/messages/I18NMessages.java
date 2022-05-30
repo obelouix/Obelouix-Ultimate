@@ -1,6 +1,6 @@
 package fr.obelouix.ultimate.messages;
 
-import fr.obelouix.ultimate.i18n.I18n;
+import fr.obelouix.ultimate.ObelouixUltimate;
 import org.bukkit.command.CommandSender;
 
 import java.util.Locale;
@@ -48,6 +48,7 @@ public enum I18NMessages {
      */
     UP_TO_DATE("obelouix.update.up_to_date");
 
+    private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     private final String translation;
 
     I18NMessages(String translation) {
@@ -55,10 +56,10 @@ public enum I18NMessages {
     }
 
     public String getTranslation(CommandSender sender) {
-        return I18n.getInstance().getTranslation(sender, translation);
+        return plugin.getTranslationAPI().getTranslation(sender, translation);
     }
 
     public String getSystemTranslation() {
-        return I18n.getInstance().getTranslation(new Locale(System.getProperty("user.language"), System.getProperty("user.country")), translation);
+        return plugin.getTranslationAPI().getTranslation(new Locale(System.getProperty("user.language"), System.getProperty("user.country")), translation);
     }
 }

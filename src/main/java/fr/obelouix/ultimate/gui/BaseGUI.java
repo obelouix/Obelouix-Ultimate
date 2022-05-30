@@ -1,7 +1,7 @@
 package fr.obelouix.ultimate.gui;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.i18n.I18n;
+import fr.obelouix.ultimate.api.TranslationAPI;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class BaseGUI implements Listener {
 
     protected static ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    protected static final I18n i18n = I18n.getInstance();
+    protected static final TranslationAPI translationAPI = plugin.getTranslationAPI();
     protected Inventory inventory;
 
     public BaseGUI() {

@@ -1,13 +1,14 @@
 package fr.obelouix.ultimate.commands.manager;
 
 import cloud.commandframework.context.CommandContext;
-import fr.obelouix.ultimate.i18n.I18n;
+import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.api.TranslationAPI;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public abstract class BaseCommand {
 
-    protected final I18n i18n = I18n.getInstance();
+    protected final TranslationAPI translationAPI = ObelouixUltimate.getInstance().getTranslationAPI();
 
     /**
      * Method for registering the command to the framework
