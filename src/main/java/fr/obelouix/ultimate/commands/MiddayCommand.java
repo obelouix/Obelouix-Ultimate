@@ -1,76 +1,90 @@
 package fr.obelouix.ultimate.commands;
 
+import cloud.commandframework.arguments.standard.StringArgument;
+import cloud.commandframework.context.CommandContext;
+import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
+import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.audience.MessageSender;
-import fr.obelouix.ultimate.i18n.I18n;
+import fr.obelouix.ultimate.commands.manager.BaseCommand;
+import fr.obelouix.ultimate.commands.manager.CommandManager;
+import fr.obelouix.ultimate.messages.I18NMessages;
 import fr.obelouix.ultimate.messages.PluginMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
 import java.util.Objects;
 
-public class MiddayCommand extends BukkitCommand {
+public class MiddayCommand extends BaseCommand {
 
-    private static final I18n i18n = I18n.getInstance();
-    private static Component message;
-    private static CommandSender sender;
+    public void register() {
+        CommandManager.getInstance().command(
+                        CommandManager.getInstance()
+                                .commandBuilder("midday")
+                                .argument(StringArgument.optional("world"))
+                                .handler(this::execute)
+                                .build())
+                .setCommandSuggestionProcessor(this::suggestions);
+    }
 
-    public MiddayCommand(String name) {
-        super(name);
-        this.setUsage("/midday [world]");
+    private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
+        final CommandSender sender = commandSenderCommandPreprocessingContext.getCommandContext().getSender();
+        if (sender.hasPermission("obelouix.command.midday")) {
+            Bukkit.getWorlds().forEach(world -> {
+                if (world.getEnvironment().equals(World.Environment.NORMAL)) {
+                    strings.add(world.getName());
+                }
+            });
+        }
+        return strings;
     }
 
     @Override
-    public boolean execute(@NotNull CommandSender commandSender, @NotNull String label, @NotNull String[] args) {
-        if (commandSender instanceof Player player && IPermission.hasPermission(commandSender, "obelouix.command.midday")) {
-            if (args.length == 0) {
-                setMidday(player.getWorld().getName());
-            } else if (args.length == 1) {
-                setMidday(args[0]);
-            } else {
-                MessageSender.sendMessage(commandSender, PluginMessages.wrongCommandUsage(this, player));
+    protected void execute(@NonNull CommandContext<CommandSender> context) {
+        final CommandSender sender = context.getSender();
+        String world = null;
+        if (IPermission.hasPermission(sender, "obelouix.command.midday")) {
+            if (context.getOptional("world").isPresent()) {
+                world = (String) context.getOptional("world").get();
             }
-            MessageSender.sendMessage(commandSender, message);
-        } else if (commandSender instanceof ConsoleCommandSender) {
-            if (args.length == 0) {
-                commandSender.sendMessage(i18n.getTranslation(commandSender, "obelouix.command.day.console.too_few_arguments"));
-            } else if (args.length == 1) {
-                setMidday(args[0]);
-                MessageSender.sendMessage(commandSender, message);
+            if (world != null) {
+                if (Bukkit.getWorld(world) != null) {
+                    setMidday(world);
+                    MessageSender.sendMessage(sender, PluginMessages.playerTimeMessage(sender, world, 6000));
+                } else {
+                    MessageSender.sendMessage(sender, PluginMessages.nonExistentWorldMessage(sender, world));
+                }
             } else {
-                commandSender.sendMessage(i18n.getTranslation(commandSender, "obelouix.command.day.console.too_many_arguments"));
+                if (sender instanceof Player player) {
+                    setMidday(player.getWorld().getName());
+                    MessageSender.sendMessage(player, PluginMessages.playerTimeMessage(player, player.getWorld().getName(), 6000));
+
+                } else {
+                    MessageSender.sendMessage(sender,
+                            Component.text(I18NMessages.COMMAND_NOT_ENOUGH_ARGS.getSystemTranslation(), NamedTextColor.DARK_RED));
+                }
             }
         }
-        return false;
     }
 
-    @Override
-    public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, @NotNull String[] args) throws IllegalArgumentException {
-        if (sender.hasPermission("obelouix.command.midday") && args.length == 1) {
-            return DayCommand.getNormalWorlds();
-        }
-        return super.tabComplete(sender, alias, args);
-    }
-
+    /**
+     * We can't set the midday asynchronously, so we need to run this method
+     *
+     * @param world world name
+     */
     private void setMidday(String world) {
-        if (Bukkit.getWorld(world) != null) {
-            Objects.requireNonNull(Bukkit.getWorld(world)).setTime(6000);
-            if (sender instanceof Player player) {
-                message = PluginMessages.playerTimeMessage(player, 6000);
-            } else {
-                message = PluginMessages.playerTimeMessage(sender, world, 6000);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Objects.requireNonNull(Bukkit.getWorld(world)).setTime(6000);
             }
-
-        } else {
-            message = PluginMessages.nonExistentWorldMessage(sender, world);
-        }
-
+        }.runTask(ObelouixUltimate.getInstance());
     }
-
 }

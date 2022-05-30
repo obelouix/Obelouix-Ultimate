@@ -136,5 +136,10 @@
       <option name="name" value="maven18" />
       <option name="url" value="https://api.github.com/repos/InventivetalentDev/GlowAPI/contents" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven18" />
+      <option name="name" value="maven18" />
+      <option name="url" value="https://repo.incendo.org/content/repositories/snapshots/" />
+    </remote-repository>
   </component>
 </project>

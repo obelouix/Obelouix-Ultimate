@@ -9,8 +9,10 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class CustomVillager extends net.minecraft.world.entity.npc.Villager {
 
@@ -19,9 +21,9 @@ public class CustomVillager extends net.minecraft.world.entity.npc.Villager {
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.0, Ingredient.of(Blocks.EMERALD_BLOCK.asItem()), false));
         this.targetSelector.addGoal(3, new TemptGoal(this, 1.0, Ingredient.of(Blocks.EMERALD_BLOCK.asItem()), false));
         this.getAttributes().registerAttribute(Attributes.FOLLOW_RANGE);
-        this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(10);
+        Objects.requireNonNull(this.getAttribute(Attributes.FOLLOW_RANGE)).setBaseValue(10);
         this.setHealth(20);
-        this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(10);
+        Objects.requireNonNull(this.getAttribute(Attributes.FOLLOW_RANGE)).setBaseValue(10);
         ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
         this.getNavigation().setCanFloat(true);
         this.setCanPickUpLoot(true);

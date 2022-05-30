@@ -1,7 +1,7 @@
 package fr.obelouix.ultimate.events;
 
 import fr.obelouix.ultimate.entity.CustomVillager;
-import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_18_R2.CraftWorld;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

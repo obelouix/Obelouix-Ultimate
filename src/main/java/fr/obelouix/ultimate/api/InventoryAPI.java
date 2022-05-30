@@ -51,7 +51,7 @@ public class InventoryAPI {
     /**
      * Get a player head with a custom texture ID
      *
-     * @param texture get the texture ID from https://freshcoal.com/
+     * @param texture get the texture ID from <a href="https://freshcoal.com/">https://freshcoal.com/</a>
      * @param title   - the item name
      * @return Player Head with custom skin and name
      */

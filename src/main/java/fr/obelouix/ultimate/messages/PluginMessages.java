@@ -25,7 +25,7 @@ public class PluginMessages {
      * @return a formatted message with the correct use of the given command
      */
     public static Component wrongCommandUsage(Command command, CommandSender commandSender) {
-        return Component.text(i18n.getTranslation(commandSender, "obelouix.wrong_command_usage"))
+        return Component.text(I18NMessages.COMMAND_WRONG_USAGE.getTranslation(commandSender))
                 .color(NamedTextColor.DARK_RED)
                 .replaceText(TextReplacementConfig.builder()
                         .matchLiteral("{0}")

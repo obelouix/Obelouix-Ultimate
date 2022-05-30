@@ -11,6 +11,7 @@ import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 import java.nio.file.Path;
 import java.util.Locale;
 import java.util.MissingResourceException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -53,7 +54,7 @@ public class I18n {
 
                 playerMessages = completableFuture.get();
             } catch (MissingResourceException | InterruptedException | ExecutionException | NullPointerException | ConfigurateException e) {
-                if (root.node("language").getString().equalsIgnoreCase("br_fr")) {
+                if (Objects.requireNonNull(Objects.requireNonNull(root).node("language").getString()).equalsIgnoreCase("br_fr")) {
                     playerMessages = ResourceBundle.getBundle("messages_fr_FR");
                 } else {
                     playerMessages = ResourceBundle.getBundle("messages_en_US");
@@ -72,4 +73,16 @@ public class I18n {
 
         return playerMessages.getString(message);
     }
+
+    public String getTranslation(Locale locale, String message) {
+        ResourceBundle translationBundle;
+        try {
+            translationBundle = ResourceBundle.getBundle("messages_" + locale.toLanguageTag().replaceAll("-", "_"));
+
+        } catch (MissingResourceException e) {
+            translationBundle = ResourceBundle.getBundle("messages_en_US");
+        }
+        return translationBundle.getString(message);
+    }
+
 }

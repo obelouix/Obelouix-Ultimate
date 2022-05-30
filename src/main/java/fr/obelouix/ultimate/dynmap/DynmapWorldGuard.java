@@ -12,6 +12,7 @@ import org.dynmap.DynmapCommonAPI;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class DynmapWorldGuard {
 
@@ -34,15 +35,15 @@ public class DynmapWorldGuard {
                 // Remove WorldGuard area markers if their WorldGuard region no longer exist
                 Bukkit.getWorlds().forEach(world -> {
                     final World world1 = BukkitAdapter.adapt(world);
-                    final Map<String, ProtectedRegion> region = WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1).getRegions();
+                    final Map<String, ProtectedRegion> region = Objects.requireNonNull(WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1)).getRegions();
                     region.keySet().forEach(regionID -> {
                         final double[] x = {
-                                WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1).getRegion(regionID).getMinimumPoint().getBlockX(),
-                                WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1).getRegion(regionID).getMaximumPoint().getBlockX()
+                                Objects.requireNonNull(Objects.requireNonNull(WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1)).getRegion(regionID)).getMinimumPoint().getBlockX(),
+                                Objects.requireNonNull(Objects.requireNonNull(WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1)).getRegion(regionID)).getMaximumPoint().getBlockX()
                         };
                         final double[] z = {
-                                WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1).getRegion(regionID).getMinimumPoint().getBlockZ(),
-                                WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1).getRegion(regionID).getMaximumPoint().getBlockZ()
+                                Objects.requireNonNull(Objects.requireNonNull(WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1)).getRegion(regionID)).getMinimumPoint().getBlockZ(),
+                                Objects.requireNonNull(Objects.requireNonNull(WorldGuard.getWorldGuardPlatform().getRegionContainer().get(world1)).getRegion(regionID)).getMaximumPoint().getBlockZ()
                         };
                         dynmapCommonAPI.getMarkerAPI().getMarkerSet(Config.getDynmapWorldGuardLayer().toLowerCase(Locale.ROOT))
                                 .getAreaMarkers().forEach(areaMarker -> {

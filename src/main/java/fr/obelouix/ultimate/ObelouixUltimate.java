@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate;
 
 import co.aikar.timings.lib.TimingManager;
+import com.earth2me.essentials.Essentials;
 import fr.obelouix.ultimate.api.UltimateAdvancementAPI;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
@@ -11,7 +12,9 @@ import fr.obelouix.ultimate.events.manager.EventManager;
 import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
 import fr.obelouix.ultimate.recipes.CustomFurnaceRecipes;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
+import fr.obelouix.ultimate.utils.Updater;
 import fr.obelouix.ultimate.worlds.WorldManager;
+import net.essentialsx.discord.EssentialsDiscord;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NonNls;
@@ -23,6 +26,8 @@ public class ObelouixUltimate extends JavaPlugin {
     private static final Logger LOGGER = Logger.getLogger("Obelouix Ultimate");
     private static ObelouixUltimate instance;
     private static TimingManager timingManager;
+    private static Essentials essentials;
+    private static EssentialsDiscord essentialsXDiscordPlugin;
 
     /**
      * Get an instance of {@link ObelouixUltimate ObelouixUltimate} main class
@@ -98,6 +103,26 @@ public class ObelouixUltimate extends JavaPlugin {
         }
     }
 
+    public static Essentials getEssentialsPlugin() {
+        return essentials;
+    }
+
+    public boolean isIsDynmapPresent() {
+        return getClass("org.dynmap.bukkit.DynmapPlugin");
+    }
+
+    public boolean isWorldGuardPresent() {
+        return getClass("com.sk89q.worldguard.WorldGuard");
+    }
+
+    public void setEssentialsPlugin(Essentials essentials) {
+        ObelouixUltimate.essentials = essentials;
+    }
+
+    private boolean isServerUtilsPresent() {
+        return getClass("net.frankheijden.serverutils.bukkit.ServerUtils");
+    }
+
     @Override
     public void onEnable() {
         checkPaperPresence();
@@ -109,6 +134,15 @@ public class ObelouixUltimate extends JavaPlugin {
         WorldManager.loadWorlds();
         if (Config.shouldUnloadEmptyWorlds()) {
             Bukkit.getServer().getScheduler().runTaskTimer(this, WorldManager.unloadEmptyWorlds(), 300, 1200);
+        }
+
+        if (Config.isDisconnectOnHighPing() && Config.getMaxPing() < 200) {
+            getLogger().warning("""
+                    Minimum ping for kicking a player is too low (must be 200 or higher)
+                    Using 200ms as value until you change it in the config file
+                    """);
+
+            Config.setMaxPing(200);
         }
 
         LuckPermsUtils.checkForLuckPerms();
@@ -125,20 +159,35 @@ public class ObelouixUltimate extends JavaPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         //new EntityRegistry();
         new EventManager();
         // new EntityRegistry();
         DataStorage.setupStorage();
-        UltimateAdvancementAPI.init();
+        UltimateAdvancementAPI advancementAPI = new UltimateAdvancementAPI();
+        advancementAPI.init();
         new CustomFurnaceRecipes();
         new CustomCraftingTableRecipes();
+        new Updater();
     }
 
-    public boolean isIsDynmapPresent() {
-        return getClass("org.dynmap.bukkit.DynmapPlugin");
+    public boolean isEssentialsXPresent() {
+        return getClass("com.earth2me.essentials.Essentials");
     }
 
-    public boolean isWorldGuardPresent() {
-        return getClass("com.sk89q.worldguard.WorldGuard");
+    public boolean isEssentialsXDiscordPresent() {
+        return getClass("net.essentialsx.discord.EssentialsDiscord");
+    }
+
+    public Essentials getEssentials() {
+        return essentials;
+    }
+
+    public EssentialsDiscord getEssentialsXDiscordPlugin() {
+        return essentialsXDiscordPlugin;
+    }
+
+    public void setEssentialsXDiscordPlugin(EssentialsDiscord essentialsXDiscordPlugin) {
+        ObelouixUltimate.essentialsXDiscordPlugin = essentialsXDiscordPlugin;
     }
 }

@@ -2,7 +2,9 @@ package fr.obelouix.ultimate.coordinates;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.audience.MessageSender;
-import fr.obelouix.ultimate.i18n.I18n;
+import fr.obelouix.ultimate.config.Config;
+import fr.obelouix.ultimate.data.PlayerData;
+import fr.obelouix.ultimate.messages.I18NMessages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.apache.commons.lang3.StringUtils;
@@ -31,27 +33,31 @@ public class Coordinates implements Listener {
             @Override
             public void run() {
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
-                            .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getName() + ".conf"))
-                            .build();
-                    final CommentedConfigurationNode root;
-                    try {
-                        root = playerFile.load();
-                        if (!root.node("language").empty()) {
+                    if (!Config.getCoordinatesBlacklist().contains(player.getWorld()) && PlayerData.isShowCoordinates(player)) {
+                        final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
+                                .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getName() + ".conf"))
+                                .build();
+                        final CommentedConfigurationNode root;
+                        try {
+                            root = playerFile.load();
+                            if (root.node("show-coordinates").getBoolean()) {
+                                if (!root.node("language").empty()) {
 
-                            final Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
-                                    .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
-                                    .append(Component.text(" Y: ", NamedTextColor.GREEN))
-                                    .append(Component.text(player.getLocation().getBlockY(), NamedTextColor.WHITE))
-                                    .append(Component.text(" Z: ", NamedTextColor.DARK_BLUE))
-                                    .append(Component.text(player.getLocation().getBlockZ(), NamedTextColor.WHITE))
-                                    .append(Component.text(" " + parseTo24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
-                                    .append(Component.text(" Direction: ", NamedTextColor.AQUA))
-                                    .append(Component.text(getFacing(player), NamedTextColor.WHITE));
-                            MessageSender.sendActionBar(player.getPlayer(), actionBar);
+                                    final Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
+                                            .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
+                                            .append(Component.text(" Y: ", NamedTextColor.GREEN))
+                                            .append(Component.text(player.getLocation().getBlockY(), NamedTextColor.WHITE))
+                                            .append(Component.text(" Z: ", NamedTextColor.DARK_BLUE))
+                                            .append(Component.text(player.getLocation().getBlockZ(), NamedTextColor.WHITE))
+                                            .append(Component.text(" " + parseTo24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
+                                            .append(Component.text(StringUtils.capitalize(I18NMessages.DIRECTION.getTranslation(player)) + ": ", NamedTextColor.AQUA))
+                                            .append(Component.text(getFacing(player), NamedTextColor.WHITE));
+                                    MessageSender.sendActionBar(player.getPlayer(), actionBar);
+                                }
+                            }
+                        } catch (ConfigurateException e) {
+                            e.printStackTrace();
                         }
-                    } catch (ConfigurateException e) {
-                        e.printStackTrace();
                     }
                 });
             }
@@ -105,28 +111,28 @@ public class Coordinates implements Listener {
         final double yaw = p.getLocation().getYaw();
 
         if (yaw >= 337.5 || yaw <= 22.5 && yaw >= 0.0 || yaw >= -22.5 && yaw <= 0.0 || yaw <= -337.5) {
-            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.south"));
+            return StringUtils.capitalize(I18NMessages.DIRECTION_SOUTH.getTranslation(p));
         }
         if (yaw >= 22.5 && yaw <= 67.5 || yaw <= -292.5) {
-            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.southwest"));
+            return StringUtils.capitalize(I18NMessages.DIRECTION_SOUTH_WEST.getTranslation(p));
         }
         if (yaw >= 67.5 && yaw <= 112.5 || yaw <= -247.5) {
-            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.west"));
+            return StringUtils.capitalize(I18NMessages.DIRECTION_WEST.getTranslation(p));
         }
         if (yaw >= 112.5 && yaw <= 157.5 || yaw <= -202.5) {
-            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.northwest"));
+            return StringUtils.capitalize(I18NMessages.DIRECTION_NORTH_WEST.getTranslation(p));
         }
         if (yaw >= 157.5 && yaw <= 202.5 || yaw <= -157.5) {
-            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.north"));
+            return StringUtils.capitalize(I18NMessages.DIRECTION_NORTH.getTranslation(p));
         }
         if (yaw >= 202.5 && yaw <= 247.5 || yaw <= -112.5) {
-            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.northeast"));
+            return StringUtils.capitalize(I18NMessages.DIRECTION_NORTH_EAST.getTranslation(p));
         }
         if (yaw >= 247.5 && yaw <= 292.5 || yaw <= -67.5) {
-            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.east"));
+            return StringUtils.capitalize(I18NMessages.DIRECTION_EAST.getTranslation(p));
         }
         if (yaw >= 292.5 || yaw <= -22.5) {
-            return StringUtils.capitalize(I18n.getInstance().getTranslation(p, "obelouix.direction.southeast"));
+            return StringUtils.capitalize(I18NMessages.DIRECTION_SOUTH_EAST.getTranslation(p));
         }
         return "error";
     }

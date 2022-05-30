@@ -3,7 +3,7 @@ import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 plugins {
     `java-library`
     idea //force Intellij to generate project file, cause i don't know why it refuse to import dependencies
-    id("io.papermc.paperweight.userdev") version "1.3.5"
+    id("io.papermc.paperweight.userdev") version "1.3.6"
     id("xyz.jpenilla.run-paper") version "1.0.6" // Adds runServer and runMojangMappedServer tasks for testing
     id("net.minecrell.plugin-yml.bukkit") version "0.5.1" // Generates plugin.yml
 
@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "fr.obelouix.ultimate"
-version = "1.0.0-SNAPSHOT"
+version = "1.0.2-SNAPSHOT"
 
 java {
     // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
@@ -36,9 +36,6 @@ repositories {
     maven("https://repo.spongepowered.org/maven/")
     // Minecraft
     maven("https://libraries.minecraft.net/")
-    // CodeMC
-    maven("https://repo.codemc.org/repository/maven-public/")
-    maven("https://repo.codemc.io/repository/nms/")
     // Aikar's repo
     maven("https://repo.aikar.co/content/groups/aikar/")
     // EngineHub
@@ -56,6 +53,9 @@ repositories {
     maven("https://repo.essentialsx.net/releases/")
     // fren_gor
     maven("https://nexus.frengor.com/repository/public/")
+    // CodeMC
+    maven("https://repo.codemc.org/repository/maven-public/")
+    maven("https://repo.codemc.io/repository/nms/")
 }
 
 dependencies {
@@ -88,15 +88,18 @@ dependencies {
     implementation("de.tr7zw:item-nbt-api-plugin:2.9.2")
 
     // ServerUtils
-    compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.2")
+    compileOnly("net.frankheijden.serverutils:ServerUtils:3.4.4")
 
     // EssentialsX
     compileOnly("net.essentialsx:EssentialsX:2.20.0-SNAPSHOT")
+    compileOnly("net.essentialsx:EssentialsXSpawn:2.20.0-SNAPSHOT")
+    compileOnly("net.essentialsx:EssentialsXProtect:2.20.0-SNAPSHOT")
+    compileOnly("net.essentialsx:EssentialsXDiscord:2.20.0-SNAPSHOT")
 
     // FAWE
 
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.1.1-SNAPSHOT") { isTransitive = false }
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.0.2-SNAPSHOT") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.2.1-SNAPSHOT") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.2.1-SNAPSHOT") { isTransitive = false }
 
     // WorldGuard
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-20211230.194325-8")
@@ -109,11 +112,13 @@ dependencies {
     implementation("com.frengor:ultimateadvancementapi-shadeable:2.1.2")
 
     implementation("org.bstats:bstats-bukkit:3.0.0")
-    implementation("org.inventivetalent:reflectionhelper:1.18.7-SNAPSHOT")
+    implementation("org.inventivetalent:reflectionhelper:1.18.10-SNAPSHOT")
     //PacketAPI Listener
-    implementation("org.inventivetalent.packetlistenerapi:api:3.9.9-SNAPSHOT")
+    implementation("org.inventivetalent.packetlistenerapi:api:3.9.10-SNAPSHOT")
     // GlowAPI
     //implementation("com.github.InventivetalentDev:GlowAPI:master-SNAPSHOT")
+    // Interfaces (inventory)
+    implementation("com.github.Incendo.interfaces:interfaces-paper:-SNAPSHOT")
 }
 
 tasks {
@@ -152,18 +157,25 @@ tasks {
         // helper function to relocate a package into our package
         fun reloc(pkg: String) = relocate(pkg, "fr.obelouix.ultimate.dependency.$pkg")
 
-        // relocate cloud and it's transitive dependencies
-        reloc("cloud.commandframework")
-        reloc("io.leangen.geantyref")
-        reloc("co.aikar.timings")
-        reloc("com.typesafe")
-        reloc("de.tr7zw")
-        reloc("org.intellij")
-        reloc("org.jetbrains")
-        reloc("org.spongepowered")
-        reloc("com.fren_gor.ultimateAdvancementAPI")
-        reloc("com.github.inventivetalentDev")
-        reloc("org.inventivetalent")
+        val deps = listOf(
+            "cloud.commandframework",
+            "io.leangen.geantyref",
+            "co.aikar.timings",
+            "com.typesafe",
+            "de.tr7zw",
+            "org.intellij",
+            "org.jetbrains",
+            "org.spongepowered",
+            "com.fren_gor.ultimateAdvancementAPI",
+            "com.github.inventivetalentDev",
+            "org.inventivetalent",
+            "com.github.Incendo.interfaces"
+        )
+
+        //relocate every dependencies
+        deps.forEach {
+            reloc(it)
+        }
     }
 }
 
@@ -171,7 +183,7 @@ tasks {
 bukkit {
     load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     main = "fr.obelouix.ultimate.ObelouixUltimate"
-    apiVersion = "1.18.2"
+    apiVersion = "1.18"
     authors = listOf("Obelouix")
     softDepend = listOf("dynmap", "worldguard")
 }

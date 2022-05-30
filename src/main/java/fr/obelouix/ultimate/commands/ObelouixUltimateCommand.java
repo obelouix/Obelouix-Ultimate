@@ -8,9 +8,10 @@ import cloud.commandframework.meta.CommandMeta;
 import com.google.common.collect.ImmutableList;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.audience.MessageSender;
+import fr.obelouix.ultimate.commands.manager.BaseCommand;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
-import fr.obelouix.ultimate.i18n.I18n;
+import fr.obelouix.ultimate.messages.I18NMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
@@ -20,10 +21,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
 
-public class ObelouixUltimateCommand {
+public class ObelouixUltimateCommand extends BaseCommand {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    private static final I18n i18n = I18n.getInstance();
 
     public void register() {
         CommandManager.getInstance().command(
@@ -40,13 +40,13 @@ public class ObelouixUltimateCommand {
         return ImmutableList.of("reload", "version");
     }
 
-    private void execute(@NonNull CommandContext<CommandSender> context) {
+    protected void execute(@NonNull CommandContext<CommandSender> context) {
         final CommandSender sender = context.getSender();
         final String argument = context.get("version/reload");
         if (IPermission.hasPermission(sender, "obelouix.command.obelouixultimate")) {
             if (argument.equalsIgnoreCase("version")) {
                 MessageSender.sendMessage(sender,
-                        Component.text(I18n.getInstance().getTranslation(sender, "obelouix.plugin.version"))
+                        Component.text(I18NMessages.PLUGIN_VERSION.getTranslation(sender))
                                 .color(NamedTextColor.GREEN)
                                 .replaceText(TextReplacementConfig.builder()
                                         .matchLiteral("{0}")
