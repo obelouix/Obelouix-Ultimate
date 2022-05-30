@@ -65,6 +65,21 @@ public class MessagesAPI {
     }
 
     /**
+     * Send a message to every opped players
+     *
+     * @param message a component
+     * @see Audience#sendMessage(Component)
+     */
+    public static void broadcastToOP(Component message) {
+        final Collection<Player> OppedPlayers = new ArrayList<>(Collections.emptyList());
+        for (final Player player : Bukkit.getOnlinePlayers()) {
+            if (player.isOp()) OppedPlayers.add(player);
+        }
+        final Audience audience = Audience.audience(OppedPlayers);
+        audience.sendMessage(message);
+    }
+
+    /**
      * show a boss bar to a specific player
      *
      * @param player  the player that will see the boss bar
