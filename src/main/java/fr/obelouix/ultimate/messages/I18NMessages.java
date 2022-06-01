@@ -46,7 +46,8 @@ public enum I18NMessages {
     /**
      * The message when there is no update available
      */
-    UP_TO_DATE("obelouix.update.up_to_date");
+    UP_TO_DATE("obelouix.update.up_to_date"),
+    WORLDEDIT_WAND_TITLE("obelouix.worldedit_wand.title");
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     private final String translation;

@@ -1,7 +1,6 @@
 package fr.obelouix.ultimate;
 
 import co.aikar.timings.lib.TimingManager;
-import com.earth2me.essentials.Essentials;
 import fr.obelouix.ultimate.api.TranslationAPI;
 import fr.obelouix.ultimate.api.UltimateAdvancementAPI;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
@@ -12,13 +11,13 @@ import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
 import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
 import fr.obelouix.ultimate.recipes.CustomFurnaceRecipes;
+import fr.obelouix.ultimate.tweaks.TweaksManager;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
+import fr.obelouix.ultimate.utils.PluginDetector;
 import fr.obelouix.ultimate.utils.Updater;
 import fr.obelouix.ultimate.worlds.WorldManager;
-import net.essentialsx.discord.EssentialsDiscord;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NonNls;
 
 import java.util.logging.Logger;
 
@@ -27,10 +26,7 @@ public class ObelouixUltimate extends JavaPlugin {
     private static final Logger LOGGER = Logger.getLogger("Obelouix Ultimate");
     private static ObelouixUltimate instance;
     private static TranslationAPI translationAPI;
-
     private static TimingManager timingManager;
-    private static Essentials essentials;
-    private static EssentialsDiscord essentialsXDiscordPlugin;
 
     /**
      * Get an instance of {@link ObelouixUltimate ObelouixUltimate} main class
@@ -59,7 +55,7 @@ public class ObelouixUltimate extends JavaPlugin {
      * if not, the server will be shutdown
      */
     private void checkPaperPresence() {
-        if (!getClass("com.destroystokyo.paper.PaperConfig")) {
+        if (!PluginDetector.detectClass("com.destroystokyo.paper.PaperConfig")) {
             LOGGER.severe(
                     """
                             **************************************************************\s
@@ -76,20 +72,7 @@ public class ObelouixUltimate extends JavaPlugin {
         }
     }
 
-    /**
-     * Check the presence of a {@link Class class} in the classpath
-     *
-     * @param classPath the {@link Class class} to be checked, must not be null
-     * @return {@code true} or {@code false}
-     */
-    public boolean getClass(@NonNls String classPath) {
-        try {
-            Class.forName(classPath);
-            return true;
-        } catch (ClassNotFoundException ignored) {
-        }
-        return false;
-    }
+
 
     private void checkOfflineMode() {
         if (!this.getServer().getOnlineMode()) {
@@ -106,25 +89,9 @@ public class ObelouixUltimate extends JavaPlugin {
         }
     }
 
-    public static Essentials getEssentialsPlugin() {
-        return essentials;
-    }
-
-    public boolean isIsDynmapPresent() {
-        return getClass("org.dynmap.bukkit.DynmapPlugin");
-    }
-
-    public boolean isWorldGuardPresent() {
-        return getClass("com.sk89q.worldguard.WorldGuard");
-    }
-
-    public void setEssentialsPlugin(Essentials essentials) {
-        ObelouixUltimate.essentials = essentials;
-    }
-
-    private boolean isServerUtilsPresent() {
+ /*   private boolean isServerUtilsPresent() {
         return getClass("net.frankheijden.serverutils.bukkit.ServerUtils");
-    }
+    }*/
 
     @Override
     public void onEnable() {
@@ -133,6 +100,7 @@ public class ObelouixUltimate extends JavaPlugin {
         instance = this;
         translationAPI = new TranslationAPI();
         translationAPI.setResourceBundleBaseName("lang_");
+        PluginDetector.init();
         timingManager = TimingManager.of(this);
 
         new MultiverseMigrator();
@@ -151,11 +119,11 @@ public class ObelouixUltimate extends JavaPlugin {
         }
 
         LuckPermsUtils.checkForLuckPerms();
-        if (isWorldGuardPresent()) {
+        if (PluginDetector.getWorldGuard() != null) {
             getLogger().info("Found WorldGuard");
 //            new WorldGuard();
         }
-        if (isIsDynmapPresent()) {
+        if (PluginDetector.getDynmap() != null) {
             new DynmapLoader().init();
         }
         Config.loadConfig();
@@ -167,6 +135,7 @@ public class ObelouixUltimate extends JavaPlugin {
 
         //new EntityRegistry();
         new EventManager();
+        new TweaksManager();
         // new EntityRegistry();
         DataStorage.setupStorage();
         UltimateAdvancementAPI advancementAPI = new UltimateAdvancementAPI();
@@ -180,23 +149,4 @@ public class ObelouixUltimate extends JavaPlugin {
         return translationAPI;
     }
 
-    public boolean isEssentialsXPresent() {
-        return getClass("com.earth2me.essentials.Essentials");
-    }
-
-    public boolean isEssentialsXDiscordPresent() {
-        return getClass("net.essentialsx.discord.EssentialsDiscord");
-    }
-
-    public Essentials getEssentials() {
-        return essentials;
-    }
-
-    public EssentialsDiscord getEssentialsXDiscordPlugin() {
-        return essentialsXDiscordPlugin;
-    }
-
-    public void setEssentialsXDiscordPlugin(EssentialsDiscord essentialsXDiscordPlugin) {
-        ObelouixUltimate.essentialsXDiscordPlugin = essentialsXDiscordPlugin;
-    }
 }
