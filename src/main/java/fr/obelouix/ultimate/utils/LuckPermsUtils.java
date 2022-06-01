@@ -4,9 +4,7 @@ import fr.obelouix.ultimate.ObelouixUltimate;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
@@ -17,25 +15,17 @@ import java.util.Set;
 public class LuckPermsUtils {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    private static RegisteredServiceProvider<LuckPerms> luckPermsProvider;
     private static LuckPerms luckPermsAPI;
 
     private LuckPermsUtils() {
     }
 
     public static void checkForLuckPerms() {
-        if (plugin.getClass("net.luckperms.api.LuckPerms")) {
-            plugin.getLogger().info("Found LuckPerms");
-            final RegisteredServiceProvider<LuckPerms> lpProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
-            if (lpProvider != null) {
-                luckPermsProvider = lpProvider;
-                luckPermsAPI = luckPermsProvider.getProvider();
-            }
-        }
-    }
+        plugin.getLogger().info("Found LuckPerms");
 
-    public static RegisteredServiceProvider<LuckPerms> getLuckPermsProvider() {
-        return luckPermsProvider;
+        if (PluginDetector.getLuckPerms() != null) {
+            luckPermsAPI = PluginDetector.getLuckPerms().getProvider();
+        }
     }
 
     public static LuckPerms getLuckPermsAPI() {

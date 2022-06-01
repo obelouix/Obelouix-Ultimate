@@ -2,6 +2,7 @@ package fr.obelouix.ultimate.dynmap;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
+import fr.obelouix.ultimate.utils.PluginDetector;
 import io.papermc.paper.event.world.StructuresLocateEvent;
 import org.bukkit.Location;
 import org.bukkit.StructureType;
@@ -26,7 +27,7 @@ public class DynmapStructures implements Listener {
     private static final List<String> enabledStructures = new ArrayList<>();
 
     public DynmapStructures(DynmapCommonAPI dynmapCommonAPI) {
-        if (plugin.isIsDynmapPresent() && Config.isDynmapStructuresEnabled()) {
+        if (PluginDetector.getDynmap() != null && Config.isDynmapStructuresEnabled()) {
             plugin.getServer().getPluginManager().registerEvents(this, plugin);
             if (enabledStructures.isEmpty()) setupBiomeStructures(dynmapCommonAPI);
         }

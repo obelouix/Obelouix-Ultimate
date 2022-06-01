@@ -2,6 +2,7 @@ package fr.obelouix.ultimate.dynmap;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.config.Config;
+import fr.obelouix.ultimate.utils.PluginDetector;
 import org.bukkit.event.Listener;
 import org.dynmap.DynmapCommonAPI;
 import org.dynmap.DynmapCommonAPIListener;
@@ -24,7 +25,7 @@ public class DynmapLoader implements Listener {
                     plugin.getLogger().info("Dynmap Structures is disabled until a working fix is found as it cause a huge amoung of lag");
                     //new DynmapStructures(dynmapCommonAPI);
                 }
-                if (plugin.isWorldGuardPresent() && Config.isDynmapWorldGuardEnabled()) {
+                if (PluginDetector.getWorldGuard() != null && Config.isDynmapWorldGuardEnabled()) {
                     new DynmapWorldGuard(dynmapCommonAPI);
                 }
 
