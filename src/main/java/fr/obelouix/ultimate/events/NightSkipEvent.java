@@ -1,9 +1,7 @@
 package fr.obelouix.ultimate.events;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.config.Config;
 import io.papermc.paper.event.player.PlayerDeepSleepEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +22,7 @@ public class NightSkipEvent implements Listener {
 
     @EventHandler
     public void onPlayerSleep(PlayerDeepSleepEvent event) {
-        for (World world : Bukkit.getWorlds()) {
+       /* for (World world : Bukkit.getWorlds()) {
             if (world.getEnvironment().equals(World.Environment.NORMAL)) {
                 onlinePlayersPerWorlds.putIfAbsent(world, world.getPlayerCount());
                 if (plugin.isEssentialsXPresent() && Config.isEssentialsAFKHook()) {
@@ -36,7 +34,7 @@ public class NightSkipEvent implements Listener {
                 }
             }
 
-        }
+        }*/
 
 
         if (event.getPlayer().isDeeplySleeping()) {

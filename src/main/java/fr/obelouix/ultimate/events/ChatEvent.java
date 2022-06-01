@@ -55,7 +55,7 @@ public class ChatEvent implements Listener {
     }
 
     /**
-     * Convert hex color codes and < 1.16 codes into components color codes
+     * Convert hex color codes and < 1.16 codes into Components color codes
      *
      * @param component the component to colorize
      * @return a colorized component
