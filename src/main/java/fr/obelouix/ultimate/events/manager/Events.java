@@ -20,8 +20,8 @@ public abstract class Events {
      * register all events from the events set
      */
     protected void registerEvents() {
+        System.out.println(eventsSet);
         eventsSet.forEach(listener -> {
-            plugin.getServer().getPluginManager().registerEvents(listener, plugin);
             if (Config.isDebugMode())
                 plugin.getLogger().info("Registered " + listener.getClass().getSimpleName() + " event");
         });

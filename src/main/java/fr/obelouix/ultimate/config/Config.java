@@ -2,9 +2,11 @@ package fr.obelouix.ultimate.config;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
+import fr.obelouix.ultimate.utils.PluginDetector;
 import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.spigotmc.SpigotConfig;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
@@ -21,6 +23,8 @@ public class Config {
     private static final HoconConfigurationLoader configLoader = HoconConfigurationLoader.builder()
             .path(Path.of(plugin.getDataFolder().getPath(), "config.conf"))
             .build();
+
+    private static CommentedConfigurationNode paperRoot;
 
     private static boolean debugMode;
     private static final HashMap<String, Boolean> dynmapStructureMap = new HashMap<>();
@@ -45,6 +49,8 @@ public class Config {
     private static boolean EssentialsAFKHook;
     private static final Set<World> coordinatesBlacklist = new HashSet<>();
 
+    private static boolean giveEnderDragon = false;
+
     public static void loadConfig() {
         try {
             if (!configReloaded) configReloaded = true;
@@ -68,6 +74,8 @@ public class Config {
             e.printStackTrace();
         }
 
+        giveEnderDragon = root.node("tweaks", "give-enderdragon-exp-to-everyone").getBoolean();
+
         debugMode = root.node("debug").getBoolean();
 
         customServerBrandName = root.node("custom-server-brand").getString();
@@ -80,7 +88,7 @@ public class Config {
 
         }
 
-        if (plugin.isIsDynmapPresent()) {
+        if (PluginDetector.getDynmap() != null) {
 
             dynmapStructuresEnabled = root.node("dynmap", "modules", "structures", "enabled").getBoolean();
 
@@ -89,7 +97,7 @@ public class Config {
                 plugin.getLogger().info("Dynmap Structures is disabled until the lag it cause is resolved");
             }
 
-            if (plugin.isWorldGuardPresent()) {
+            if (PluginDetector.getWorldGuard() != null) {
                 dynmapWorldGuardEnabled = root.node("dynmap", "modules", "worldguard", "enabled").getBoolean();
                 dynmapWorldGuardLayer = root.node("dynmap", "modules", "worldguard", "layer_name").getString();
             }
@@ -111,7 +119,7 @@ public class Config {
 
         nightSkipSystemEnabled = root.node("night-skipper", "enabled").getBoolean();
 
-        if (EssentialsAFKHook && !plugin.isEssentialsXPresent()) {
+        if (EssentialsAFKHook && PluginDetector.getEssentials() != null) {
             try {
                 root.node("night-skipper", "essentials-hook").set(Boolean.FALSE);
             } catch (SerializationException e) {
@@ -153,6 +161,21 @@ public class Config {
      *
      */
     private static void addMissingConfigs() throws SerializationException {
+
+        final CommentedConfigurationNode enderDragonExpShare = root.node("tweaks", "give-enderdragon-exp-to-everyone");
+
+        if (enderDragonExpShare.empty()) {
+
+            final double expMergeRadius = SpigotConfig.config.getDouble("world-settings.default.merge-radius.exp");
+            if (expMergeRadius > 0.) enderDragonExpShare.set(true);
+            else enderDragonExpShare.set(false);
+
+            enderDragonExpShare.commentIfAbsent("""
+                    Give Ender Dragon's experience to every player that are present in the end.
+                    You can enable this if your server merge experience orbs (see spigot.yml).
+                    By default it is enabled when this configuration generate if your server merge experience
+                    """);
+        }
 
         if (root.node("debug").empty()) {
             root.node("debug").set(false)
@@ -232,7 +255,7 @@ public class Config {
         if (root.node("ping", "threshold").empty()) {
             root.node("ping", "threshold").set(500).commentIfAbsent("Minimal ping before being disconnected");
         }
-        if (plugin.isIsDynmapPresent()) {
+        if (PluginDetector.getDynmap() != null) {
             if (root.node("dynmap", "modules", "structures", "enabled").empty()) {
                 root.node("dynmap", "modules", "structures", "enabled").set(Boolean.TRUE);
             }
@@ -240,7 +263,7 @@ public class Config {
                 root.node("dynmap", "modules", "structures", "layer_name").set("Structures");
 //                    .commentIfAbsent("A server restart is required to change the name, a reload will not work");
             }
-            if (plugin.isWorldGuardPresent()) {
+            if (PluginDetector.getWorldGuard() != null) {
                 if (root.node("dynmap", "modules", "worldguard", "enabled").empty()) {
                     root.node("dynmap", "modules", "worldguard", "enabled").set(Boolean.TRUE);
                 }
@@ -277,7 +300,7 @@ public class Config {
         root.node("night-skipper", "enabled").set(Boolean.TRUE);
 
 
-        if (plugin.isEssentialsXPresent()) {
+        if (PluginDetector.getEssentials() != null) {
             root.node("night-skipper", "essentials-hook").set(Boolean.TRUE);
         } else {
             root.node("night-skipper", "essentials-hook").set(Boolean.FALSE);
@@ -290,6 +313,10 @@ public class Config {
         }
 
         save(root);
+    }
+
+    public static boolean giveEnderDragonExp() {
+        return giveEnderDragon;
     }
 
     public static boolean isDebugMode() {

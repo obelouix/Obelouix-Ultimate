@@ -5,7 +5,9 @@ import fr.obelouix.ultimate.coordinates.Coordinates;
 import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.events.*;
 import fr.obelouix.ultimate.fastleafdecay.FastLeafDecay;
+import fr.obelouix.ultimate.plugins.worldedit.WorldEditWand;
 import fr.obelouix.ultimate.recipes.RecipeDiscoverer;
+import fr.obelouix.ultimate.utils.PluginDetector;
 
 import java.util.List;
 
@@ -37,6 +39,8 @@ public class EventManager extends Events {
         if (Config.isDisconnectOnHighPing()) addEvent(new PingChecker());
 
         if (Config.isNightSkipSystemEnabled()) addEvent(new NightSkipEvent());
+
+        if (PluginDetector.getEssentials() != null) addEvent(new WorldEditWand());
 
         registerEvents();
 
