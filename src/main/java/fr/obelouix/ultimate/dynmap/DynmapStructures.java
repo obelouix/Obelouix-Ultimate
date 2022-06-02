@@ -41,7 +41,7 @@ public class DynmapStructures implements Listener {
         final World world = location.getWorld();
         if (world != null) {
             final Biome biome = world.getBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ());
-            for (StructureType structureType : Biomes[biome.ordinal()]) {
+            for (final StructureType structureType : Biomes[biome.ordinal()]) {
                 boolean show = Config.getRoot().node("dynmap", "structures", structureType.getName(), "show").getBoolean();
                 if (show) {
                     final Location structureLocation = location.getWorld().locateNearestStructure(location, structureType, 1, false);
@@ -131,7 +131,7 @@ public class DynmapStructures implements Listener {
         });
 
         dynmapCommonAPI.getMarkerAPI().createMarkerSet(Config.getDynmapStructuresLayerName().toLowerCase(Locale.ROOT), Config.getDynmapStructuresLayerName(), null, true);
-        for (StructureType structureType : getStructureTypes().values()) {
+        for (final StructureType structureType : getStructureTypes().values()) {
             final InputStream in = this.getClass().getResourceAsStream("/" + structureType.getName() + ".png");
             if (in != null) {
                 if (dynmapCommonAPI.getMarkerAPI().getMarkerIcon("" + structureType.getName()) == null) {

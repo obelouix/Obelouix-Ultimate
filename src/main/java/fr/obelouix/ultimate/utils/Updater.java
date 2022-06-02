@@ -50,8 +50,7 @@ public class Updater {
                     } else plugin.getLogger().info(I18NMessages.UP_TO_DATE.getSystemTranslation());
 
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (IOException ignored) {
                 }
             }
         };

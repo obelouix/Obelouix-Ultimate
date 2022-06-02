@@ -63,7 +63,7 @@ public class WorldManager {
 
     public static @NotNull Runnable unloadEmptyWorlds() {
         return () -> {
-            for (World world : Bukkit.getWorlds()) {
+            for (final World world : Bukkit.getWorlds()) {
                 if (world.getPlayerCount() == 0 && !Bukkit.getWorlds().get(0).equals(world)) {
                     Bukkit.unloadWorld(world, true);
                     plugin.getLogger().info("Unloaded world '" + world.getName() + "' (reason: no player currently in this world)");

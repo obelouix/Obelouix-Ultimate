@@ -21,6 +21,7 @@ public abstract class Events {
      */
     protected void registerEvents() {
         eventsSet.forEach(listener -> {
+            plugin.getServer().getPluginManager().registerEvents(listener, plugin);
             if (Config.isDebugMode())
                 plugin.getLogger().info("Registered " + listener.getClass().getSimpleName() + " event");
         });

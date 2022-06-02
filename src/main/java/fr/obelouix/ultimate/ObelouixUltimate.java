@@ -2,7 +2,6 @@ package fr.obelouix.ultimate;
 
 import co.aikar.timings.lib.TimingManager;
 import fr.obelouix.ultimate.api.TranslationAPI;
-import fr.obelouix.ultimate.api.UltimateAdvancementAPI;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.DataStorage;
@@ -133,13 +132,9 @@ public class ObelouixUltimate extends JavaPlugin {
             e.printStackTrace();
         }
 
-        //new EntityRegistry();
         new EventManager();
         new TweaksManager();
-        // new EntityRegistry();
         DataStorage.setupStorage();
-        UltimateAdvancementAPI advancementAPI = new UltimateAdvancementAPI();
-        advancementAPI.init();
         new CustomFurnaceRecipes();
         new CustomCraftingTableRecipes();
         new Updater();

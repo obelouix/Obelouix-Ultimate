@@ -43,7 +43,7 @@ public class MultiverseMigrator {
                 final CommentedConfigurationNode root = worldLoader.load();
                 final CommentedConfigurationNode mvRoot = multiverseLoader.load();
 
-                NavigableMap<Object, CommentedConfigurationNode> mvMap = new TreeMap<>(mvRoot.node("worlds").childrenMap());
+                final NavigableMap<Object, CommentedConfigurationNode> mvMap = new TreeMap<>(mvRoot.node("worlds").childrenMap());
                 mvMap.keySet().forEach(o -> {
                     final boolean isPVPEnabled = mvRoot.node("worlds", o.toString(), "pvp").getBoolean();
                     final String seed = mvRoot.node("worlds", o.toString(), "seed").getString();

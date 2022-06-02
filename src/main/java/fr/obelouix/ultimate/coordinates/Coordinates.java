@@ -40,20 +40,18 @@ public class Coordinates implements Listener {
                         final CommentedConfigurationNode root;
                         try {
                             root = playerFile.load();
-                            if (root.node("show-coordinates").getBoolean()) {
-                                if (!root.node("language").empty()) {
+                            if (root.node("show-coordinates").getBoolean() && !root.node("language").empty()) {
 
-                                    final Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
-                                            .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
-                                            .append(Component.text(" Y: ", NamedTextColor.GREEN))
-                                            .append(Component.text(player.getLocation().getBlockY(), NamedTextColor.WHITE))
-                                            .append(Component.text(" Z: ", NamedTextColor.DARK_BLUE))
-                                            .append(Component.text(player.getLocation().getBlockZ(), NamedTextColor.WHITE))
-                                            .append(Component.text(" " + parseTo24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
-                                            .append(Component.text(StringUtils.capitalize(I18NMessages.DIRECTION.getTranslation(player)) + ": ", NamedTextColor.AQUA))
-                                            .append(Component.text(getFacing(player), NamedTextColor.WHITE));
-                                    MessagesAPI.sendActionBar(player.getPlayer(), actionBar);
-                                }
+                                final Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
+                                        .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
+                                        .append(Component.text(" Y: ", NamedTextColor.GREEN))
+                                        .append(Component.text(player.getLocation().getBlockY(), NamedTextColor.WHITE))
+                                        .append(Component.text(" Z: ", NamedTextColor.DARK_BLUE))
+                                        .append(Component.text(player.getLocation().getBlockZ(), NamedTextColor.WHITE))
+                                        .append(Component.text(" " + parseTo24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
+                                        .append(Component.text(StringUtils.capitalize(I18NMessages.DIRECTION.getTranslation(player)) + ": ", NamedTextColor.AQUA))
+                                        .append(Component.text(getFacing(player), NamedTextColor.WHITE));
+                                MessagesAPI.sendActionBar(player.getPlayer(), actionBar);
                             }
                         } catch (ConfigurateException e) {
                             e.printStackTrace();

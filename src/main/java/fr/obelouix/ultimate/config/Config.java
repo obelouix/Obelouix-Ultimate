@@ -75,7 +75,6 @@ public class Config {
         }
 
         giveEnderDragon = root.node("tweaks", "give-enderdragon-exp-to-everyone").getBoolean();
-
         debugMode = root.node("debug").getBoolean();
 
         customServerBrandName = root.node("custom-server-brand").getString();

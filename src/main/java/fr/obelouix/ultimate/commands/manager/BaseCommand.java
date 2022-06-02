@@ -8,6 +8,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public abstract class BaseCommand {
 
+    protected static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     protected final TranslationAPI translationAPI = ObelouixUltimate.getInstance().getTranslationAPI();
 
     /**

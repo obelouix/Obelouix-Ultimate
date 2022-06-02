@@ -35,6 +35,9 @@ public enum I18NMessages {
     DIRECTION_SOUTH_WEST("obelouix.direction.southwest"),
     DIRECTION_EAST("obelouix.direction.east"),
     DIRECTION_WEST("obelouix.direction.west"),
+    ENDERDRAGON_KILL_REWARD("obelouix.enderdragon.kill_reward"),
+    ENDERDRAGON_KILL_BROADCAST("obelouix.enderdragon.broadcast"),
+    ENDERDRAGON_KILL_BROADCAST_SINGLEPLAYER("obelouix.enderdragon.broadcast.single"),
     /**
      * The message that tell the plugin version
      */

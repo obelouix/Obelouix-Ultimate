@@ -6,9 +6,7 @@ import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
 import cloud.commandframework.meta.CommandMeta;
 import com.google.common.collect.ImmutableList;
-import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.api.MessagesAPI;
-import fr.obelouix.ultimate.api.TranslationAPI;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
@@ -23,9 +21,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.List;
 
 public class ObelouixUltimateCommand extends BaseCommand {
-
-    private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
-    private static final TranslationAPI translationAPI = plugin.getTranslationAPI();
 
     public void register() {
         CommandManager.getInstance().command(
