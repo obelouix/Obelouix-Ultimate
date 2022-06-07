@@ -5,13 +5,18 @@ import fr.obelouix.ultimate.utils.CustomHeadSkins;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.incendo.interfaces.core.click.ClickHandler;
+import org.incendo.interfaces.paper.PlayerViewer;
+import org.incendo.interfaces.paper.element.ItemStackElement;
+import org.incendo.interfaces.paper.transform.PaperTransform;
+import org.incendo.interfaces.paper.type.ChestInterface;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -41,6 +46,7 @@ public class AdminInventory extends BaseGUI {
      * @param player - the player that will see the inventory
      */
     public AdminInventory(Player player) {
+
         inventory = Bukkit.createInventory(null, 54, title(player)); //Bukkit.createInventory(null, 54, title(player));
         this.viewer = player;
         playerManagementComponent = Component.text(translationAPI.getTranslation(player, "obelouix.inventory.admin_center.player_management"), NamedTextColor.GREEN);
@@ -54,7 +60,7 @@ public class AdminInventory extends BaseGUI {
         maintenanceDescComponent = Component.text(translationAPI.getTranslation(player, "obelouix.inventory.maintenance_center.description"))
                 .decoration(TextDecoration.ITALIC, false);
 
-        setupInventory();
+        setupInventory(player);
         showInventory(player);
     }
 
@@ -63,7 +69,22 @@ public class AdminInventory extends BaseGUI {
         return Component.text(translationAPI.getTranslation(player, "obelouix.inventory.admin_center"), NamedTextColor.DARK_RED);
     }
 
+    @Override
     protected void setupInventory() {
+
+    }
+
+    protected void setupInventory(Player player) {
+
+        chestInterface = ChestInterface.builder()
+                .rows(6)
+                .updates(true, 5)
+                .clickHandler(ClickHandler.cancel())
+                .addTransform(PaperTransform.chestItem(ItemStackElement.of(InventoryAPI.addCustomSkull(viewer, playerManagementComponent)), 1, 1))
+                .addTransform(PaperTransform.chestFill(ItemStackElement.of(new ItemStack(Material.BLACK_STAINED_GLASS_PANE))))
+                .title(title(viewer))
+                .build();
+
         inventory.setItem(0, InventoryAPI.addCustomSkull(viewer, playerManagementComponent));
         InventoryAPI.addLore(Objects.requireNonNull(inventory.getItem(0)),
                 List.of(playerManagementDescriptionComponent));
@@ -75,7 +96,8 @@ public class AdminInventory extends BaseGUI {
 
     @Override
     public void showInventory(@NotNull Player player) {
-        player.openInventory(inventory);
+        //player.openInventory(inventory);
+        chestInterface.open(PlayerViewer.of(player));
     }
 
     @Override
@@ -92,7 +114,7 @@ public class AdminInventory extends BaseGUI {
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event) {
 
-        final ItemStack clickedItem = event.getCurrentItem();
+/*        final ItemStack clickedItem = event.getCurrentItem();
         final Player clicker = (Player) event.getWhoClicked();
         if (clickedItem != null) {
             final String clickedItemTitle = PlainTextComponentSerializer.plainText().serialize(Objects.requireNonNull(clickedItem.getItemMeta().displayName()));
@@ -100,6 +122,6 @@ public class AdminInventory extends BaseGUI {
 //                new SignGui(new String[]{"",  "^^^^^^^^^^^^^^^", "date de debut", "format: jj/mm/aaaa"}).openFakeGui((Player) event.getWhoClicked());
                 clicker.openBook(new MaintenanceBook(clicker).show());
             }
-        }
+        }*/
     }
 }

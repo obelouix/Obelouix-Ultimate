@@ -19,7 +19,6 @@ public class EnderDragonTweaks implements Listener {
 
     @EventHandler
     public void onEnderDragonDeath(EntityDeathEvent event) {
-        System.out.println(event.getEntity());
         if (event.getEntity() instanceof EnderDragon enderDragon) {
 
             final Location center = new Location(enderDragon.getWorld(), 0, 65, 0);

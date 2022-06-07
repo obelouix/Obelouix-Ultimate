@@ -9,12 +9,15 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.incendo.interfaces.paper.type.ChestInterface;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class BaseGUI implements Listener {
 
     protected static ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     protected static final TranslationAPI translationAPI = plugin.getTranslationAPI();
+
+    protected ChestInterface chestInterface;
     protected Inventory inventory;
 
     public BaseGUI() {

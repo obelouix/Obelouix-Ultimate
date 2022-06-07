@@ -8,10 +8,7 @@ import cloud.commandframework.minecraft.extras.AudienceProvider;
 import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.commands.CoordsCommand;
-import fr.obelouix.ultimate.commands.MaintenanceCommand;
-import fr.obelouix.ultimate.commands.ObelouixUltimateCommand;
-import fr.obelouix.ultimate.commands.PluginCommand;
+import fr.obelouix.ultimate.commands.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
@@ -62,8 +59,9 @@ public class CommandManager extends PaperCommandManager<CommandSender> {
         }
         List.of(
                 new ObelouixUltimateCommand(),
-                new CoordsCommand()/*,
-                new AdminCommand(),
+                new CoordsCommand(),
+                new AdminCommand()/*,
+
                 new DayCommand(),
                 new MiddayCommand(),
                 new NightCommand(),
