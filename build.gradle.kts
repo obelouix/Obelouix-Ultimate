@@ -172,7 +172,7 @@ tasks {
 bukkit {
     load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     main = "fr.obelouix.ultimate.ObelouixUltimate"
-    apiVersion = "1.18"
+    apiVersion = "1.19"
     authors = listOf("Obelouix")
     softDepend = listOf("dynmap", "worldguard")
 }
