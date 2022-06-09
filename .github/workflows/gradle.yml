@@ -5,9 +5,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ master, ver/1.18 ]
+    branches: [ master, ver/1.19 ]
   pull_request:
-    branches: [ master, ver/1.18 ]
+    branches: [ master, ver/1.19 ]
 
 jobs:
   build:
@@ -44,7 +44,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: Package
+        name: Obelouix-Ultimate
         path: build/libs
     
   codeQL:
@@ -74,7 +74,7 @@ jobs:
     - uses: actions/setup-java@v3
       with:
         distribution: 'adopt' # See 'Supported distributions' for available options
-        java-version: '16'
+        java-version: '17'
     
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
