@@ -22,44 +22,67 @@ java {
 
 repositories {
     mavenCentral()
+    listOf(
+        "https://repo.papermc.io/repository/maven-public/",              // Paper
+        "https://oss.sonatype.org/content/groups/public/",              // Sonatype
+        "https://jitpack.io",                                           // Jitpack
+        "https://repo.dmulloy2.net/repository/public/",                 // dmulloy2
+        "https://repo.spongepowered.org/maven/",                        // Sponge
+        "https://libraries.minecraft.net/",                             // Minecraft
+        "https://repo.aikar.co/content/groups/aikar/",                  // Airkar
+        "https://maven.enginehub.org/repo/",                            // EngineHub
+        "https://s01.oss.sonatype.org/content/repositories/snapshots/", // FAWE
+        "https://hub.spigotmc.org/nexus/content/groups/public/",        // Spigot
+        "https://repo.mikeprimm.com",                                   // Dynmap
+        "https://repo.fvdh.dev/releases",                               // FrankHeijden
+        "https://repo.essentialsx.net/snapshots/",                      // EssentialsX
+        "https://repo.essentialsx.net/releases/",                       // EssentialsX
+        "https://nexus.frengor.com/repository/public/",                 // fren_gor
+        "https://repo.codemc.org/repository/maven-public/",             // CodeMC
+        "https://repo.codemc.io/repository/nms/"                        // CodeMC
+    ).forEach {
+        maven(it)
+    }
+
+
     // Paper
-    maven("https://repo.papermc.io/repository/maven-public/")
+    //maven("https://repo.papermc.io/repository/maven-public/")
     // Purpur
     // maven("https://repo.pl3x.net/")
     // Sonatype
-    maven("https://oss.sonatype.org/content/groups/public/")
+//    maven("https://oss.sonatype.org/content/groups/public/")
     // JitPack
-    maven("https://jitpack.io")
+//    maven("https://jitpack.io")
     // dmulloy2 repo (ProtocolLib)
-    maven("https://repo.dmulloy2.net/repository/public/")
+//    maven("https://repo.dmulloy2.net/repository/public/")
     // Sponge
-    maven("https://repo.spongepowered.org/maven/")
+//    maven("https://repo.spongepowered.org/maven/")
     // Minecraft
-    maven("https://libraries.minecraft.net/")
+//    maven("https://libraries.minecraft.net/")
     // Aikar's repo
-    maven("https://repo.aikar.co/content/groups/aikar/")
+//    maven("https://repo.aikar.co/content/groups/aikar/")
     // EngineHub
-    maven("https://maven.enginehub.org/repo/")
+//    maven("https://maven.enginehub.org/repo/")
     // FAWE
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+//    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     // SpigotMC
-    maven("https://hub.spigotmc.org/nexus/content/groups/public/")
+//    maven("https://hub.spigotmc.org/nexus/content/groups/public/")
     // Mikeprimm's repo (Dynmap)
-    maven("https://repo.mikeprimm.com")
+//    maven("https://repo.mikeprimm.com")
     // FrankHeijden
-    maven("https://repo.fvdh.dev/releases")
+//    maven("https://repo.fvdh.dev/releases")
     // EssentialsX
-    maven("https://repo.essentialsx.net/snapshots/")
-    maven("https://repo.essentialsx.net/releases/")
+//    maven("https://repo.essentialsx.net/snapshots/")
+//    maven("https://repo.essentialsx.net/releases/")
     // fren_gor
-    maven("https://nexus.frengor.com/repository/public/")
+//    maven("https://nexus.frengor.com/repository/public/")
     // CodeMC
-    maven("https://repo.codemc.org/repository/maven-public/")
-    maven("https://repo.codemc.io/repository/nms/")
+//    maven("https://repo.codemc.org/repository/maven-public/")
+//    maven("https://repo.codemc.io/repository/nms/")
 }
 
 dependencies {
-    paperDevBundle("1.18.2-R0.1-SNAPSHOT")
+    paperDevBundle("1.19-R0.1-SNAPSHOT")
     // paperweightDevBundle("com.example.paperfork", "1.18-R0.1-SNAPSHOT")
 
     // You will need to manually specify the full dependency if using the groovy gradle dsl
@@ -69,7 +92,7 @@ dependencies {
     // Shadow will include the runtimeClasspath by default, which implementation adds to.
     // Dependencies you don't want to include go in the compileOnly configuration.
     // Make sure to relocate shaded dependencies!
-    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
 
     // Cloud Command Framework
     implementation("cloud.commandframework", "cloud-paper", "1.6.2")
