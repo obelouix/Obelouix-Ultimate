@@ -44,41 +44,6 @@ repositories {
         maven(it)
     }
 
-
-    // Paper
-    //maven("https://repo.papermc.io/repository/maven-public/")
-    // Purpur
-    // maven("https://repo.pl3x.net/")
-    // Sonatype
-//    maven("https://oss.sonatype.org/content/groups/public/")
-    // JitPack
-//    maven("https://jitpack.io")
-    // dmulloy2 repo (ProtocolLib)
-//    maven("https://repo.dmulloy2.net/repository/public/")
-    // Sponge
-//    maven("https://repo.spongepowered.org/maven/")
-    // Minecraft
-//    maven("https://libraries.minecraft.net/")
-    // Aikar's repo
-//    maven("https://repo.aikar.co/content/groups/aikar/")
-    // EngineHub
-//    maven("https://maven.enginehub.org/repo/")
-    // FAWE
-//    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-    // SpigotMC
-//    maven("https://hub.spigotmc.org/nexus/content/groups/public/")
-    // Mikeprimm's repo (Dynmap)
-//    maven("https://repo.mikeprimm.com")
-    // FrankHeijden
-//    maven("https://repo.fvdh.dev/releases")
-    // EssentialsX
-//    maven("https://repo.essentialsx.net/snapshots/")
-//    maven("https://repo.essentialsx.net/releases/")
-    // fren_gor
-//    maven("https://nexus.frengor.com/repository/public/")
-    // CodeMC
-//    maven("https://repo.codemc.org/repository/maven-public/")
-//    maven("https://repo.codemc.io/repository/nms/")
 }
 
 dependencies {
