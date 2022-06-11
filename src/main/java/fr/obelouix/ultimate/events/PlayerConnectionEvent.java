@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.events;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.database.Database;
 import fr.obelouix.ultimate.database.models.PlayerOptionsTable;
@@ -35,22 +36,21 @@ public class PlayerConnectionEvent implements Listener {
         //execute the task 10 ticks ( = 500 ms) after player logged in
         bukkitRunnable.runTaskLaterAsynchronously(plugin, 10L);
 
-        final PlayerTable playerData = new PlayerTable(player.getUniqueId(), player.getName(), fr.obelouix.ultimate.data.player.Player.getLocale());
-        Database.PlayerDao.createOrUpdateData(playerData);
+        if (!Config.getStorageType().equalsIgnoreCase("file")) {
 
-        try {
-            if (Database.getPlayerOptionsDao().queryBuilder().selectColumns("showCoordinates").where().eq("UUID", player.getUniqueId()) == null) {
+            final PlayerTable playerData = new PlayerTable(player.getUniqueId(), player.getName(), fr.obelouix.ultimate.data.player.Player.getLocale());
+            Database.PlayerDao.createOrUpdateData(playerData);
 
-                final PlayerOptionsTable playerOptions = new PlayerOptionsTable(player.getUniqueId(), true);
-                Database.PlayerOptionsDao.createOrUpdateData(playerOptions);
+            try {
+                if (Database.getPlayerOptionsDao().queryBuilder().selectColumns("showCoordinates").where().eq("UUID", player.getUniqueId()) == null) {
+
+                    final PlayerOptionsTable playerOptions = new PlayerOptionsTable(player.getUniqueId(), true);
+                    Database.PlayerOptionsDao.createOrUpdateData(playerOptions);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
-
-//        Database.PlayerOptionsDao.createOrUpdateData()
-
-        //   UltimateAdvancementAPI.updateProgression(player);
     }
 
 }
