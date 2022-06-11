@@ -1,14 +1,10 @@
 package fr.obelouix.ultimate.commands;
 
-import cloud.commandframework.ArgumentDescription;
-import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
-import cloud.commandframework.meta.CommandMeta;
 import com.google.common.collect.ImmutableList;
 import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
-import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.messages.I18NMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
@@ -17,20 +13,14 @@ import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class ObelouixUltimateCommand extends BaseCommand {
 
-    public void register() {
-        CommandManager.getInstance().command(
-                        CommandManager.getInstance().commandBuilder("obelouixultimate")
-                                .argument(StringArgument.single("version/reload"), ArgumentDescription.of("return the version of the plugin or reload the plugin"))
-                                .handler(this::execute)
-                                .meta(CommandMeta.DESCRIPTION, "This command allow to get the plugin version or to reload it")
-                                .build()
-                )
-                .setCommandSuggestionProcessor(this::suggestions);
+    protected ObelouixUltimateCommand(@NotNull String name) {
+        super(name);
     }
 
     private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
@@ -64,5 +54,10 @@ public class ObelouixUltimateCommand extends BaseCommand {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+        return false;
     }
 }

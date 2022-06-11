@@ -1,12 +1,10 @@
 package fr.obelouix.ultimate.commands;
 
-import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
-import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.messages.I18NMessages;
 import fr.obelouix.ultimate.messages.PluginMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
@@ -18,20 +16,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
 
 public class MiddayCommand extends BaseCommand {
 
-    public void register() {
-        CommandManager.getInstance().command(
-                        CommandManager.getInstance()
-                                .commandBuilder("midday")
-                                .argument(StringArgument.optional("world"))
-                                .handler(this::execute)
-                                .build())
-                .setCommandSuggestionProcessor(this::suggestions);
+    protected MiddayCommand(@NotNull String name) {
+        super(name);
     }
 
     private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
@@ -86,5 +79,10 @@ public class MiddayCommand extends BaseCommand {
                 Objects.requireNonNull(Bukkit.getWorld(world)).setTime(6000);
             }
         }.runTask(ObelouixUltimate.getInstance());
+    }
+
+    @Override
+    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+        return false;
     }
 }

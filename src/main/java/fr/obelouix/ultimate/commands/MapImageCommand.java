@@ -1,12 +1,10 @@
 package fr.obelouix.ultimate.commands;
 
-import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
-import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.permissions.IPermission;
 import fr.obelouix.ultimate.renderer.ImageMapRenderder;
 import net.kyori.adventure.text.Component;
@@ -19,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -26,14 +25,8 @@ public class MapImageCommand extends BaseCommand {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
 
-    @Override
-    public void register() {
-        CommandManager.getInstance().command(
-                CommandManager.getInstance().commandBuilder("mapimg")
-                        .argument(StringArgument.of("action"))
-                        .handler(this::execute)
-                        .build()
-        ).setCommandSuggestionProcessor(this::suggestions);
+    protected MapImageCommand(@NotNull String name) {
+        super(name);
     }
 
     private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
@@ -65,5 +58,10 @@ public class MapImageCommand extends BaseCommand {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+        return false;
     }
 }

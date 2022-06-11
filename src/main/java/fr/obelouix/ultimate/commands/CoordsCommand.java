@@ -3,7 +3,6 @@ package fr.obelouix.ultimate.commands;
 import cloud.commandframework.context.CommandContext;
 import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
-import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.messages.I18NMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
@@ -14,14 +13,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 public class CoordsCommand extends BaseCommand {
-    public void register() {
-        CommandManager.getInstance().command(
-                CommandManager.getInstance()
-                        .commandBuilder("coords")
-                        .handler(this::execute)
-                        .build());
+    protected CoordsCommand(@NotNull String name) {
+        super(name);
     }
 
     protected void execute(@NonNull CommandContext<CommandSender> context) {
@@ -40,5 +36,10 @@ public class CoordsCommand extends BaseCommand {
         } else if (sender instanceof ConsoleCommandSender console) {
             MessagesAPI.sendMessage(console, Component.text(I18NMessages.COMMAND_ONLY_FOR_PLAYER.getSystemTranslation(), NamedTextColor.DARK_RED));
         }
+    }
+
+    @Override
+    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+        return false;
     }
 }
