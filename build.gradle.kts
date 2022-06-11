@@ -103,11 +103,15 @@ dependencies {
     implementation("org.inventivetalent:reflectionhelper:1.18.10-SNAPSHOT")
     //PacketAPI Listener
     implementation("org.inventivetalent.packetlistenerapi:api:3.9.10-SNAPSHOT")
-    // GlowAPI
-    //implementation("com.github.InventivetalentDev:GlowAPI:master-SNAPSHOT")
+
     // Interfaces (inventory)
     implementation("com.github.Incendo.interfaces:interfaces-paper:ee352a5c8b")
     implementation("com.github.Incendo.interfaces:interfaces-core:ee352a5c8b")
+
+    implementation("com.j256.ormlite:ormlite-core:6.1")
+    implementation("com.j256.ormlite:ormlite-jdbc:6.1")
+    implementation("com.h2database:h2:2.1.212")
+
 }
 
 tasks {
@@ -158,7 +162,8 @@ tasks {
             "com.fren_gor.ultimateAdvancementAPI",
             "com.github.inventivetalentDev",
             "org.inventivetalent",
-            "com.github.Incendo.interfaces"
+            "com.github.Incendo.interfaces",
+            "com.j256.ormlite"
         )
 
         //relocate every dependencies

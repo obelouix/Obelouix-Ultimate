@@ -31,7 +31,7 @@ public class PlayerData extends fr.obelouix.ultimate.data.player.Player implemen
      *
      * @return the locale of the player
      */
-    static String getPlayerLocaleString(@NotNull Player player) {
+    public static String getPlayerLocaleString(@NotNull Player player) {
         return player.locale().toString();
     }
 
@@ -92,7 +92,7 @@ public class PlayerData extends fr.obelouix.ultimate.data.player.Player implemen
 
         FakeServerBrand.sendFakeBrand(event.getPlayer());
 
-        if (DataStorage.isFileBasedStorage()) {
+        if (StorageType.isUsingFiles()) {
             final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
                     .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", event.getPlayer().getName() + ".conf"))
                     .build();

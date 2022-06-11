@@ -50,6 +50,10 @@ public class Config {
     private static final Set<World> coordinatesBlacklist = new HashSet<>();
 
     private static boolean giveEnderDragon = false;
+    private static String databaseUsername;
+    private static String databasePassword;
+    private static String databaseUrl;
+    private static int databasePort;
 
     public static void loadConfig() {
         try {
@@ -78,7 +82,20 @@ public class Config {
         debugMode = root.node("debug").getBoolean();
 
         customServerBrandName = root.node("custom-server-brand").getString();
-        storageType = root.node("data-storage-type").getString();
+
+        storageType = root.node("data", "storage-type").getString();
+
+        if (storageType.equalsIgnoreCase("mysql")) {
+            databaseUrl = root.node("data", "database", "url").getString();
+            databasePort = root.node("data", "database", "port").getInt();
+
+        }
+        if (List.of("mysql", "h2").stream().anyMatch(s -> storageType.equalsIgnoreCase(s))) {
+            databaseUsername = root.node("data", "database", "username").getString();
+            databasePassword = root.node("data", "database", "password").getString();
+        }
+
+
         disableReloadCommand = root.node("disable-default-reload-command").getBoolean();
         if (LuckPermsUtils.getLuckPermsAPI() != null) {
             for (final Object group : root.node("chat", "format").childrenMap().keySet()) {
@@ -157,7 +174,6 @@ public class Config {
 
     /**
      * add Missing entries in the configuration if the file exist
-     *
      */
     private static void addMissingConfigs() throws SerializationException {
 
@@ -182,10 +198,31 @@ public class Config {
                             + "Be aware that this will be spammy");
         }
 
-        if (root.node("data-storage-type").empty()) {
-            root.node("data-storage-type").set("file")
-                    .commentIfAbsent("Choose between: file, H2, MYSQL, SQLite . Note that SQL database are not yet implemented");
+        if (root.node("data", "storage-type").empty()) {
+            root.node("data", "storage-type").set("file")
+                    .commentIfAbsent("Choose between: file, h2, mysql");
         }
+
+        if (root.node("data", "database", "url").empty()) {
+            root.node("data", "database", "url").set("")
+                    .commentIfAbsent("Use this only for mysql");
+        }
+
+        if (root.node("data", "database", "port").empty()) {
+            root.node("data", "database", "port").set(3306)
+                    .commentIfAbsent("Use this only for mysql");
+        }
+
+        if (root.node("data", "database", "username").empty()) {
+            root.node("data", "database", "username").set("")
+                    .commentIfAbsent("Optional for h2");
+        }
+
+        if (root.node("data", "database", "password").empty()) {
+            root.node("data", "database", "password").set("")
+                    .commentIfAbsent("Optional for h2");
+        }
+
         if (root.node("disable-default-reload-command").empty()) {
             root.node("disable-default-reload-command").set(false).commentIfAbsent("Enabling this will block the /reload command");
         }
@@ -419,5 +456,21 @@ public class Config {
 
     public static Set<World> getCoordinatesBlacklist() {
         return coordinatesBlacklist;
+    }
+
+    public static String getDatabaseUsername() {
+        return databaseUsername;
+    }
+
+    public static String getDatabasePassword() {
+        return databasePassword;
+    }
+
+    public static String getDatabaseUrl() {
+        return databaseUrl;
+    }
+
+    public static int getDatabasePort() {
+        return databasePort;
     }
 }

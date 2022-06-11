@@ -4,8 +4,8 @@ import co.aikar.timings.lib.TimingManager;
 import fr.obelouix.ultimate.api.TranslationAPI;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
-import fr.obelouix.ultimate.data.DataStorage;
 import fr.obelouix.ultimate.data.MultiverseMigrator;
+import fr.obelouix.ultimate.data.StorageType;
 import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
 import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
@@ -18,6 +18,7 @@ import fr.obelouix.ultimate.worlds.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 public class ObelouixUltimate extends JavaPlugin {
@@ -38,11 +39,13 @@ public class ObelouixUltimate extends JavaPlugin {
 
     /**
      * Get an instance of Aikar's {@link TimingManager TimingManager}
+     *
      * @return {@link TimingManager TimingManager}
      */
     public static TimingManager getTimingManager() {
         return timingManager;
     }
+
 
     @Override
     public void onDisable() {
@@ -71,7 +74,9 @@ public class ObelouixUltimate extends JavaPlugin {
         }
     }
 
-
+ /*   private boolean isServerUtilsPresent() {
+        return getClass("net.frankheijden.serverutils.bukkit.ServerUtils");
+    }*/
 
     private void checkOfflineMode() {
         if (!this.getServer().getOnlineMode()) {
@@ -87,10 +92,6 @@ public class ObelouixUltimate extends JavaPlugin {
                     """);
         }
     }
-
- /*   private boolean isServerUtilsPresent() {
-        return getClass("net.frankheijden.serverutils.bukkit.ServerUtils");
-    }*/
 
     @Override
     public void onEnable() {
@@ -126,15 +127,20 @@ public class ObelouixUltimate extends JavaPlugin {
             new DynmapLoader().init();
         }
         Config.loadConfig();
-        try {
-            new CommandManager();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        CompletableFuture.runAsync(() -> {
+            try {
+                StorageType.setup();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
+        new CommandManager();
 
         new EventManager();
         new TweaksManager();
-        DataStorage.setupStorage();
         new CustomFurnaceRecipes();
         new CustomCraftingTableRecipes();
         new Updater();
@@ -143,5 +149,4 @@ public class ObelouixUltimate extends JavaPlugin {
     public TranslationAPI getTranslationAPI() {
         return translationAPI;
     }
-
 }
