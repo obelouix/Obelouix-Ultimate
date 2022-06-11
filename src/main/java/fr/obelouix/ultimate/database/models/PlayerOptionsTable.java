@@ -8,11 +8,14 @@ import java.util.UUID;
 @DatabaseTable(tableName = "players_options")
 public class PlayerOptionsTable {
 
-    @DatabaseField(canBeNull = false, foreign = true)
-    private final UUID uuid;
+    @DatabaseField(canBeNull = false)
+    private UUID uuid;
 
     @DatabaseField(canBeNull = false)
-    private final boolean showCoordinates;
+    private boolean showCoordinates;
+
+    public PlayerOptionsTable() {
+    }
 
     public PlayerOptionsTable(UUID uuid, boolean showCoordinates) {
         this.uuid = uuid;

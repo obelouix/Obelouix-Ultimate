@@ -18,7 +18,6 @@ import fr.obelouix.ultimate.worlds.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 public class ObelouixUltimate extends JavaPlugin {
@@ -128,13 +127,11 @@ public class ObelouixUltimate extends JavaPlugin {
         }
         Config.loadConfig();
 
-        CompletableFuture.runAsync(() -> {
-            try {
-                StorageType.setup();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+        try {
+            StorageType.setup();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
 
         new CommandManager();

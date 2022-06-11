@@ -9,14 +9,16 @@ import java.util.UUID;
 public class PlayerTable {
 
     @DatabaseField(canBeNull = false)
-    private final String name;
+    private String name;
 
     @DatabaseField(canBeNull = false, id = true)
-    private final UUID uuid;
+    private UUID uuid;
 
     @DatabaseField(canBeNull = false)
     private String language;
 
+    public PlayerTable() {
+    }
 
     public PlayerTable(UUID uniqueId, String name) {
         uuid = uniqueId;
@@ -28,4 +30,5 @@ public class PlayerTable {
         this.name = name;
         this.language = language;
     }
+
 }
