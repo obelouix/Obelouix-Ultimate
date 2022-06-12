@@ -31,10 +31,9 @@ public class Database {
         playerOptionsDao = DaoManager.createDao(connection, PlayerOptionsTable.class);
         TableUtils.createTableIfNotExists(connection, PlayerOptionsTable.class);
 
-        connection.close();
     }
 
-    private static Dao<PlayerTable, String> getPlayerDao() {
+    public static Dao<PlayerTable, String> getPlayerDao() {
         return playerDao;
     }
 
@@ -52,7 +51,7 @@ public class Database {
             return CompletableFuture.runAsync(() -> {
                 try {
                     getPlayerDao().createIfNotExists(data);
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             });
@@ -62,7 +61,7 @@ public class Database {
             return CompletableFuture.runAsync(() -> {
                 try {
                     getPlayerDao().createOrUpdate(data);
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             });
@@ -75,7 +74,7 @@ public class Database {
             return CompletableFuture.runAsync(() -> {
                 try {
                     getPlayerOptionsDao().createIfNotExists(data);
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             });
@@ -85,7 +84,7 @@ public class Database {
             return CompletableFuture.runAsync(() -> {
                 try {
                     getPlayerOptionsDao().createOrUpdate(data);
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             });

@@ -19,7 +19,7 @@ public class StorageType {
 
         switch (Config.getStorageType().toLowerCase(Locale.ROOT)) {
             case "h2" -> {
-                if (database == null) database = new Database(H2_URL);
+                if (database == null) database = new Database(H2_URL + ";AUTO_SERVER=TRUE");
             }
             case "mysql" -> {
                 if (database == null) {

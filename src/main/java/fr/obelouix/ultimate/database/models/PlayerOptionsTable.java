@@ -8,7 +8,7 @@ import java.util.UUID;
 @DatabaseTable(tableName = "players_options")
 public class PlayerOptionsTable {
 
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = false, id = true)
     private UUID uuid;
 
     @DatabaseField(canBeNull = false)
