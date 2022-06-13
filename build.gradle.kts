@@ -60,8 +60,8 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
 
     // Cloud Command Framework
-    implementation("cloud.commandframework", "cloud-paper", "1.6.2")
-    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.6.2")
+    implementation("cloud.commandframework", "cloud-paper", "1.7.0-SNAPSHOT")
+    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.7.0-SNAPSHOT")
 
     // Aikar's Timing
     implementation("co.aikar:minecraft-timings:1.0.4")
