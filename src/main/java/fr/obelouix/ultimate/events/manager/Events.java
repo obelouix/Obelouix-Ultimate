@@ -23,7 +23,7 @@ public abstract class Events {
         eventsSet.forEach(listener -> {
             plugin.getServer().getPluginManager().registerEvents(listener, plugin);
             if (Config.isDebugMode())
-                plugin.getLogger().info("Registered " + listener.getClass().getSimpleName() + " event");
+                plugin.getComponentLogger().info("Registered " + listener.getClass().getSimpleName() + " event");
         });
     }
 

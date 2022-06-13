@@ -61,14 +61,14 @@ public class Config {
             root = configLoader.load();
             createFile();
         } catch (ConfigurateException e) {
-            plugin.getLogger().severe("An error occurred while loading this configuration: " + e.getMessage());
+            plugin.getComponentLogger().error("An error occurred while loading this configuration: " + e.getMessage());
             configReloaded = false;
             if (e.getCause() != null) {
                 e.getCause().printStackTrace();
             }
         }
 
-        plugin.getLogger().info("Loading configuration...");
+        plugin.getComponentLogger().info("Loading configuration...");
 
         final File file = Path.of(plugin.getDataFolder().getPath(), "config.conf").toFile();
 
@@ -110,7 +110,7 @@ public class Config {
 
             if (dynmapStructuresEnabled) {
                 dynmapStructuresEnabled = false;
-                plugin.getLogger().info("Dynmap Structures is disabled until the lag it cause is resolved");
+                plugin.getComponentLogger().info("Dynmap Structures is disabled until the lag it cause is resolved");
             }
 
             if (PluginDetector.getWorldGuard() != null) {
@@ -124,7 +124,7 @@ public class Config {
         showWitherSkullExplosionsParticles = root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").getBoolean();
         serverInMaintenance = root.node("maintenance").getBoolean();
         isFastLeafDecayEnabled = root.node("fast-leaf-decay", "enabled").getBoolean();
-        plugin.getLogger().info("Configuration loaded");
+        plugin.getComponentLogger().info("Configuration loaded");
 
         unloadEmptyWorlds = root.node("worlds", "unload_if_empty").getBoolean();
 
@@ -157,7 +157,7 @@ public class Config {
         final File file = Path.of(plugin.getDataFolder().getPath(), "config.conf").toFile();
 
         if (!file.exists()) {
-            plugin.getLogger().info("Creating configuration file...");
+            plugin.getComponentLogger().info("Creating configuration file...");
 
 
             save(root);

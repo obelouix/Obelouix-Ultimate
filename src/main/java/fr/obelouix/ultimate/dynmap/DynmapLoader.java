@@ -17,12 +17,12 @@ public class DynmapLoader implements Listener {
     }
 
     public void init() {
-        plugin.getLogger().info("Found Dynmap");
+        plugin.getComponentLogger().info("Found Dynmap");
         DynmapCommonAPIListener.register(new DynmapCommonAPIListener() {
             @Override
             public void apiEnabled(DynmapCommonAPI dynmapCommonAPI) {
                 if (Config.isDynmapStructuresEnabled()) {
-                    plugin.getLogger().info("Dynmap Structures is disabled until a working fix is found as it cause a huge amoung of lag");
+                    plugin.getComponentLogger().info("Dynmap Structures is disabled until a working fix is found as it cause a huge amoung of lag");
                     //new DynmapStructures(dynmapCommonAPI);
                 }
                 if (PluginDetector.getWorldGuard() != null && Config.isDynmapWorldGuardEnabled()) {

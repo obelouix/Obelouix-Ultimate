@@ -15,13 +15,11 @@ import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import fr.obelouix.ultimate.utils.PluginDetector;
 import fr.obelouix.ultimate.utils.Updater;
 import fr.obelouix.ultimate.worlds.WorldManager;
-import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ObelouixUltimate extends JavaPlugin {
 
-    private final ComponentLogger LOGGER = this.getComponentLogger();
     private static ObelouixUltimate instance;
     private static TranslationAPI translationAPI;
     private static TimingManager timingManager;
@@ -56,7 +54,7 @@ public class ObelouixUltimate extends JavaPlugin {
      */
     private void checkPaperPresence() {
         if (!PluginDetector.detectClass("com.destroystokyo.paper.PaperConfig")) {
-            LOGGER.error(
+            this.getComponentLogger().error(
                     """
                             **************************************************************\s
                                                         
@@ -66,7 +64,7 @@ public class ObelouixUltimate extends JavaPlugin {
                             **************************************************************
                             """);
 
-            LOGGER.info("Shutting down the server...");
+            this.getComponentLogger().info("Shutting down the server...");
             // Shutdown the server to force the user to change server software
             getServer().shutdown();
         }
@@ -78,7 +76,7 @@ public class ObelouixUltimate extends JavaPlugin {
 
     private void checkOfflineMode() {
         if (!this.getServer().getOnlineMode()) {
-            LOGGER.warn("""
+            this.getComponentLogger().warn("""
                                         
                     ****************************************************************
                                         
@@ -108,7 +106,7 @@ public class ObelouixUltimate extends JavaPlugin {
         }
 
         if (Config.isDisconnectOnHighPing() && Config.getMaxPing() < 200) {
-            getLogger().warning("""
+            this.getComponentLogger().warn("""
                     Minimum ping for kicking a player is too low (must be 200 or higher)
                     Using 200ms as value until you change it in the config file
                     """);
@@ -118,7 +116,7 @@ public class ObelouixUltimate extends JavaPlugin {
 
         LuckPermsUtils.checkForLuckPerms();
         if (PluginDetector.getWorldGuard() != null) {
-            getLogger().info("Found WorldGuard");
+            this.getComponentLogger().info("Found WorldGuard");
 //            new WorldGuard();
         }
         if (PluginDetector.getDynmap() != null) {

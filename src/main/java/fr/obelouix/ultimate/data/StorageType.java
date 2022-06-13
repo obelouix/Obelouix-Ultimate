@@ -32,14 +32,14 @@ public class StorageType {
             }
             case "file" -> usingFiles = true;
             default -> {
-                plugin.getLogger().severe("misconfigured storage type, using files to store data as fallback");
-                plugin.getLogger().severe("Please stop the server and fix this in the plugin config");
+                plugin.getComponentLogger().error("misconfigured storage type, using files to store data as fallback");
+                plugin.getComponentLogger().error("Please stop the server and fix this in the plugin config");
                 usingFiles = true;
             }
 
         }
 
-        plugin.getLogger().info("Using " + Config.getStorageType() + " as storage method");
+        plugin.getComponentLogger().info("Using " + Config.getStorageType() + " as storage method");
 
     }
 
