@@ -1,12 +1,23 @@
 package fr.obelouix.ultimate.commands.manager;
 
+import cloud.commandframework.CommandTree;
+import cloud.commandframework.bukkit.CloudBukkitCapabilities;
+import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;
+import cloud.commandframework.execution.CommandExecutionCoordinator;
+import cloud.commandframework.paper.PaperCommandManager;
+import com.avaje.ebeaninternal.server.deploy.parse.AnnotationParser;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.commands.PingCommand;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.function.Function;
 
 public class CommandManager {
 
@@ -21,8 +32,44 @@ public class CommandManager {
         }
     }
 
+    private AnnotationParser annotationParser;
+    private PaperCommandManager<CommandSender> manager;
+    private Audience audience;
+
     public CommandManager() {
         instance = this;
+
+        try {
+
+            final Function<CommandTree<CommandSender>, CommandExecutionCoordinator<CommandSender>> executionCoordinatorFunction =
+                    AsynchronousCommandExecutionCoordinator.<CommandSender>newBuilder().build();
+            final Function<CommandSender, CommandSender> mapperFunction = Function.identity();
+
+            this.manager = new PaperCommandManager<>(
+                    plugin,
+                    executionCoordinatorFunction,
+                    mapperFunction,
+                    mapperFunction
+            );
+
+            this.audience = Audience.audience(plugin.getServer());
+            //
+            // Register Brigadier mappings
+            //
+            if (this.manager.hasCapability(CloudBukkitCapabilities.BRIGADIER)) {
+                this.manager.registerBrigadier();
+            }
+            //
+            // Register asynchronous completions
+            //
+            if (this.manager.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
+                this.manager.registerAsynchronousCompletions();
+            }
+
+        } catch (Exception e) {
+            plugin.getComponentLogger().error(Component.text("Failed to initialize the command manager", NamedTextColor.DARK_RED));
+            return;
+        }
 
 /*        if (this.queryCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
             this.registerBrigadier();
@@ -64,6 +111,10 @@ public class CommandManager {
 
     }
 
+    public static CommandManager getInstance() {
+        return instance;
+    }
+
     /**
      * allow registering of commands in the Bukkit CommandMap instead of using the plugin.yml
      *
@@ -86,10 +137,6 @@ public class CommandManager {
             throw new RuntimeException(e);
         }
 
-    }
-
-    public static CommandManager getInstance() {
-        return instance;
     }
 
 }
