@@ -15,6 +15,7 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class Config {
 
@@ -177,6 +178,14 @@ public class Config {
      */
     private static void addMissingConfigs() throws SerializationException {
 
+        CompletableFuture.runAsync(() -> {
+            addStorageSettings();
+            addDynmapSettings();
+            addFeatureSettings();
+            addLuckPermsSettings();
+        });
+
+
         final CommentedConfigurationNode enderDragonExpShare = root.node("tweaks", "give-enderdragon-exp-to-everyone");
 
         if (enderDragonExpShare.empty()) {
@@ -198,63 +207,8 @@ public class Config {
                             + "Be aware that this will be spammy");
         }
 
-        if (root.node("data", "storage-type").empty()) {
-            root.node("data", "storage-type").set("file")
-                    .commentIfAbsent("Choose between: file, h2, mysql");
-        }
-
-        if (root.node("data", "database", "url").empty()) {
-            root.node("data", "database", "url").set("")
-                    .commentIfAbsent("Use this only for mysql");
-        }
-
-        if (root.node("data", "database", "port").empty()) {
-            root.node("data", "database", "port").set(3306)
-                    .commentIfAbsent("Use this only for mysql");
-        }
-
-        if (root.node("data", "database", "username").empty()) {
-            root.node("data", "database", "username").set("")
-                    .commentIfAbsent("Optional for h2");
-        }
-
-        if (root.node("data", "database", "password").empty()) {
-            root.node("data", "database", "password").set("")
-                    .commentIfAbsent("Optional for h2");
-        }
-
         if (root.node("disable-default-reload-command").empty()) {
             root.node("disable-default-reload-command").set(false).commentIfAbsent("Enabling this will block the /reload command");
-        }
-        // Get all groups and generate the config dynamically
-        if (LuckPermsUtils.getLuckPermsAPI() != null && root.node("chat").empty()) {
-            for (final Group group : LuckPermsUtils.getGroups()) {
-                root.node("chat").act(n -> {
-                    if (group.getName().equals("default")) {
-                        n.node("format")
-                                .commentIfAbsent("""
-                                        This allow you to control the chat formatting for every groups
-                                        You case use standard color code like &4 and also hex color codes like &#808080
-                                                                                    
-                                        Some tags are available to allow you to fully customize the chat:
-                                        - {displayname} : player name
-                                        - {message} : the message of the player
-                                        - {world} : the current world of the player
-                                        - {prefix} : the luckperms prefix of the group
-                                        - {suffix} : the luckperms suffix of the group
-                                                                                    
-                                        /!\\ PLEASE NOTE THAT IF YOU ADD COLOR CODES DIRECTLY IN LUCKPERMS META FOR
-                                        PREFIX AND SUFFIX, THEY WILL OVERRIDE PREFIX AND SUFFIX COLORS FROM THIS CONFIG
-                                        """)
-                                .node(group.getName()).set("&#808080{displayname}: {message}")
-                                .commentIfAbsent("default LuckPerms group");
-                    } else {
-                        n.node("format").node(group.getName()).set("&#32cd32[{world}]&r{prefix}{displayname}{suffix}: &r{message}")
-                                .commentIfAbsent(group.getName() + " group");
-                    }
-
-                });
-            }
         }
 
         if (root.node("custom-server-brand").empty()) {
@@ -266,16 +220,6 @@ public class Config {
                             """);
         }
 
-        if (root.node("protection", "explosions", "wither", "disable-block-damage").empty()) {
-            root.node("protection", "explosions", "wither", "disable-block-damage").set(false)
-                    .commentIfAbsent("Disable damages on blocks from the wither boss");
-        }
-
-        if (root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").empty()) {
-            root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").set(false)
-                    .commentIfAbsent("Show smoke at the location where wither skulls explodes\n" +
-                            "only works if block damages are blocked");
-        }
 
         if (root.node("maintenance").empty()) {
             root.node("maintenance").set(false)
@@ -291,31 +235,11 @@ public class Config {
         if (root.node("ping", "threshold").empty()) {
             root.node("ping", "threshold").set(500).commentIfAbsent("Minimal ping before being disconnected");
         }
-        if (PluginDetector.getDynmap() != null) {
-            if (root.node("dynmap", "modules", "structures", "enabled").empty()) {
-                root.node("dynmap", "modules", "structures", "enabled").set(Boolean.TRUE);
-            }
-            if (root.node("dynmap", "modules", "structures", "layer_name").empty()) {
-                root.node("dynmap", "modules", "structures", "layer_name").set("Structures");
-//                    .commentIfAbsent("A server restart is required to change the name, a reload will not work");
-            }
-            if (PluginDetector.getWorldGuard() != null) {
-                if (root.node("dynmap", "modules", "worldguard", "enabled").empty()) {
-                    root.node("dynmap", "modules", "worldguard", "enabled").set(Boolean.TRUE);
-                }
-                if (root.node("dynmap", "modules", "worldguard", "layer_name").empty()) {
-                    root.node("dynmap", "modules", "worldguard", "layer_name").set("WorldGuard");
-                }
-            }
-        }
 
         if (root.node("anvil", "infinite-repair").empty()) {
             root.node("anvil", "infinite-repair").set(Boolean.TRUE);
         }
 
-        if (root.node("fast-leaf-decay", "enabled").empty()) {
-            root.node("fast-leaf-decay", "enabled").set(Boolean.TRUE);
-        }
 
         if (root.node("worlds", "unload_if_empty").empty()) {
             root.node("worlds", "unload_if_empty").set(Boolean.FALSE)
@@ -341,14 +265,137 @@ public class Config {
         } else {
             root.node("night-skipper", "essentials-hook").set(Boolean.FALSE);
         }
-
-        if (root.node("coordinates", "world", "blacklist").empty()) {
-            root.node("coordinates", "world", "blacklist").setList(String.class, new ArrayList<>())
-                    .commentIfAbsent("Add here the worlds were you wish to hide the coordinates bar" +
-                            "\n Like this: blacklist=[\"world1\",\"world2\"]");
-        }
-
         save(root);
+    }
+
+    private static void addStorageSettings() {
+        CompletableFuture.runAsync(() ->
+                {
+                    try {
+                        if (root.node("data", "storage-type").empty()) {
+                            root.node("data", "storage-type").set("file")
+                                    .commentIfAbsent("Choose between: file, h2, mysql");
+                        }
+
+                        if (root.node("data", "database", "url").empty()) {
+                            root.node("data", "database", "url").set("")
+                                    .commentIfAbsent("Use this only for mysql");
+                        }
+
+                        if (root.node("data", "database", "port").empty()) {
+                            root.node("data", "database", "port").set(3306)
+                                    .commentIfAbsent("Use this only for mysql");
+                        }
+
+                        if (root.node("data", "database", "username").empty()) {
+                            root.node("data", "database", "username").set("")
+                                    .commentIfAbsent("Optional for h2");
+                        }
+
+                        if (root.node("data", "database", "password").empty()) {
+                            root.node("data", "database", "password").set("")
+                                    .commentIfAbsent("Optional for h2");
+                        }
+                    } catch (SerializationException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+        );
+    }
+
+    private static void addDynmapSettings() {
+        CompletableFuture.runAsync(() -> {
+            try {
+                if (PluginDetector.getDynmap() != null) {
+                    if (root.node("dynmap", "modules", "structures", "enabled").empty()) {
+                        root.node("dynmap", "modules", "structures", "enabled").set(Boolean.TRUE);
+                    }
+                    if (root.node("dynmap", "modules", "structures", "layer_name").empty()) {
+                        root.node("dynmap", "modules", "structures", "layer_name").set("Structures");
+//                    .commentIfAbsent("A server restart is required to change the name, a reload will not work");
+                    }
+                    if (PluginDetector.getWorldGuard() != null) {
+                        if (root.node("dynmap", "modules", "worldguard", "enabled").empty()) {
+                            root.node("dynmap", "modules", "worldguard", "enabled").set(Boolean.TRUE);
+                        }
+                        if (root.node("dynmap", "modules", "worldguard", "layer_name").empty()) {
+                            root.node("dynmap", "modules", "worldguard", "layer_name").set("WorldGuard");
+                        }
+                    }
+                }
+            } catch (SerializationException e) {
+                throw new RuntimeException();
+            }
+        });
+    }
+
+    private static void addLuckPermsSettings() {
+        CompletableFuture.runAsync(() -> {
+            try {
+                // Get all groups and generate the config dynamically
+                if (LuckPermsUtils.getLuckPermsAPI() != null && root.node("chat").empty()) {
+                    for (final Group group : LuckPermsUtils.getGroups()) {
+                        root.node("chat").act(n -> {
+                            if (group.getName().equals("default")) {
+                                n.node("format")
+                                        .commentIfAbsent("""
+                                                This allow you to control the chat formatting for every groups
+                                                You case use standard color code like &4 and also hex color codes like &#808080
+                                                                                            
+                                                Some tags are available to allow you to fully customize the chat:
+                                                - {displayname} : player name
+                                                - {message} : the message of the player
+                                                - {world} : the current world of the player
+                                                - {prefix} : the luckperms prefix of the group
+                                                - {suffix} : the luckperms suffix of the group
+                                                                                            
+                                                /!\\ PLEASE NOTE THAT IF YOU ADD COLOR CODES DIRECTLY IN LUCKPERMS META FOR
+                                                PREFIX AND SUFFIX, THEY WILL OVERRIDE PREFIX AND SUFFIX COLORS FROM THIS CONFIG
+                                                """)
+                                        .node(group.getName()).set("&#808080{displayname}: {message}")
+                                        .commentIfAbsent("default LuckPerms group");
+                            } else {
+                                n.node("format").node(group.getName()).set("&#32cd32[{world}]&r{prefix}{displayname}{suffix}: &r{message}")
+                                        .commentIfAbsent(group.getName() + " group");
+                            }
+
+                        });
+                    }
+                }
+            } catch (SerializationException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private static void addFeatureSettings() {
+        CompletableFuture.runAsync(() -> {
+            try {
+                if (root.node("coordinates", "world", "blacklist").empty()) {
+                    root.node("coordinates", "world", "blacklist").setList(String.class, new ArrayList<>())
+                            .commentIfAbsent("Add here the worlds were you wish to hide the coordinates bar" +
+                                    "\n Like this: blacklist=[\"world1\",\"world2\"]");
+                }
+
+                if (root.node("fast-leaf-decay", "enabled").empty()) {
+                    root.node("fast-leaf-decay", "enabled").set(Boolean.TRUE);
+                }
+
+                if (root.node("protection", "explosions", "wither", "disable-block-damage").empty()) {
+                    root.node("protection", "explosions", "wither", "disable-block-damage").set(false)
+                            .commentIfAbsent("Disable damages on blocks from the wither boss");
+                }
+
+                if (root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").empty()) {
+                    root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").set(false)
+                            .commentIfAbsent("Show smoke at the location where wither skulls explodes\n" +
+                                    "only works if block damages are blocked");
+                }
+
+            } catch (SerializationException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public static boolean giveEnderDragonExp() {
