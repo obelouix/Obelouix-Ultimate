@@ -5,7 +5,7 @@ plugins {
     idea //force Intellij to generate project file, cause i don't know why it refuse to import dependencies
     id("io.papermc.paperweight.userdev") version "1.3.6"
     id("xyz.jpenilla.run-paper") version "1.0.6" // Adds runServer and runMojangMappedServer tasks for testing
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.1" // Generates plugin.yml
+    id("net.minecrell.plugin-yml.bukkit") version "0.5.2" // Generates plugin.yml
 
     // Shades and relocates dependencies into our plugin jar. See https://imperceptiblethoughts.com/shadow/introduction/
     id("com.github.johnrengelman.shadow") version "7.1.2"
@@ -86,8 +86,8 @@ dependencies {
 
     // FAWE
 
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.2.1-SNAPSHOT") { isTransitive = false }
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.2.1-SNAPSHOT") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.3.0") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.3.0") { isTransitive = false }
 
     // WorldGuard
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-20211230.194325-8")
