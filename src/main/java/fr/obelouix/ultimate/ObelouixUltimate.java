@@ -15,14 +15,13 @@ import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import fr.obelouix.ultimate.utils.PluginDetector;
 import fr.obelouix.ultimate.utils.Updater;
 import fr.obelouix.ultimate.worlds.WorldManager;
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.logging.Logger;
-
 public class ObelouixUltimate extends JavaPlugin {
 
-    private static final Logger LOGGER = Logger.getLogger("Obelouix Ultimate");
+    private final ComponentLogger LOGGER = this.getComponentLogger();
     private static ObelouixUltimate instance;
     private static TranslationAPI translationAPI;
     private static TimingManager timingManager;
@@ -57,7 +56,7 @@ public class ObelouixUltimate extends JavaPlugin {
      */
     private void checkPaperPresence() {
         if (!PluginDetector.detectClass("com.destroystokyo.paper.PaperConfig")) {
-            LOGGER.severe(
+            LOGGER.error(
                     """
                             **************************************************************\s
                                                         
@@ -79,7 +78,7 @@ public class ObelouixUltimate extends JavaPlugin {
 
     private void checkOfflineMode() {
         if (!this.getServer().getOnlineMode()) {
-            LOGGER.warning("""
+            LOGGER.warn("""
                                         
                     ****************************************************************
                                         
