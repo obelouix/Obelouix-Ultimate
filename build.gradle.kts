@@ -85,7 +85,6 @@ dependencies {
     compileOnly("net.essentialsx:EssentialsXDiscord:2.20.0-SNAPSHOT")
 
     // FAWE
-
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.3.0") { isTransitive = false }
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.3.0") { isTransitive = false }
 
@@ -163,7 +162,8 @@ tasks {
             "com.github.inventivetalentDev",
             "org.inventivetalent",
             "com.github.Incendo.interfaces",
-            "com.j256.ormlite"
+            "com.j256.ormlite",
+            "com.h2database"
         )
 
         //relocate every dependencies
