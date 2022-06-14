@@ -13,18 +13,18 @@ import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class ObelouixUltimateCommand extends BaseCommand {
 
-    protected ObelouixUltimateCommand(@NotNull String name) {
-        super(name);
-    }
-
     private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
         return ImmutableList.of("reload", "version");
+    }
+
+    @Override
+    protected void register() {
+
     }
 
     protected void execute(@NonNull CommandContext<CommandSender> context) {
@@ -54,10 +54,5 @@ public class ObelouixUltimateCommand extends BaseCommand {
                 }
             }
         }
-    }
-
-    @Override
-    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        return false;
     }
 }

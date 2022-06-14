@@ -1,23 +1,55 @@
 package fr.obelouix.ultimate.commands;
 
-import fr.obelouix.ultimate.api.MessagesAPI;
-import fr.obelouix.ultimate.components.PingFormat;
-import fr.obelouix.ultimate.messages.I18NMessages;
+import cloud.commandframework.ArgumentDescription;
+import cloud.commandframework.arguments.standard.StringArgument;
+import cloud.commandframework.context.CommandContext;
+import cloud.commandframework.meta.CommandMeta;
+import fr.obelouix.ultimate.commands.manager.BaseCommand;
 import fr.obelouix.ultimate.permissions.IPermission;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextReplacementConfig;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.command.Command;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class PingCommand extends Command {
-    public PingCommand(@NotNull String name) {
-        super(name);
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class PingCommand extends BaseCommand {
+
+    @Override
+    protected void register() {
+        CommandBuilder("ping")
+                .meta(CommandMeta.DESCRIPTION, "get your ping")
+                .argument(StringArgument.optional("player"), ArgumentDescription.of("The player that you want to see the ping"))
+                .build();
+
+        SuggestionsProvider("playerSuggestionProvider", this::suggestions);
+    }
+
+    private List<String> suggestions(CommandContext<CommandSender> commandSenderCommandContext, String s) {
+        if (commandSenderCommandContext.hasPermission("obelouix.command.ping.others")) {
+            final List<String> players = new ArrayList<>();
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                //don't had players that have this permission
+                if (!onlinePlayer.hasPermission("obelouix.ping.hide")) players.add(onlinePlayer.getName());
+            }
+            return players;
+        }
+        return Collections.emptyList();
     }
 
     @Override
+    public void execute(@NonNull CommandContext<CommandSender> context) {
+        if (context.contains("player")) ;
+        if (context.getSender() instanceof Player player) {
+            if (IPermission.hasPermission(player, "obelouix.command.ping")) {
+
+            }
+        }
+    }
+
+/*    @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
         if (IPermission.hasPermission(sender, "obelouix.command.ping")) {
             if (sender instanceof Player player) {
@@ -30,5 +62,5 @@ public class PingCommand extends Command {
             }
         }
         return false;
-    }
+    }*/
 }

@@ -72,7 +72,7 @@ public class InventoryAPI {
      *
      * @param item         the item that will receive the enchantment
      * @param enchantment  the {@link Enchantment} to add
-     * @param enchantLevel an {@link Integer} between {@code 0} and {@link 255}
+     * @param enchantLevel an {@link Integer} between {@code 0} and {@code  255}
      */
     public static void addEnchantment(ItemStack item, Enchantment enchantment, int enchantLevel) {
         final ItemMeta meta = item.getItemMeta();
@@ -86,7 +86,7 @@ public class InventoryAPI {
      *
      * @param item         the item that will receive the enchantments
      * @param enchantments a {@link List} of {@link Enchantment}
-     * @param enchantLevel an {@link Integer} between {@code 0} and {@link 255}
+     * @param enchantLevel an {@link Integer} between {@code 0} and {@code  255}
      */
     public static void addEnchantments(ItemStack item, List<Enchantment> enchantments, int enchantLevel) {
         final ItemMeta meta = item.getItemMeta();

@@ -66,6 +66,7 @@ public class CommandManager {
                 this.manager.registerAsynchronousCompletions();
             }
 
+
         } catch (Exception e) {
             plugin.getComponentLogger().error(Component.text("Failed to initialize the command manager", NamedTextColor.DARK_RED));
             return;
@@ -96,8 +97,8 @@ public class CommandManager {
         ).forEach(BaseCommand::register);*/
 
         List.of(
-                new PingCommand("ping")
-        ).forEach(this::registerCommand);
+                new PingCommand()
+        ).forEach(BaseCommand::register);
 
 
 /*        new MinecraftExceptionHandler<CommandSender>()
@@ -139,4 +140,7 @@ public class CommandManager {
 
     }
 
+    public PaperCommandManager<CommandSender> getManager() {
+        return manager;
+    }
 }

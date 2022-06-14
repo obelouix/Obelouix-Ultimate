@@ -13,11 +13,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 public class CoordsCommand extends BaseCommand {
-    protected CoordsCommand(@NotNull String name) {
-        super(name);
+
+    @Override
+    protected void register() {
+
     }
 
     protected void execute(@NonNull CommandContext<CommandSender> context) {
@@ -38,8 +39,4 @@ public class CoordsCommand extends BaseCommand {
         }
     }
 
-    @Override
-    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        return false;
-    }
 }

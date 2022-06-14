@@ -24,6 +24,8 @@ public class ObelouixUltimate extends JavaPlugin {
     private static TranslationAPI translationAPI;
     private static TimingManager timingManager;
 
+    private CommandManager commandManager;
+
     /**
      * Get an instance of {@link ObelouixUltimate ObelouixUltimate} main class
      *
@@ -42,6 +44,9 @@ public class ObelouixUltimate extends JavaPlugin {
         return timingManager;
     }
 
+    public CommandManager getCommandManager() {
+        return commandManager;
+    }
 
     @Override
     public void onDisable() {
@@ -131,7 +136,7 @@ public class ObelouixUltimate extends JavaPlugin {
         }
 
 
-        new CommandManager();
+        commandManager = new CommandManager();
 
         new EventManager();
         new TweaksManager();

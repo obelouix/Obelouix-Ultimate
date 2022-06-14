@@ -32,6 +32,7 @@ repositories {
         "https://repo.aikar.co/content/groups/aikar/",                  // Airkar
         "https://maven.enginehub.org/repo/",                            // EngineHub
         "https://s01.oss.sonatype.org/content/repositories/snapshots/", // FAWE
+        "https://oss.sonatype.org/content/repositories/snapshots",      // Sonatype snapshots
         "https://hub.spigotmc.org/nexus/content/groups/public/",        // Spigot
         "https://repo.mikeprimm.com",                                   // Dynmap
         "https://repo.fvdh.dev/releases",                               // FrankHeijden
@@ -63,10 +64,16 @@ dependencies {
     // Cloud Command Framework
     implementation("cloud.commandframework", "cloud-core", "1.7.0-SNAPSHOT")
     implementation("cloud.commandframework", "cloud-paper", "1.7.0-SNAPSHOT")
+    //implementation("cloud.commandframework", "cloud-cloud-annotations", "1.7.0-SNAPSHOT")
     implementation("cloud.commandframework", "cloud-minecraft-extras", "1.7.0-SNAPSHOT")
+
+    // Comodore
+    implementation("me.lucko:commodore:2.0")
 
     // Aikar's Timing
     implementation("co.aikar:minecraft-timings:1.0.4")
+
+    // LuckPerms
     compileOnly("net.luckperms:api:5.4")
 
     // Sponge Configurate

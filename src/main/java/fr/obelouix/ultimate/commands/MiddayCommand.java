@@ -16,16 +16,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
 
 public class MiddayCommand extends BaseCommand {
-
-    protected MiddayCommand(@NotNull String name) {
-        super(name);
-    }
 
     private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
         final CommandSender sender = commandSenderCommandPreprocessingContext.getCommandContext().getSender();
@@ -37,6 +32,11 @@ public class MiddayCommand extends BaseCommand {
             });
         }
         return strings;
+    }
+
+    @Override
+    protected void register() {
+
     }
 
     @Override
@@ -81,8 +81,4 @@ public class MiddayCommand extends BaseCommand {
         }.runTask(ObelouixUltimate.getInstance());
     }
 
-    @Override
-    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        return false;
-    }
 }

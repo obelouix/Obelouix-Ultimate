@@ -17,7 +17,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -25,12 +24,14 @@ public class MapImageCommand extends BaseCommand {
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
 
-    protected MapImageCommand(@NotNull String name) {
-        super(name);
-    }
 
     private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
         return List.of("set", "clear");
+    }
+
+    @Override
+    protected void register() {
+
     }
 
     @Override
@@ -60,8 +61,4 @@ public class MapImageCommand extends BaseCommand {
         }
     }
 
-    @Override
-    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        return false;
-    }
 }

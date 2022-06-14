@@ -7,13 +7,14 @@ import fr.obelouix.ultimate.permissions.IPermission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jetbrains.annotations.NotNull;
 
 public class AdminCommand extends BaseCommand {
-    public AdminCommand() {
-        super("");
-    }
 
+
+    @Override
+    protected void register() {
+
+    }
 
     protected void execute(@NonNull CommandContext<CommandSender> context) {
         final CommandSender sender = context.getSender();
@@ -22,8 +23,4 @@ public class AdminCommand extends BaseCommand {
         }
     }
 
-    @Override
-    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        return false;
-    }
 }
