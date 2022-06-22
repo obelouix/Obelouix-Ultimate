@@ -62,10 +62,10 @@ dependencies {
 
 
     // Cloud Command Framework
-    implementation("cloud.commandframework", "cloud-core", "1.7.0-SNAPSHOT")
-    implementation("cloud.commandframework", "cloud-paper", "1.7.0-SNAPSHOT")
+    implementation("cloud.commandframework", "cloud-core", "1.7.0")
+    implementation("cloud.commandframework", "cloud-paper", "1.7.0")
     //implementation("cloud.commandframework", "cloud-cloud-annotations", "1.7.0-SNAPSHOT")
-    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.7.0-SNAPSHOT")
+    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.7.0")
 
     // Comodore
     implementation("me.lucko:commodore:2.0")

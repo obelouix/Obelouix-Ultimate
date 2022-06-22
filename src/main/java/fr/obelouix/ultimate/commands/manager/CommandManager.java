@@ -7,7 +7,6 @@ import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.avaje.ebeaninternal.server.deploy.parse.AnnotationParser;
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.commands.PingCommand;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -16,7 +15,6 @@ import org.bukkit.command.CommandSender;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.function.Function;
 
 public class CommandManager {
@@ -96,9 +94,12 @@ public class CommandManager {
                 new MapImageCommand()*//*
         ).forEach(BaseCommand::register);*/
 
+        //new PingCommand().register();
+
+        /*
         List.of(
                 new PingCommand()
-        ).forEach(BaseCommand::register);
+        ).forEach(BaseCommand::register);*/
 
 
 /*        new MinecraftExceptionHandler<CommandSender>()

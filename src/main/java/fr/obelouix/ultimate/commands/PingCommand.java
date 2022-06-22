@@ -1,38 +1,54 @@
 package fr.obelouix.ultimate.commands;
 
-import cloud.commandframework.ArgumentDescription;
 import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.context.CommandContext;
+import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
 import cloud.commandframework.meta.CommandMeta;
+import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
+import fr.obelouix.ultimate.components.PingFormat;
+import fr.obelouix.ultimate.messages.I18NMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextReplacementConfig;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class PingCommand extends BaseCommand {
 
     @Override
-    protected void register() {
-        CommandBuilder("ping")
-                .meta(CommandMeta.DESCRIPTION, "get your ping")
-                .argument(StringArgument.optional("player"), ArgumentDescription.of("The player that you want to see the ping"))
-                .build();
+    public void register() {
+        COMMAND_MANAGER.command(
+                CommandBuilder("ping")
+                        .meta(CommandMeta.DESCRIPTION, "get your ping")
+                        .argument(StringArgument.optional("target"))
+                        .build()).setCommandSuggestionProcessor(this::suggestions);
 
-        SuggestionsProvider("playerSuggestionProvider", this::suggestions);
+        //SuggestionsProvider("playerSuggestionProvider", this::suggestions);
     }
 
-    private List<String> suggestions(CommandContext<CommandSender> commandSenderCommandContext, String s) {
-        if (commandSenderCommandContext.hasPermission("obelouix.command.ping.others")) {
+    private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
+        return null;
+    }
+
+    private List<String> suggestions(CommandContext<CommandSender> commandContext, String s) {
+        if (commandContext.hasPermission("obelouix.command.ping.others")) {
             final List<String> players = new ArrayList<>();
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                //don't had players that have this permission
-                if (!onlinePlayer.hasPermission("obelouix.ping.hide")) players.add(onlinePlayer.getName());
+                if (!onlinePlayer.equals(commandContext.getSender())) {
+                    //don't had players that have this permission
+                    if (!onlinePlayer.hasPermission("obelouix.ping.hide")) players.add(onlinePlayer.getName());
+                }
+
             }
             return players;
         }
@@ -41,11 +57,19 @@ public class PingCommand extends BaseCommand {
 
     @Override
     public void execute(@NonNull CommandContext<CommandSender> context) {
-        if (context.contains("player")) ;
-        if (context.getSender() instanceof Player player) {
-            if (IPermission.hasPermission(player, "obelouix.command.ping")) {
+        final String target = Objects.requireNonNull(context.getOptional("target").orElse(null)).toString();
 
+        if (context.getSender() instanceof Player player) {
+            if (IPermission.hasPermission(player, "obelouix.command.ping") && target.length() == 0) {
+                MessagesAPI.sendMessage(player, Component.text(I18NMessages.PING_COMMAND_SELF.getTranslation(player), NamedTextColor.GRAY)
+                        .replaceText(
+                                TextReplacementConfig.builder()
+                                        .matchLiteral("{0}")
+                                        .replacement(PingFormat.getPingComponent(player.getPing()))
+                                        .build()));
             }
+        } else if (context.getSender() instanceof ConsoleCommandSender console) {
+
         }
     }
 

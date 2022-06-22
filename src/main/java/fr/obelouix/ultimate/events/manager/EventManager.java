@@ -5,6 +5,7 @@ import fr.obelouix.ultimate.coordinates.Coordinates;
 import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.events.*;
 import fr.obelouix.ultimate.fastleafdecay.FastLeafDecay;
+import fr.obelouix.ultimate.features.HeadDrop;
 import fr.obelouix.ultimate.recipes.RecipeDiscoverer;
 
 import java.util.List;
@@ -14,12 +15,15 @@ public class EventManager extends Events {
     public EventManager() {
 
         addEvents(List.of(new PlayerData(),
-                new ServerListEvent(),
-                new ServerListEvent(),
-                new ReloadDetector(),
-                new PlayerConnectionEvent(),
-                new Coordinates(),
-                new RecipeDiscoverer())
+                        new ServerListEvent(),
+                        new ServerListEvent(),
+                        new ReloadDetector(),
+                        new PlayerConnectionEvent(),
+                        new Coordinates(),
+                        new RecipeDiscoverer(),
+                        new HeadDrop()
+                        //new NightSkipEvent()
+                )
         );
 
         if (Config.isWitherBlockDamageDisabled()) {
