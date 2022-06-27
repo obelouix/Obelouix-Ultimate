@@ -57,7 +57,7 @@ public class ObelouixUltimate extends JavaPlugin {
      */
     private void checkPaperPresence() {
         if (!PluginDetector.detectClass("com.destroystokyo.paper.PaperConfig")) {
-            this.getComponentLogger().error(
+            this.getLogger().severe(
                     """
                             **************************************************************\s
                                                         
