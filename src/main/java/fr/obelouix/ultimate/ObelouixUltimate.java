@@ -15,6 +15,8 @@ import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import fr.obelouix.ultimate.utils.PluginDetector;
 import fr.obelouix.ultimate.utils.Updater;
 import fr.obelouix.ultimate.worlds.WorldManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -77,7 +79,7 @@ public class ObelouixUltimate extends JavaPlugin {
 
     private void checkOfflineMode() {
         if (!this.getServer().getOnlineMode()) {
-            this.getComponentLogger().warn("""
+            this.getComponentLogger().warn(Component.text("""
                                         
                     ****************************************************************
                                         
@@ -86,7 +88,7 @@ public class ObelouixUltimate extends JavaPlugin {
                       TO SERVERS RUNNING IN ONLINE MODE
                                         
                     ****************************************************************
-                    """);
+                    """, NamedTextColor.DARK_RED));
         }
     }
 
