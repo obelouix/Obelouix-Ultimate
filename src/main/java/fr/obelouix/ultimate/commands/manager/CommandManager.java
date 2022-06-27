@@ -1,12 +1,13 @@
 package fr.obelouix.ultimate.commands.manager;
 
 import cloud.commandframework.CommandTree;
-import cloud.commandframework.bukkit.CloudBukkitCapabilities;
+import cloud.commandframework.brigadier.CloudBrigadierManager;
 import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.avaje.ebeaninternal.server.deploy.parse.AnnotationParser;
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.commands.TimeCommand;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -15,6 +16,7 @@ import org.bukkit.command.CommandSender;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.function.Function;
 
 public class CommandManager {
@@ -51,17 +53,20 @@ public class CommandManager {
             );
 
             this.audience = Audience.audience(plugin.getServer());
-            //
+
+            // No need to check as we don't support old versions that don't have theses
+
             // Register Brigadier mappings
-            //
-            if (this.manager.hasCapability(CloudBukkitCapabilities.BRIGADIER)) {
-                this.manager.registerBrigadier();
-            }
-            //
+            this.manager.registerBrigadier();
+            plugin.getComponentLogger().info(Component.text("Registered Brigadier mappings", NamedTextColor.GREEN));
             // Register asynchronous completions
-            //
-            if (this.manager.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
-                this.manager.registerAsynchronousCompletions();
+            this.manager.registerAsynchronousCompletions();
+            plugin.getComponentLogger().info(Component.text("Registered Async completions", NamedTextColor.GREEN));
+
+
+            final CloudBrigadierManager<?, ?> brigadierManager = this.manager.brigadierManager();
+            if (brigadierManager != null) {
+                brigadierManager.setNativeNumberSuggestions(false);
             }
 
 
@@ -96,10 +101,10 @@ public class CommandManager {
 
         //new PingCommand().register();
 
-        /*
         List.of(
-                new PingCommand()
-        ).forEach(BaseCommand::register);*/
+                new TimeCommand()
+                //new PingCommand()
+        ).forEach(BaseCommand::register);
 
 
 /*        new MinecraftExceptionHandler<CommandSender>()

@@ -44,10 +44,6 @@ public class ObelouixUltimate extends JavaPlugin {
         return timingManager;
     }
 
-    public CommandManager getCommandManager() {
-        return commandManager;
-    }
-
     @Override
     public void onDisable() {
         super.onDisable();
@@ -136,8 +132,7 @@ public class ObelouixUltimate extends JavaPlugin {
         }
 
 
-        commandManager = new CommandManager();
-
+         CommandManager.getInstance();
         new EventManager();
         new TweaksManager();
         new CustomFurnaceRecipes();
@@ -148,4 +143,9 @@ public class ObelouixUltimate extends JavaPlugin {
     public TranslationAPI getTranslationAPI() {
         return translationAPI;
     }
+
+    public CommandManager getCommandManager() {
+        return commandManager;
+    }
+
 }

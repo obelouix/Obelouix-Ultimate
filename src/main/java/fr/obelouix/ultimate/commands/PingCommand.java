@@ -1,6 +1,5 @@
 package fr.obelouix.ultimate.commands;
 
-import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
 import cloud.commandframework.meta.CommandMeta;
@@ -28,10 +27,10 @@ public class PingCommand extends BaseCommand {
     @Override
     public void register() {
         COMMAND_MANAGER.command(
-                CommandBuilder("ping")
+                COMMAND_MANAGER.commandBuilder("ping")
                         .meta(CommandMeta.DESCRIPTION, "get your ping")
-                        .argument(StringArgument.optional("target"))
-                        .build()).setCommandSuggestionProcessor(this::suggestions);
+                        //.argument(StringArgument.optional("target"))
+                        .build()).commandSuggestionProcessor(this::suggestions);
 
         //SuggestionsProvider("playerSuggestionProvider", this::suggestions);
     }
