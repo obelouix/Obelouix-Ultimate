@@ -60,7 +60,8 @@ dependencies {
     // Make sure to relocate shaded dependencies!
     compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
 
-
+    // PaperLib
+    implementation("io.papermc:paperlib:1.0.7")
     // Cloud Command Framework
     //implementation("cloud.commandframework", "cloud-core", "1.7.0")
     implementation("cloud.commandframework", "cloud-paper", "1.7.0")
@@ -159,6 +160,7 @@ tasks {
         fun reloc(pkg: String) = relocate(pkg, "fr.obelouix.ultimate.dependency.$pkg")
 
         val deps = listOf(
+            "io.papermc.lib",
             "cloud.commandframework",
             "io.leangen.geantyref",
             "co.aikar.timings",
