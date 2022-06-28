@@ -3,6 +3,7 @@ package fr.obelouix.ultimate.api;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 import fr.obelouix.ultimate.utils.CustomHeadSkins;
+import fr.obelouix.ultimate.utils.MobHeadsSkin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
@@ -72,7 +73,7 @@ public class InventoryAPI {
      *
      * @param item         the item that will receive the enchantment
      * @param enchantment  the {@link Enchantment} to add
-     * @param enchantLevel an {@link Integer} between {@code 0} and {@link 255}
+     * @param enchantLevel an {@link Integer} between {@code 0} and {@code  255}
      */
     public static void addEnchantment(ItemStack item, Enchantment enchantment, int enchantLevel) {
         final ItemMeta meta = item.getItemMeta();
@@ -86,7 +87,7 @@ public class InventoryAPI {
      *
      * @param item         the item that will receive the enchantments
      * @param enchantments a {@link List} of {@link Enchantment}
-     * @param enchantLevel an {@link Integer} between {@code 0} and {@link 255}
+     * @param enchantLevel an {@link Integer} between {@code 0} and {@code  255}
      */
     public static void addEnchantments(ItemStack item, List<Enchantment> enchantments, int enchantLevel) {
         final ItemMeta meta = item.getItemMeta();
@@ -121,4 +122,15 @@ public class InventoryAPI {
         item.setItemMeta(meta);
     }
 
+    public static ItemStack addCustomSkull(MobHeadsSkin mobTexture, Component title) {
+        final ItemStack skull = new ItemStack(Material.PLAYER_HEAD); // Create a new ItemStack of the Player Head type.
+        final SkullMeta skullMeta = (SkullMeta) skull.getItemMeta(); // Get the created item's ItemMeta and cast it to SkullMeta so we can access the skull properties
+
+        final PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
+        profile.setProperty(new ProfileProperty("textures", mobTexture.toString()));
+        skullMeta.setPlayerProfile(profile);
+        skullMeta.displayName(title.decoration(TextDecoration.ITALIC, false));
+        skull.setItemMeta(skullMeta); // Apply the modified meta to the initial created item
+        return skull;
+    }
 }

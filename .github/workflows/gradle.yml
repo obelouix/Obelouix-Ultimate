@@ -20,12 +20,12 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '17'
-        distribution: 'adopt'
+        distribution: 'temurin'
         fetch-depth: 0
-    
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    
+
     - name: Gradle Wrapper Validation
       uses: gradle/wrapper-validation-action@v1.0.4
 
@@ -35,18 +35,18 @@ jobs:
         path: ~/.gradle/caches
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
         restore-keys: ${{ runner.os }}-gradle
-    
+
     - name: Build with Gradle
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
       run: ./gradlew build
-    
+
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
         name: Obelouix-Ultimate
         path: build/libs
-    
+
   codeQL:
     needs: [build]
     runs-on: ubuntu-latest
@@ -70,24 +70,15 @@ jobs:
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
-    
+
     - uses: actions/setup-java@v3
       with:
-        distribution: 'adopt' # See 'Supported distributions' for available options
+        distribution: 'temurin' # See 'Supported distributions' for available options
         java-version: '17'
-    
-    # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
+
+      # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
- 
-  YAMLCheck:
-    needs: [build, codeQL]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Yaml-Checker
-    # You may pin to the exact commit or the version.
-    # uses: leon-th/yaml-checker@2b9db0be751e8ba8fc6cff66e868eb0072906715
-        uses: frenck/action-yamllint@v1.1.2

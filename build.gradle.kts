@@ -3,7 +3,7 @@ import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 plugins {
     `java-library`
     idea //force Intellij to generate project file, cause i don't know why it refuse to import dependencies
-    id("io.papermc.paperweight.userdev") version "1.3.6"
+    id("io.papermc.paperweight.userdev") version "1.3.8"
     id("xyz.jpenilla.run-paper") version "1.0.6" // Adds runServer and runMojangMappedServer tasks for testing
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2" // Generates plugin.yml
 
@@ -32,6 +32,7 @@ repositories {
         "https://repo.aikar.co/content/groups/aikar/",                  // Airkar
         "https://maven.enginehub.org/repo/",                            // EngineHub
         "https://s01.oss.sonatype.org/content/repositories/snapshots/", // FAWE
+        "https://oss.sonatype.org/content/repositories/snapshots",      // Sonatype snapshots
         "https://hub.spigotmc.org/nexus/content/groups/public/",        // Spigot
         "https://repo.mikeprimm.com",                                   // Dynmap
         "https://repo.fvdh.dev/releases",                               // FrankHeijden
@@ -59,12 +60,20 @@ dependencies {
     // Make sure to relocate shaded dependencies!
     compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
 
+
     // Cloud Command Framework
-    implementation("cloud.commandframework", "cloud-paper", "1.6.2")
-    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.6.2")
+    //implementation("cloud.commandframework", "cloud-core", "1.7.0")
+    implementation("cloud.commandframework", "cloud-paper", "1.7.0")
+    //implementation("cloud.commandframework", "cloud-cloud-annotations", "1.7.0-SNAPSHOT")
+    implementation("cloud.commandframework", "cloud-minecraft-extras", "1.7.0")
+
+    // Comodore
+    //implementation("me.lucko:commodore:2.0")
 
     // Aikar's Timing
     implementation("co.aikar:minecraft-timings:1.0.4")
+
+    // LuckPerms
     compileOnly("net.luckperms:api:5.4")
 
     // Sponge Configurate
@@ -85,7 +94,6 @@ dependencies {
     compileOnly("net.essentialsx:EssentialsXDiscord:2.20.0-SNAPSHOT")
 
     // FAWE
-
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.4.0") { isTransitive = false }
     compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.4.0") { isTransitive = false }
 
@@ -103,11 +111,15 @@ dependencies {
     implementation("org.inventivetalent:reflectionhelper:1.18.10-SNAPSHOT")
     //PacketAPI Listener
     implementation("org.inventivetalent.packetlistenerapi:api:3.9.10-SNAPSHOT")
-    // GlowAPI
-    //implementation("com.github.InventivetalentDev:GlowAPI:master-SNAPSHOT")
+
     // Interfaces (inventory)
     implementation("com.github.Incendo.interfaces:interfaces-paper:ee352a5c8b")
     implementation("com.github.Incendo.interfaces:interfaces-core:ee352a5c8b")
+
+    implementation("com.j256.ormlite:ormlite-core:6.1")
+    implementation("com.j256.ormlite:ormlite-jdbc:6.1")
+    implementation("com.h2database:h2:2.1.212")
+
 }
 
 tasks {
@@ -158,7 +170,9 @@ tasks {
             "com.fren_gor.ultimateAdvancementAPI",
             "com.github.inventivetalentDev",
             "org.inventivetalent",
-            "com.github.Incendo.interfaces"
+            "com.github.Incendo.interfaces",
+            "com.j256.ormlite",
+            "com.h2database"
         )
 
         //relocate every dependencies
@@ -172,7 +186,7 @@ tasks {
 bukkit {
     load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     main = "fr.obelouix.ultimate.ObelouixUltimate"
-    apiVersion = "1.18"
+    apiVersion = "1.19"
     authors = listOf("Obelouix")
     softDepend = listOf("dynmap", "worldguard")
 }

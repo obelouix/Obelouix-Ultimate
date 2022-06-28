@@ -38,6 +38,7 @@ public enum I18NMessages {
     ENDERDRAGON_KILL_REWARD("obelouix.enderdragon.kill_reward"),
     ENDERDRAGON_KILL_BROADCAST("obelouix.enderdragon.broadcast"),
     ENDERDRAGON_KILL_BROADCAST_SINGLEPLAYER("obelouix.enderdragon.broadcast.single"),
+    PING_COMMAND_SELF("obelouix.command.ping.self"),
     /**
      * The message that tell the plugin version
      */

@@ -17,7 +17,7 @@ public interface IPermission {
             final Component message = Component.text(I18NMessages.COMMAND_NO_PERMISSION.getTranslation(sender))
                     .color(TextColor.color(183, 0, 0));
             MessagesAPI.sendMessage(sender, message);
-            plugin.getLogger().info("Refused command to " + sender.getName());
+            plugin.getComponentLogger().info("Refused command to " + sender.getName());
             return false;
         }
         return true;

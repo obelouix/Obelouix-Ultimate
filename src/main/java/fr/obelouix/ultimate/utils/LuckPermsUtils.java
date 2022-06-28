@@ -21,7 +21,7 @@ public class LuckPermsUtils {
     }
 
     public static void checkForLuckPerms() {
-        plugin.getLogger().info("Found LuckPerms");
+        plugin.getComponentLogger().info("Found LuckPerms");
 
         if (PluginDetector.getLuckPerms() != null) {
             luckPermsAPI = PluginDetector.getLuckPerms().getProvider();

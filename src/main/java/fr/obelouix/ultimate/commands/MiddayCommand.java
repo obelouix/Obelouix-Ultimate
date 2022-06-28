@@ -1,12 +1,10 @@
 package fr.obelouix.ultimate.commands;
 
-import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
-import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.messages.I18NMessages;
 import fr.obelouix.ultimate.messages.PluginMessages;
 import fr.obelouix.ultimate.permissions.IPermission;
@@ -24,16 +22,6 @@ import java.util.Objects;
 
 public class MiddayCommand extends BaseCommand {
 
-    public void register() {
-        CommandManager.getInstance().command(
-                        CommandManager.getInstance()
-                                .commandBuilder("midday")
-                                .argument(StringArgument.optional("world"))
-                                .handler(this::execute)
-                                .build())
-                .setCommandSuggestionProcessor(this::suggestions);
-    }
-
     private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
         final CommandSender sender = commandSenderCommandPreprocessingContext.getCommandContext().getSender();
         if (sender.hasPermission("obelouix.command.midday")) {
@@ -44,6 +32,11 @@ public class MiddayCommand extends BaseCommand {
             });
         }
         return strings;
+    }
+
+    @Override
+    protected void register() {
+
     }
 
     @Override
@@ -87,4 +80,5 @@ public class MiddayCommand extends BaseCommand {
             }
         }.runTask(ObelouixUltimate.getInstance());
     }
+
 }

@@ -34,20 +34,20 @@ public class Updater {
                     InputStream inputStream = new URL("https://api.github.com/repos/obelouix/Obelouix-Ultimate/releases/latest").openStream();
                     reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
 
-                    plugin.getLogger().info(I18NMessages.UPDATE_CHECK.getSystemTranslation());
+                    plugin.getComponentLogger().info(I18NMessages.UPDATE_CHECK.getSystemTranslation());
                     result = JsonParser.parseReader(reader).getAsJsonObject().getAsJsonPrimitive("tag_name");
 
                     if (updateAvailable(plugin.getDescription().getVersion().replace("-SNAPSHOT", ""), result.getAsString().replace("-SNAPSHOT", ""))) {
                         final boolean isBothSnapshot = plugin.getDescription().getVersion().contains("-SNAPSHOT") && result.getAsString().contains("-SNAPSHOT");
                         if (isBothSnapshot) {
-                            plugin.getLogger().info("A new snapshot is available, download it here: https://github.com/obelouix/Obelouix-Ultimate/releases/latest");
+                            plugin.getComponentLogger().info("A new snapshot is available, download it here: https://github.com/obelouix/Obelouix-Ultimate/releases/latest");
                         } else {
                             if (!isBothSnapshot) {
-                                plugin.getLogger().info("A new update available, download it here: https://github.com/obelouix/Obelouix-Ultimate/releases/latest");
-                            } else plugin.getLogger().info(I18NMessages.UP_TO_DATE.getSystemTranslation());
+                                plugin.getComponentLogger().info("A new update available, download it here: https://github.com/obelouix/Obelouix-Ultimate/releases/latest");
+                            } else plugin.getComponentLogger().info(I18NMessages.UP_TO_DATE.getSystemTranslation());
                         }
 
-                    } else plugin.getLogger().info(I18NMessages.UP_TO_DATE.getSystemTranslation());
+                    } else plugin.getComponentLogger().info(I18NMessages.UP_TO_DATE.getSystemTranslation());
 
 
                 } catch (IOException ignored) {

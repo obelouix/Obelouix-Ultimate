@@ -26,14 +26,14 @@ public class WorldManager {
         try {
             final CommentedConfigurationNode root = worldLoader.load();
             final Map<Object, CommentedConfigurationNode> WorldList = new TreeMap<>(root.node("worlds").childrenMap());
-            plugin.getLogger().info("Found worlds: "
+            plugin.getComponentLogger().info("Found worlds: "
                     + WorldList.keySet().toString().substring(1, WorldList.keySet().toString().length() - 1)
                     + " in worlds.conf");
             WorldList.keySet().forEach(world -> {
                 if ((Objects.equals(Bukkit.getWorlds().get(1).getName(), world) && Bukkit.getWorlds().get(1).getName().contains("nether"))
                         || (Objects.equals(Bukkit.getWorlds().get(2).getName(), world) && Bukkit.getWorlds().get(2).getName().contains("the_end"))) {
                     if (!root.node("worlds", world, "autoLoad").getBoolean()) {
-                        plugin.getLogger().info("Unloaded world '" + world + "' because autoLoad is set to 'false' for this default world");
+                        plugin.getComponentLogger().info("Unloaded world '" + world + "' because autoLoad is set to 'false' for this default world");
                         Bukkit.getWorlds().remove(Bukkit.getWorld(world.toString()));
                     }
                 } else if (!Objects.equals(Bukkit.getWorlds().get(0).getName(), world)) {
@@ -66,7 +66,7 @@ public class WorldManager {
             for (final World world : Bukkit.getWorlds()) {
                 if (world.getPlayerCount() == 0 && !Bukkit.getWorlds().get(0).equals(world)) {
                     Bukkit.unloadWorld(world, true);
-                    plugin.getLogger().info("Unloaded world '" + world.getName() + "' (reason: no player currently in this world)");
+                    plugin.getComponentLogger().info("Unloaded world '" + world.getName() + "' (reason: no player currently in this world)");
                 }
             }
         };

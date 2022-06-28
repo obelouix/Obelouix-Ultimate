@@ -38,7 +38,7 @@ public class MultiverseMigrator {
 
     private static void startMigration() {
         if (checkForMultiverseData() && !checkForExistingMigratedData()) {
-            plugin.getLogger().info("Found Multiverse-Core data, starting importation of worlds...");
+            plugin.getComponentLogger().info("Found Multiverse-Core data, starting importation of worlds...");
             try {
                 final CommentedConfigurationNode root = worldLoader.load();
                 final CommentedConfigurationNode mvRoot = multiverseLoader.load();
@@ -73,7 +73,7 @@ public class MultiverseMigrator {
                 });
 
                 worldLoader.save(root);
-                plugin.getLogger().info("Importation successful. Moved data to worlds.conf");
+                plugin.getComponentLogger().info("Importation successful. Moved data to worlds.conf");
 
             } catch (IOException e) {
                 e.printStackTrace();
