@@ -10,7 +10,7 @@ public class TimeCommand extends BaseCommand {
     @Override
     protected void register() {
         COMMAND_MANAGER.command(
-                COMMAND_MANAGER.commandBuilder("test")
+                COMMAND_MANAGER.commandBuilder("time")
                         .argument(StringArgument.of("input"))
                         .handler(this::execute)
                         .build()

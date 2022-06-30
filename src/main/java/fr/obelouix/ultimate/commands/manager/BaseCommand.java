@@ -1,5 +1,6 @@
 package fr.obelouix.ultimate.commands.manager;
 
+import cloud.commandframework.Command;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.paper.PaperCommandManager;
 import fr.obelouix.ultimate.ObelouixUltimate;
@@ -32,11 +33,11 @@ public abstract class BaseCommand {
      * @param command the command name
      * @return the command builder
      */
-   /* protected cloud.commandframework.Command.@NonNull Builder<CommandSender> CommandBuilder(String command) {
+    protected cloud.commandframework.Command.@NonNull Builder<CommandSender> BuildCommand(String command) {
         Command.@NonNull Builder<CommandSender> builder = COMMAND_MANAGER.commandBuilder(command);
         return builder.handler(this::execute);
     }
-
+/**
     protected void SuggestionsProvider(String name, BiFunction<cloud.commandframework.context.CommandContext<org.bukkit.command.CommandSender>, java.lang.String, java.util.List<java.lang.String>> suggestionMethod) {
         COMMAND_MANAGER.getParserRegistry().registerSuggestionProvider(name, suggestionMethod);
     }*/

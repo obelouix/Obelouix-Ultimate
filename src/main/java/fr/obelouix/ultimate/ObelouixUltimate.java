@@ -134,7 +134,7 @@ public class ObelouixUltimate extends JavaPlugin {
         }
 
 
-         CommandManager.getInstance();
+        CommandManager.getInstance();
         new EventManager();
         new TweaksManager();
         new CustomFurnaceRecipes();

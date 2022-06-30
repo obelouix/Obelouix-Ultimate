@@ -7,10 +7,14 @@ import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.avaje.ebeaninternal.server.deploy.parse.AnnotationParser;
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.commands.SpawnCommand;
 import fr.obelouix.ultimate.commands.TimeCommand;
+import fr.obelouix.ultimate.commands.argument.GroupArgument;
+import io.leangen.geantyref.TypeToken;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.minecraft.commands.arguments.EntityArgument;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -64,9 +68,15 @@ public class CommandManager {
             plugin.getComponentLogger().info(Component.text("Registered Async completions", NamedTextColor.GREEN));
 
 
-            final CloudBrigadierManager<?, ?> brigadierManager = this.manager.brigadierManager();
+            final CloudBrigadierManager<CommandSender, ?> brigadierManager = this.manager.brigadierManager();
             if (brigadierManager != null) {
                 brigadierManager.setNativeNumberSuggestions(false);
+
+                brigadierManager.registerMapping(
+                        new TypeToken<GroupArgument.Parser<CommandSender>>() {
+                        },
+                        builder -> builder.toConstant(EntityArgument.players()).cloudSuggestions()
+                );
             }
 
 
@@ -100,8 +110,8 @@ public class CommandManager {
         ).forEach(BaseCommand::register);*/
 
         //new PingCommand().register();
-
         List.of(
+                new SpawnCommand(),
                 new TimeCommand()
                 //new PingCommand()
         ).forEach(BaseCommand::register);

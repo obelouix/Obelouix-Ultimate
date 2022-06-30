@@ -1,8 +1,10 @@
 package fr.obelouix.ultimate.utils;
 
 import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.spawn.EssentialsSpawn;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import net.ess3.api.IEssentials;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -13,6 +15,8 @@ public class PluginDetector {
 
     private static JavaPlugin dynmap;
     private static Essentials essentials;
+    private static IEssentials ess;
+    private static EssentialsSpawn essentialsSpawn;
     private static RegisteredServiceProvider<LuckPerms> luckPerms;
     private static WorldEditPlugin worldEdit;
     private static WorldGuardPlugin worldGuard;
@@ -20,7 +24,11 @@ public class PluginDetector {
     public static synchronized void init() {
         if (detectClass("org.dynmap.bukkit.DynmapPlugin"))
             dynmap = (JavaPlugin) Bukkit.getPluginManager().getPlugin("dynmap");
-        if (detectClass("com.earth2me.essentials.Essentials")) essentials = Essentials.getPlugin(Essentials.class);
+        if (detectClass("com.earth2me.essentials.Essentials")) {
+            essentials = Essentials.getPlugin(Essentials.class);
+            ess = Essentials.getPlugin(Essentials.class);
+            essentialsSpawn = Essentials.getPlugin(EssentialsSpawn.class);
+        }
         if (detectClass("net.luckperms.api.LuckPerms"))
             luckPerms = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (detectClass("com.sk89q.worldedit.bukkit.WorldEditPlugin")) worldEdit = WorldEditPlugin.getInstance();
@@ -49,6 +57,14 @@ public class PluginDetector {
 
     public static Essentials getEssentials() {
         return essentials;
+    }
+
+    public static IEssentials getIEssentialsAPI() {
+        return ess;
+    }
+
+    public static EssentialsSpawn getEssentialsSpawn() {
+        return essentialsSpawn;
     }
 
     public static RegisteredServiceProvider<LuckPerms> getLuckPerms() {
