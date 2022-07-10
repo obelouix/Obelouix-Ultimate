@@ -41,10 +41,10 @@ public class FreezeCommand extends BaseCommand implements Listener {
                 .flag(COMMAND_MANAGER.flagBuilder("silent")
                         .withAliases("s")
                         .withDescription(ArgumentDescription.of("Freeze without alerting your target")))
-                .build()).commandSuggestionProcessor(this::playerSuggestions);
+                .build()).commandSuggestionProcessor(this::Suggestions);
     }
 
-    private List<String> playerSuggestions(@NonNull CommandPreprocessingContext<CommandSender> PreprocessingContext, @NonNull List<String> strings) {
+    private List<String> Suggestions(@NonNull CommandPreprocessingContext<CommandSender> PreprocessingContext, @NonNull List<String> strings) {
         return strings;
     }
 
@@ -63,7 +63,7 @@ public class FreezeCommand extends BaseCommand implements Listener {
         final boolean silentFreeze = context.flags().isPresent("silent");
 
         if (target != null) {
-            if (target.getName().equals(sender.getName())) {
+            if (!target.getName().equals(sender.getName())) {
 
                 if (target.hasPermission("obelouix.protection.freeze")) {
                     MessagesAPI.sendMessage(sender, Component.text(I18NMessages.PROTECTION_FREEZE.getTranslation(sender), NamedTextColor.DARK_RED));
@@ -73,9 +73,10 @@ public class FreezeCommand extends BaseCommand implements Listener {
                 if (!target.isFrozen() && target.getFreezeTicks() != 100000) {
                     target.setFreezeTicks(100000);
                     target.lockFreezeTicks(true);
-                    if (!silentFreeze)
+                    if (!silentFreeze) {
                         MessagesAPI.sendMessage(target, Component.text(I18NMessages.COMMAND_FREEZE_TARGET_FROZEN.getTranslation(target), NamedTextColor.DARK_RED));
-                    MessagesAPI.sendMessage(target, Component.text(I18NMessages.COMMAND_FREEZE_SENDER_TARGET_FROZEN.getTranslation(sender))
+                    }
+                    MessagesAPI.sendMessage(sender, Component.text(I18NMessages.COMMAND_FREEZE_SENDER_TARGET_FROZEN.getTranslation(sender), NamedTextColor.GREEN)
                             .replaceText(TextReplacementConfig.builder()
                                     .matchLiteral("{player}")
                                     .replacement(target.getName())
@@ -83,9 +84,10 @@ public class FreezeCommand extends BaseCommand implements Listener {
                 } else {
                     target.setFreezeTicks(0);
                     target.lockFreezeTicks(false);
-                    if (!silentFreeze)
+                    if (!silentFreeze) {
                         MessagesAPI.sendMessage(target, Component.text(I18NMessages.COMMAND_FREEZE_TARGET_UNFROZEN.getTranslation(target), NamedTextColor.GRAY));
-                    MessagesAPI.sendMessage(target, Component.text(I18NMessages.COMMAND_FREEZE_SENDER_TARGET_UNFROZEN.getTranslation(sender))
+                    }
+                    MessagesAPI.sendMessage(sender, Component.text(I18NMessages.COMMAND_FREEZE_SENDER_TARGET_UNFROZEN.getTranslation(sender), NamedTextColor.GREEN)
                             .replaceText(TextReplacementConfig.builder()
                                     .matchLiteral("{player}")
                                     .replacement(target.getName())
