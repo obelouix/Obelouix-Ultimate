@@ -36,6 +36,7 @@ public class FreezeCommand extends BaseCommand implements Listener {
 
 
         COMMAND_MANAGER.command(BuildCommand("freeze")
+                .permission("obelouix.command.freeze")
                 .argument(playerAgument)
                 .flag(COMMAND_MANAGER.flagBuilder("silent")
                         .withAliases("s")
@@ -43,7 +44,7 @@ public class FreezeCommand extends BaseCommand implements Listener {
                 .build()).commandSuggestionProcessor(this::playerSuggestions);
     }
 
-    private List<String> playerSuggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
+    private List<String> playerSuggestions(@NonNull CommandPreprocessingContext<CommandSender> PreprocessingContext, @NonNull List<String> strings) {
         return strings;
     }
 
@@ -59,7 +60,7 @@ public class FreezeCommand extends BaseCommand implements Listener {
     protected void execute(@NonNull CommandContext<CommandSender> context) {
         final CommandSender sender = context.getSender();
         final Player target = context.getOrDefault("player", null);
-        boolean silentFreeze = context.flags().isPresent("silent");
+        final boolean silentFreeze = context.flags().isPresent("silent");
 
         if (target != null) {
             if (target.getName().equals(sender.getName())) {
@@ -100,7 +101,7 @@ public class FreezeCommand extends BaseCommand implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
         if (player.isFrozen() && player.getFreezeTicks() == 100000) {
             event.setCancelled(true);
         }
