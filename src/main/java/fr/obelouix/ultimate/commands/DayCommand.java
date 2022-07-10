@@ -23,7 +23,7 @@ import java.util.Objects;
 public class DayCommand extends BaseCommand {
 
 
-    private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
+    protected List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
         final CommandSender sender = commandSenderCommandPreprocessingContext.getCommandContext().getSender();
         if (sender.hasPermission("obelouix.command.day")) {
             Bukkit.getWorlds().forEach(world -> {

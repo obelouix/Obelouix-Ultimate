@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ObelouixUltimateCommand extends BaseCommand {
 
-    private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
+    protected List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
         return ImmutableList.of("reload", "version");
     }
 

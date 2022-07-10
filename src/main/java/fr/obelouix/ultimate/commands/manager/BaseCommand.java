@@ -1,6 +1,6 @@
 package fr.obelouix.ultimate.commands.manager;
 
-import cloud.commandframework.Command;
+import cloud.commandframework.Command.Builder;
 import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.paper.PaperCommandManager;
 import fr.obelouix.ultimate.ObelouixUltimate;
@@ -33,8 +33,8 @@ public abstract class BaseCommand {
      * @param command the command name
      * @return the command builder
      */
-    protected cloud.commandframework.Command.@NonNull Builder<CommandSender> BuildCommand(String command) {
-        Command.@NonNull Builder<CommandSender> builder = COMMAND_MANAGER.commandBuilder(command);
+    protected @NonNull Builder<CommandSender> BuildCommand(String command) {
+        @NonNull Builder<CommandSender> builder = COMMAND_MANAGER.commandBuilder(command);
         return builder.handler(this::execute);
     }
 /**

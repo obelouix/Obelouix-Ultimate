@@ -8,7 +8,6 @@ import cloud.commandframework.context.CommandContext;
 import fr.obelouix.ultimate.data.GroupInternal;
 import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import net.luckperms.api.model.group.Group;
-import net.minecraft.network.protocol.game.ServerboundChatPreviewPacket;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -18,7 +17,6 @@ import java.util.Queue;
 import java.util.function.BiFunction;
 
 public class GroupArgument<C> extends CommandArgument<C, GroupInternal> {
-    ServerboundChatPreviewPacket
 
     private GroupArgument(
             final boolean required,

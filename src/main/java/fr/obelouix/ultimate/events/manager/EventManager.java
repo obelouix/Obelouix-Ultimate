@@ -1,11 +1,11 @@
 package fr.obelouix.ultimate.events.manager;
 
+import fr.obelouix.ultimate.commands.FreezeCommand;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.coordinates.Coordinates;
 import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.events.*;
 import fr.obelouix.ultimate.fastleafdecay.FastLeafDecay;
-import fr.obelouix.ultimate.features.HeadDrop;
 import fr.obelouix.ultimate.recipes.RecipeDiscoverer;
 
 import java.util.List;
@@ -21,7 +21,8 @@ public class EventManager extends Events {
                         new PlayerConnectionEvent(),
                         new Coordinates(),
                         new RecipeDiscoverer(),
-                        new HeadDrop()
+                        new FreezeCommand()//,
+                        //new HeadDrop()
                         //new NightSkipEvent()
                 )
         );

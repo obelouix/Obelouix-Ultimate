@@ -6,6 +6,7 @@ import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.MultiverseMigrator;
 import fr.obelouix.ultimate.data.StorageType;
+import fr.obelouix.ultimate.data.essentials.EssentialsMigrator;
 import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
 import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
@@ -101,6 +102,8 @@ public class ObelouixUltimate extends JavaPlugin {
         translationAPI.setResourceBundleBaseName("lang_");
         PluginDetector.init();
         timingManager = TimingManager.of(this);
+
+        EssentialsMigrator.start();
 
         new MultiverseMigrator();
         WorldManager.loadWorlds();

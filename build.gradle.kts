@@ -62,14 +62,15 @@ dependencies {
 
     // PaperLib
     implementation("io.papermc:paperlib:1.0.7")
+
+    // Apache Commons IO
+    implementation("commons-io:commons-io:2.11.0")
+
     // Cloud Command Framework
     //implementation("cloud.commandframework", "cloud-core", "1.7.0")
     implementation("cloud.commandframework", "cloud-paper", "1.7.0")
     //implementation("cloud.commandframework", "cloud-cloud-annotations", "1.7.0-SNAPSHOT")
     implementation("cloud.commandframework", "cloud-minecraft-extras", "1.7.0")
-
-    // Comodore
-    //implementation("me.lucko:commodore:2.0")
 
     // Aikar's Timing
     implementation("co.aikar:minecraft-timings:1.0.4")
@@ -126,7 +127,7 @@ dependencies {
 tasks {
 
     runServer {
-        minecraftVersion("1.18.2")
+        minecraftVersion("1.19")
     }
     // Configure reobfJar to run when invoking the build task
     build {
@@ -161,6 +162,7 @@ tasks {
 
         val deps = listOf(
             "io.papermc.lib",
+            "org.apache.commons.io",
             "cloud.commandframework",
             "io.leangen.geantyref",
             "co.aikar.timings",

@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.commands;
 
 import cloud.commandframework.context.CommandContext;
+import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
 import fr.obelouix.ultimate.gui.AdminInventory;
 import fr.obelouix.ultimate.permissions.IPermission;
@@ -8,12 +9,19 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.List;
+
 public class AdminCommand extends BaseCommand {
 
 
     @Override
     protected void register() {
 
+    }
+
+
+    protected List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> context, @NonNull List<String> strings) {
+        return null;
     }
 
     protected void execute(@NonNull CommandContext<CommandSender> context) {

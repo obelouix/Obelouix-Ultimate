@@ -7,6 +7,7 @@ import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.avaje.ebeaninternal.server.deploy.parse.AnnotationParser;
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.commands.FreezeCommand;
 import fr.obelouix.ultimate.commands.SpawnCommand;
 import fr.obelouix.ultimate.commands.TimeCommand;
 import fr.obelouix.ultimate.commands.argument.GroupArgument;
@@ -111,6 +112,7 @@ public class CommandManager {
 
         //new PingCommand().register();
         List.of(
+                new FreezeCommand(),
                 new SpawnCommand(),
                 new TimeCommand()
                 //new PingCommand()

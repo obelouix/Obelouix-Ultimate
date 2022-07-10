@@ -35,7 +35,8 @@ public class PingCommand extends BaseCommand {
         //SuggestionsProvider("playerSuggestionProvider", this::suggestions);
     }
 
-    private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
+
+    protected List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
         return null;
     }
 

@@ -50,6 +50,7 @@ public class PlayerConnectionEvent implements Listener {
             QueryBuilder<PlayerOptionsTable, String> playerOptions = Database.getPlayerOptionsDao().queryBuilder();
             try {
                 List<PlayerOptionsTable> list = playerOptions.selectColumns("SHOWCOORDINATES").where().eq("UUID", player.getUniqueId()).query();
+                list.forEach(System.out::println);
                 if (!list.isEmpty()) {
                     player.sendMap((MapView) list.get(0));
                 }

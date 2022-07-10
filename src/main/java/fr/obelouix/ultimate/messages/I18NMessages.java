@@ -13,6 +13,11 @@ public enum I18NMessages {
      */
     COMMAND_COORDS_ENABLED("obelouix.command.coords.enabled"),
     COMMAND_COORDS_DISABLED("obelouix.command.coords.disabled"),
+    COMMAND_FREEZE_SENDER_TARGET_FROZEN("obelouix.command.freeze.sender.target_frozen"),
+    COMMAND_FREEZE_SENDER_TARGET_UNFROZEN("obelouix.command.freeze.sender.target_unfrozen"),
+    COMMAND_FREEZE_TARGET_IS_SENDER("obelouix.command.freeze.target_is_sender"),
+    COMMAND_FREEZE_TARGET_FROZEN("obelouix.command.freeze.target.frozen"),
+    COMMAND_FREEZE_TARGET_UNFROZEN("obelouix.command.freeze.target.unfrozen"),
     COMMAND_NO_PERMISSION("no_permission"),
     /**
      * The message that show when there are not enough arguments provided to a command
@@ -43,6 +48,11 @@ public enum I18NMessages {
      * The message that tell the plugin version
      */
     PLUGIN_VERSION("obelouix.plugin.version"),
+    PROTECTION_FREEZE("obelouix.protection.freeze"),
+    TELEPORTING("obelouix.teleporting"),
+    TELEPORTING_EVERYONE_SPAWN("obelouix.teleporting_everyone_spawn"),
+    TELEPORTING_TARGET_SPAWN("obelouix.teleporting_target_spawn"),
+    TELEPORTED_TO_SPAWN("obelouix.teleported_to_spawn"),
     /**
      * The message when the plugin check if it has updates
      */

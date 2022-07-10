@@ -4,7 +4,6 @@ import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class TeleportAPI {
     /**
@@ -17,16 +16,7 @@ public class TeleportAPI {
     }
 
     public static void teleport(Player player, Location location) {
-        player.teleport(location);
-    }
-
-    public static void teleportTask(Player player, Location location) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                player.teleport(location);
-            }
-        }.run();
+        PaperLib.teleportAsync(player, location);
     }
 
 }

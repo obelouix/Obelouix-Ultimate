@@ -24,7 +24,7 @@ public class NightCommand extends BaseCommand {
     //13188
 
 
-    private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
+    protected List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
         final CommandSender sender = commandSenderCommandPreprocessingContext.getCommandContext().getSender();
         if (sender.hasPermission("obelouix.command.night")) {
             Bukkit.getWorlds().forEach(world -> {

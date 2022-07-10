@@ -25,7 +25,7 @@ public class MapImageCommand extends BaseCommand {
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
 
 
-    private List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
+    protected List<String> suggestions(@NonNull CommandPreprocessingContext<CommandSender> commandSenderCommandPreprocessingContext, @NonNull List<String> strings) {
         return List.of("set", "clear");
     }
 
