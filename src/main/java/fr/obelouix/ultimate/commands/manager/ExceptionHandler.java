@@ -54,8 +54,7 @@ final class ExceptionHandler implements Listener {
                         .replaceText(TextReplacementConfig.builder()
                                 .matchLiteral("/help")
                                 .replacement(Component.text("/help", NamedTextColor.RED).clickEvent(ClickEvent.runCommand("/help"))
-                                        //TODO: change this to a translated string
-                                        .hoverEvent(MiniMessage.miniMessage().deserialize("<rainbow>click to run</rainbow>")))
+                                        .hoverEvent(MiniMessage.miniMessage().deserialize("<rainbow>" + I18NMessages.CLICK_TO_RUN.getTranslation(player) + "</rainbow>")))
                                 .build()));
                 ev.setCancelled(true);
             }
@@ -67,7 +66,8 @@ final class ExceptionHandler implements Listener {
         MessagesAPI.sendMessage(sender, Component.text(I18NMessages.UNKNOWN_COMMAND.getTranslation(sender), NamedTextColor.DARK_RED)
                 .replaceText(TextReplacementConfig.builder()
                         .matchLiteral("/help")
-                        .replacement(Component.text("/help", NamedTextColor.RED).clickEvent(ClickEvent.runCommand("/help")))
+                        .replacement(Component.text("/help", NamedTextColor.RED).clickEvent(ClickEvent.runCommand("/help"))
+                                .hoverEvent(MiniMessage.miniMessage().deserialize("<rainbow>" + I18NMessages.CLICK_TO_RUN.getTranslation(sender) + "</rainbow>")))
                         .build()));
     }
 

@@ -11,6 +11,7 @@ public enum I18NMessages {
     /**
      * Indicate to a player that he's not allowed to run the command he tried to execute
      */
+    CLICK_TO_RUN("obelouix.click_to_run"),
     COMMAND_COORDS_ENABLED("obelouix.command.coords.enabled"),
     COMMAND_COORDS_DISABLED("obelouix.command.coords.disabled"),
     COMMAND_FREEZE_SENDER_TARGET_FROZEN("obelouix.command.freeze.sender.target_frozen"),
