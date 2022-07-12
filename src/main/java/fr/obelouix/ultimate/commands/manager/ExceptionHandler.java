@@ -45,21 +45,19 @@ final class ExceptionHandler implements Listener {
 
     // Replace the default Bukkit/Spigot "Unknown command" message
     private void unknownCommandDefault(@NotNull Listener listener, @NotNull Event event) {
-        if (event instanceof PlayerCommandPreprocessEvent ev) {
-            if (!ev.isCancelled()) {
-                Player player = ev.getPlayer();
-                String command = ev.getMessage().split(" ")[0];
-                HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(command);
-                if (topic == null) {
-                    MessagesAPI.sendMessage(player, Component.text(I18NMessages.UNKNOWN_COMMAND.getTranslation(player), NamedTextColor.DARK_RED)
-                            .replaceText(TextReplacementConfig.builder()
-                                    .matchLiteral("/help")
-                                    .replacement(Component.text("/help", NamedTextColor.RED).clickEvent(ClickEvent.runCommand("/help"))
-                                            //TODO: change this to a translated string
-                                            .hoverEvent(MiniMessage.miniMessage().deserialize("<rainbow>click to run</rainbow>")))
-                                    .build()));
-                    ev.setCancelled(true);
-                }
+        if (event instanceof PlayerCommandPreprocessEvent ev && !ev.isCancelled()) {
+            final Player player = ev.getPlayer();
+            final String command = ev.getMessage().split(" ")[0];
+            final HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(command);
+            if (topic == null) {
+                MessagesAPI.sendMessage(player, Component.text(I18NMessages.UNKNOWN_COMMAND.getTranslation(player), NamedTextColor.DARK_RED)
+                        .replaceText(TextReplacementConfig.builder()
+                                .matchLiteral("/help")
+                                .replacement(Component.text("/help", NamedTextColor.RED).clickEvent(ClickEvent.runCommand("/help"))
+                                        //TODO: change this to a translated string
+                                        .hoverEvent(MiniMessage.miniMessage().deserialize("<rainbow>click to run</rainbow>")))
+                                .build()));
+                ev.setCancelled(true);
             }
         }
     }
