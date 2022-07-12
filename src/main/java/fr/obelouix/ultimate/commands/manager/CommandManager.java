@@ -7,6 +7,7 @@ import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.avaje.ebeaninternal.server.deploy.parse.AnnotationParser;
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.commands.DayCommand;
 import fr.obelouix.ultimate.commands.FreezeCommand;
 import fr.obelouix.ultimate.commands.SpawnCommand;
 import fr.obelouix.ultimate.commands.TimeCommand;
@@ -80,6 +81,18 @@ public class CommandManager {
                 );
             }
 
+            final ExceptionHandler exceptionHandler = new ExceptionHandler();
+            exceptionHandler.registerExceptionHandlers(manager);
+            
+/*            final CaptionRegistry<CommandSender> captionRegistry = manager.captionRegistry();
+            if(captionRegistry instanceof FactoryDelegatingCaptionRegistry<CommandSender> factoryRegistry) {
+               // final FactoryDelegatingCaptionRegistry<CommandSender> factoryRegistry = (FactoryDelegatingCaptionRegistry) captionRegistry;
+                factoryRegistry.registerMessageFactory(
+                        StandardCaptionKeys.ARGUMENT_PARSE_FAILURE_FLAG_NO_PERMISSION,
+                        (caption, sender) -> "tu peux pas"
+                );
+            }*/
+
 
         } catch (Exception e) {
             plugin.getComponentLogger().error(Component.text("Failed to initialize the command manager", NamedTextColor.DARK_RED));
@@ -112,6 +125,7 @@ public class CommandManager {
 
         //new PingCommand().register();
         List.of(
+                new DayCommand(),
                 new FreezeCommand(),
                 new SpawnCommand(),
                 new TimeCommand()

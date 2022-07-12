@@ -30,6 +30,7 @@ public enum I18NMessages {
     /**
      * The message that tell the command sender that he used the command badly
      */
+    COMMAND_TIME_NOT_ALLOWED_TO_CHANGE_THIS_WORLD("obelouix.command.time.not_allowed_for_this world"),
     COMMAND_WRONG_USAGE("obelouix.wrong_command_usage"),
     DIRECTION("obelouix.direction"),
     DIRECTION_NORTH("obelouix.direction.north"),
@@ -53,6 +54,7 @@ public enum I18NMessages {
     TELEPORTING_EVERYONE_SPAWN("obelouix.teleporting_everyone_spawn"),
     TELEPORTING_TARGET_SPAWN("obelouix.teleporting_target_spawn"),
     TELEPORTED_TO_SPAWN("obelouix.teleported_to_spawn"),
+    UNKNOWN_COMMAND("obelouix.command.unknown"),
     /**
      * The message when the plugin check if it has updates
      */
