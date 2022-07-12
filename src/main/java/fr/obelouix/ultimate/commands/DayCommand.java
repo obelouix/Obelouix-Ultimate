@@ -69,7 +69,7 @@ public class DayCommand extends BaseCommand {
             if (sender instanceof Player player) {
                 world = player.getWorld();
             } else {
-                MessagesAPI.sendMessage(sender, Component.text("specify world"));
+                MessagesAPI.sendMessage(sender, Component.text(I18NMessages.COMMAND_WORLD_REQUIRED.getTranslation(sender), NamedTextColor.DARK_RED));
                 return;
             }
         }
