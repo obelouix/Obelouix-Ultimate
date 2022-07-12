@@ -7,10 +7,7 @@ import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.avaje.ebeaninternal.server.deploy.parse.AnnotationParser;
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.commands.DayCommand;
-import fr.obelouix.ultimate.commands.FreezeCommand;
-import fr.obelouix.ultimate.commands.SpawnCommand;
-import fr.obelouix.ultimate.commands.TimeCommand;
+import fr.obelouix.ultimate.commands.*;
 import fr.obelouix.ultimate.commands.argument.GroupArgument;
 import io.leangen.geantyref.TypeToken;
 import net.kyori.adventure.audience.Audience;
@@ -99,27 +96,13 @@ public class CommandManager {
             return;
         }
 
-/*        if (this.queryCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
-            this.registerBrigadier();
-            //plugin.getLogger().info("Using Native Brigadier");
-            final CloudBrigadierManager<?, ?> brigadierManager = this.brigadierManager();
-            if (brigadierManager != null) {
-                brigadierManager.setNativeNumberSuggestions(false);
-            }
-        }
-
-        if (this.queryCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
-            //plugin.getLogger().info("Registered Async Completions");
-            this.registerAsynchronousCompletions();
-        }
+/*
         List.of(
                 new ObelouixUltimateCommand(),
                 new CoordsCommand(),
                 new AdminCommand()*//*,
 
-                new DayCommand(),
                 new MiddayCommand(),
-                new NightCommand(),
                 new MapImageCommand()*//*
         ).forEach(BaseCommand::register);*/
 
@@ -127,6 +110,7 @@ public class CommandManager {
         List.of(
                 new DayCommand(),
                 new FreezeCommand(),
+                new NightCommand(),
                 new SpawnCommand(),
                 new TimeCommand()
                 //new PingCommand()
@@ -137,10 +121,7 @@ public class CommandManager {
                 .withDefaultHandlers()
                 .withDecorator(component -> Component.text().append((Component) DEFAULT_SYNTAX_ERROR)
                         .build())
-                .apply(this, AudienceProvider.nativeAudience());
-
-        registerCommand(new PluginCommand("plugins"));
-        registerCommand(new MaintenanceCommand("maintenance"));*/
+                .apply(this, AudienceProvider.nativeAudience());*/
 
     }
 
