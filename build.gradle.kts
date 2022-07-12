@@ -193,4 +193,11 @@ bukkit {
     apiVersion = "1.19"
     authors = listOf("Obelouix")
     softDepend = listOf("dynmap", "worldguard")
+
+    permissions {
+        register("obelouix.command.time.world.*") {
+            description = "Allows you to choose the worlds where a player can change the time"
+            default = BukkitPluginDescription.Permission.Default.OP
+        }
+    }
 }
