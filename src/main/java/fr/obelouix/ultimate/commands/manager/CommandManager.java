@@ -110,6 +110,7 @@ public class CommandManager {
         List.of(
                 new DayCommand(),
                 new FreezeCommand(),
+                new MiddayCommand(),
                 new NightCommand(),
                 new SpawnCommand(),
                 new TimeCommand()
