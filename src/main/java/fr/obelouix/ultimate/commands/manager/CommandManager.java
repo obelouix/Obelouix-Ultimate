@@ -111,6 +111,7 @@ public class CommandManager {
                 new DayCommand(),
                 new FreezeCommand(),
                 new MiddayCommand(),
+                new MidnightCommand(),
                 new NightCommand(),
                 new SpawnCommand(),
                 new TimeCommand()
