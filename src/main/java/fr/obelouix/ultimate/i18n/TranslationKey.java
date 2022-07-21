@@ -28,41 +28,89 @@ public enum TranslationKey {
         this.key = key;
     }
 
+    /**
+     * Convert a {@link TranslatableComponent} to a {@link Component}
+     *
+     * @return a component
+     */
     public Component toComponent() {
         return key;
     }
 
+    /**
+     * Convert a {@link TranslatableComponent} to a {@link Component} and add {@link TextColor color} it
+     *
+     * @param textColor a color
+     * @return a colored component
+     */
     public Component toComponent(TextColor textColor) {
         return key.color(textColor);
     }
 
+    /**
+     * Convert a {@link TranslatableComponent} to a {@link Component} and add {@link TextDecoration decorations} to it
+     *
+     * @param decorations a text decoration
+     * @return a component with decoration(s)
+     */
     public Component toComponent(TextDecoration... decorations) {
         return key.decorate(decorations);
     }
 
-    public @NotNull Component toComponent(TextColor textColor, TextDecoration... decoration) {
-        return key.color(textColor).decorate(decoration);
+    /**
+     * Convert a {@link TranslatableComponent} to a {@link Component} and add {@link TextColor color} and {@link TextDecoration decorations} to it
+     *
+     * @param textColor   a color
+     * @param decorations a text decoration
+     * @return a colored component with decoration(s)
+     */
+    public @NotNull Component toComponent(TextColor textColor, TextDecoration... decorations) {
+        return key.color(textColor).decorate(decorations);
     }
 
-
+    /**
+     * Convert a {@link TranslatableComponent} to a {@link Component} with the first letter capitalized
+     *
+     * @return a component
+     */
     public Component toCapitalizedComponent() {
         @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
         return Component.text(StringUtils.capitalize(component));
     }
 
+    /**
+     * Convert a {@link TranslatableComponent} to a {@link Component} with the first letter capitalized and add {@link TextColor color} it
+     *
+     * @param textColor a color
+     * @return a colored component
+     */
     public Component toCapitalizedComponent(TextColor textColor) {
         @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
         return Component.text(StringUtils.capitalize(component), textColor);
     }
 
-    public Component toCapitalizedComponent(TextDecoration... decoration) {
+    /**
+     * Convert a {@link TranslatableComponent} to a {@link Component} with the first letter capitalized and add {@link TextDecoration decorations} to it
+     *
+     * @param decorations a text decoration
+     * @return a component with decoration(s)
+     */
+    public Component toCapitalizedComponent(TextDecoration... decorations) {
         @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
-        return Component.text(StringUtils.capitalize(component), Style.style(decoration));
+        return Component.text(StringUtils.capitalize(component), Style.style(decorations));
     }
 
-    public Component toCapitalizedComponent(TextColor textColor, TextDecoration... decoration) {
+    /**
+     * Convert a {@link TranslatableComponent} to a {@link Component} with the first letter capitalized a
+     * nd add {@link TextColor color} and {@link TextDecoration decorations} to it
+     *
+     * @param textColor   a color
+     * @param decorations a text decoration
+     * @return a colored component with decoration(s)
+     */
+    public Component toCapitalizedComponent(TextColor textColor, TextDecoration... decorations) {
         @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
-        return Component.text(StringUtils.capitalize(component), textColor, decoration);
+        return Component.text(StringUtils.capitalize(component), textColor, decorations);
     }
 
 
