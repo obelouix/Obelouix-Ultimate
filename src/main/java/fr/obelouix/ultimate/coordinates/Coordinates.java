@@ -38,7 +38,7 @@ public class Coordinates implements Listener {
                         final CommentedConfigurationNode root;
                         try {
                             root = playerFile.load();
-                            if (root.node("show-coordinates").getBoolean() && !root.node("language").empty()) {
+                            if (root.node("show-coordinates").getBoolean()) {
 
                                 final Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
                                         .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
