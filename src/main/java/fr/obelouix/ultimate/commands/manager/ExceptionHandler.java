@@ -30,6 +30,7 @@ final class ExceptionHandler implements Listener {
     public void registerExceptionHandlers(final cloud.commandframework.CommandManager<CommandSender> commandManager) {
         commandManager.registerExceptionHandler(NoPermissionException.class, this::noPermission);
         commandManager.registerExceptionHandler(NoSuchCommandException.class, this::unknownCommand);
+        //commandManager.registerExceptionHandler(ArgumentParseException.class, this::argumentParsing);
 
         Bukkit.getServer().getPluginManager().registerEvent(PlayerCommandPreprocessEvent.class, this, EventPriority.HIGH, this::unknownCommandDefault, ObelouixUltimate.getInstance());
 
@@ -75,5 +76,13 @@ final class ExceptionHandler implements Listener {
     private void noPermission(@NonNull CommandSender sender, @NonNull NoPermissionException exception) {
         MessagesAPI.sendMessage(sender, Component.text(I18NMessages.COMMAND_NO_PERMISSION.getTranslation(sender), NamedTextColor.DARK_RED));
     }
+
+/*
+    private void argumentParsing(@NonNull CommandSender sender, @NonNull ArgumentParseException exception) {
+        final Throwable cause = exception.getCause();
+        final Supplier<Component> fallback = () -> Objects.requireNonNull(ComponentMessageThrowable.getOrConvertMessage(cause));
+        MessagesAPI.sendMessage(sender, fallback.get());
+    }
+*/
 
 }

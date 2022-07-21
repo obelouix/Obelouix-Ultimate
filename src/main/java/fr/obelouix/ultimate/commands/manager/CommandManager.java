@@ -8,15 +8,20 @@ import cloud.commandframework.paper.PaperCommandManager;
 import com.avaje.ebeaninternal.server.deploy.parse.AnnotationParser;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.commands.*;
+import fr.obelouix.ultimate.commands.argument.BlockArgument;
 import fr.obelouix.ultimate.commands.argument.GroupArgument;
 import io.leangen.geantyref.TypeToken;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minecraft.commands.arguments.EntityArgument;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.plugin.SimplePluginManager;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -78,6 +83,9 @@ public class CommandManager {
                 );
             }
 
+            //Parser that takes only blocks
+            this.manager.parserRegistry().registerParserSupplier(TypeToken.get(Material.class), parserParameters -> new BlockArgument.BlockParser<>());
+
             final ExceptionHandler exceptionHandler = new ExceptionHandler();
             exceptionHandler.registerExceptionHandlers(manager);
             
@@ -101,20 +109,19 @@ public class CommandManager {
                 new ObelouixUltimateCommand(),
                 new CoordsCommand(),
                 new AdminCommand()*//*,
-
-                new MiddayCommand(),
                 new MapImageCommand()*//*
         ).forEach(BaseCommand::register);*/
 
         //new PingCommand().register();
         List.of(
                 new DayCommand(),
+                new FillCommand(),
                 new FreezeCommand(),
                 new MiddayCommand(),
                 new MidnightCommand(),
                 new NightCommand(),
-                new SpawnCommand(),
-                new TimeCommand()
+                new SpawnCommand()/* ,
+                new TimeCommand()*/
                 //new PingCommand()
         ).forEach(BaseCommand::register);
 
@@ -153,6 +160,23 @@ public class CommandManager {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private void unRegisterVanillaCommands() throws NoSuchFieldException, IllegalAccessException {
+        SimplePluginManager simplePluginManager = (SimplePluginManager) plugin.getServer().getPluginManager();
+
+        Field commandMapField = SimplePluginManager.class.getDeclaredField("commandMap");
+        commandMapField.setAccessible(true);
+
+        SimpleCommandMap simpleCommandMap = (SimpleCommandMap) commandMapField.get(simplePluginManager);
+
+        for (Command c : simpleCommandMap.getCommands()) { // Extended list with vanilla default commands
+
+            System.out.println(c);
+
+        }
+
+        commandMapField.setAccessible(false);
     }
 
     public PaperCommandManager<CommandSender> getManager() {

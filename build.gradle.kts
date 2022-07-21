@@ -67,7 +67,7 @@ dependencies {
     implementation("commons-io:commons-io:2.11.0")
 
     // Cloud Command Framework
-    //implementation("cloud.commandframework", "cloud-core", "1.7.0")
+    implementation("cloud.commandframework", "cloud-core", "1.7.0")
     implementation("cloud.commandframework", "cloud-paper", "1.7.0")
     //implementation("cloud.commandframework", "cloud-cloud-annotations", "1.7.0-SNAPSHOT")
     implementation("cloud.commandframework", "cloud-minecraft-extras", "1.7.0")
@@ -77,6 +77,9 @@ dependencies {
 
     // LuckPerms
     compileOnly("net.luckperms:api:5.4")
+
+    // Spark
+    compileOnly("me.lucko:spark-api:0.1-SNAPSHOT")
 
     // Sponge Configurate
     implementation("org.spongepowered:configurate-core:4.1.2")
@@ -192,7 +195,7 @@ bukkit {
     main = "fr.obelouix.ultimate.ObelouixUltimate"
     apiVersion = "1.19"
     authors = listOf("Obelouix")
-    softDepend = listOf("dynmap", "worldguard")
+    softDepend = listOf("spark", "dynmap", "worldguard")
 
     permissions {
         register("obelouix.command.time.world.*") {

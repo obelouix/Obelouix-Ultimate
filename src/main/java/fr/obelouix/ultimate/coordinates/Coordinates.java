@@ -3,10 +3,9 @@ package fr.obelouix.ultimate.coordinates;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.config.Config;
-import fr.obelouix.ultimate.messages.I18NMessages;
+import fr.obelouix.ultimate.i18n.TranslationKey;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -48,8 +47,7 @@ public class Coordinates implements Listener {
                                         .append(Component.text(" Z: ", NamedTextColor.DARK_BLUE))
                                         .append(Component.text(player.getLocation().getBlockZ(), NamedTextColor.WHITE))
                                         .append(Component.text(" " + parseTo24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
-                                        .append(Component.text(StringUtils.capitalize(I18NMessages.DIRECTION.getTranslation(player)) + ": ", NamedTextColor.AQUA))
-                                        .append(Component.text(getFacing(player), NamedTextColor.WHITE));
+                                        .append(showDirection(player));
                                 MessagesAPI.sendActionBar(player.getPlayer(), actionBar);
                             }
                         } catch (ConfigurateException e) {
@@ -104,34 +102,41 @@ public class Coordinates implements Listener {
         return hours + ":" + ("0" + minutes).substring(("0" + minutes).length() - 2);
     }
 
-    private String getFacing(final Player p) {
-        final double yaw = p.getLocation().getYaw();
+    private Component showDirection(Player player) {
+        return TranslationKey.DIRECTION.toCapitalizedComponent(NamedTextColor.AQUA).append(Component.text(": "))
+                .append(getFacing(player));
+    }
 
-        if (yaw >= 337.5 || yaw <= 22.5 && yaw >= 0.0 || yaw >= -22.5 && yaw <= 0.0 || yaw <= -337.5) {
-            return StringUtils.capitalize(I18NMessages.DIRECTION_SOUTH.getTranslation(p));
+    private Component getFacing(final Player player) {
+
+        Component direction = Component.empty();
+        double rotation = (player.getLocation().getYaw() - 180) % 360;
+        if (rotation < 0) {
+            rotation += 360.0;
         }
-        if (yaw >= 22.5 && yaw <= 67.5 || yaw <= -292.5) {
-            return StringUtils.capitalize(I18NMessages.DIRECTION_SOUTH_WEST.getTranslation(p));
+        if (0 <= rotation && rotation < 22.5) {
+            direction = direction.append(TranslationKey.NORTH.toComponent());
+        } else if (22.5 <= rotation && rotation < 67.5) {
+            direction = direction.append(TranslationKey.NORTH_EAST.toComponent());
+        } else if (67.5 <= rotation && rotation < 112.5) {
+            direction = direction.append(TranslationKey.EAST.toComponent());
+        } else if (112.5 <= rotation && rotation < 157.5) {
+            direction = direction.append(TranslationKey.SOUTH_EAST.toComponent());
+        } else if (157.5 <= rotation && rotation < 202.5) {
+            direction = direction.append(TranslationKey.SOUTH.toComponent());
+        } else if (202.5 <= rotation && rotation < 247.5) {
+            direction = direction.append(TranslationKey.SOUTH_WEST.toComponent());
+        } else if (247.5 <= rotation && rotation < 292.5) {
+            direction = direction.append(TranslationKey.WEST.toComponent());
+        } else if (292.5 <= rotation && rotation < 337.5) {
+            direction = direction.append(TranslationKey.NORTH_WEST.toComponent());
+        } else if (337.5 <= rotation && rotation < 360.0) {
+            direction = direction.append(TranslationKey.NORTH.toComponent());
+        } else {
+            return Component.text("error", NamedTextColor.DARK_RED);
         }
-        if (yaw >= 67.5 && yaw <= 112.5 || yaw <= -247.5) {
-            return StringUtils.capitalize(I18NMessages.DIRECTION_WEST.getTranslation(p));
-        }
-        if (yaw >= 112.5 && yaw <= 157.5 || yaw <= -202.5) {
-            return StringUtils.capitalize(I18NMessages.DIRECTION_NORTH_WEST.getTranslation(p));
-        }
-        if (yaw >= 157.5 && yaw <= 202.5 || yaw <= -157.5) {
-            return StringUtils.capitalize(I18NMessages.DIRECTION_NORTH.getTranslation(p));
-        }
-        if (yaw >= 202.5 && yaw <= 247.5 || yaw <= -112.5) {
-            return StringUtils.capitalize(I18NMessages.DIRECTION_NORTH_EAST.getTranslation(p));
-        }
-        if (yaw >= 247.5 && yaw <= 292.5 || yaw <= -67.5) {
-            return StringUtils.capitalize(I18NMessages.DIRECTION_EAST.getTranslation(p));
-        }
-        if (yaw >= 292.5 || yaw <= -22.5) {
-            return StringUtils.capitalize(I18NMessages.DIRECTION_SOUTH_EAST.getTranslation(p));
-        }
-        return "error";
+
+        return direction.color(NamedTextColor.WHITE);
     }
 
 }

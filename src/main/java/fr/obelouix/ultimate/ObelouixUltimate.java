@@ -6,9 +6,11 @@ import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.MultiverseMigrator;
 import fr.obelouix.ultimate.data.StorageType;
-import fr.obelouix.ultimate.data.essentials.EssentialsMigrator;
 import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
+import fr.obelouix.ultimate.i18n.I18N;
+import fr.obelouix.ultimate.profiler.Spark;
+import fr.obelouix.ultimate.profiler.Timings;
 import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
 import fr.obelouix.ultimate.recipes.CustomFurnaceRecipes;
 import fr.obelouix.ultimate.tweaks.TweaksManager;
@@ -26,8 +28,9 @@ public class ObelouixUltimate extends JavaPlugin {
     private static ObelouixUltimate instance;
     private static TranslationAPI translationAPI;
     private static TimingManager timingManager;
-
-    private CommandManager commandManager;
+    private static Spark spark;
+    private static Timings timings;
+    private final I18N i18n = new I18N();
 
     /**
      * Get an instance of {@link ObelouixUltimate ObelouixUltimate} main class
@@ -39,17 +42,26 @@ public class ObelouixUltimate extends JavaPlugin {
     }
 
     /**
+     * Get an instance of Spark API
+     *
+     * @return {@link me.lucko.spark.api.Spark Spark}
+     */
+    public static Spark getSpark() {
+        return spark;
+    }
+
+    /**
      * Get an instance of Aikar's {@link TimingManager TimingManager}
      *
      * @return {@link TimingManager TimingManager}
      */
-    public static TimingManager getTimingManager() {
-        return timingManager;
+    public static Timings getTimings() {
+        return timings;
     }
 
     @Override
     public void onDisable() {
-        super.onDisable();
+        i18n.unregister();
     }
 
     /**
@@ -74,10 +86,6 @@ public class ObelouixUltimate extends JavaPlugin {
         }
     }
 
- /*   private boolean isServerUtilsPresent() {
-        return getClass("net.frankheijden.serverutils.bukkit.ServerUtils");
-    }*/
-
     private void checkOfflineMode() {
         if (!this.getServer().getOnlineMode()) {
             this.getComponentLogger().warn(Component.text("""
@@ -100,24 +108,22 @@ public class ObelouixUltimate extends JavaPlugin {
         instance = this;
         translationAPI = new TranslationAPI();
         translationAPI.setResourceBundleBaseName("lang_");
+        i18n.init();
+        getComponentLogger().info(Component.translatable("obelouix.teleporting"));
         PluginDetector.init();
-        timingManager = TimingManager.of(this);
 
-        EssentialsMigrator.start();
+        // Use Spark instead of Timings if available
+        spark = new Spark();
+        if (spark.getSpark() == null) {
+            timings = new Timings();
+        }
+
+        /* EssentialsMigrator.start();*/
 
         new MultiverseMigrator();
         WorldManager.loadWorlds();
         if (Config.shouldUnloadEmptyWorlds()) {
             Bukkit.getServer().getScheduler().runTaskTimer(this, WorldManager.unloadEmptyWorlds(), 300, 1200);
-        }
-
-        if (Config.isDisconnectOnHighPing() && Config.getMaxPing() < 200) {
-            this.getComponentLogger().warn("""
-                    Minimum ping for kicking a player is too low (must be 200 or higher)
-                    Using 200ms as value until you change it in the config file
-                    """);
-
-            Config.setMaxPing(200);
         }
 
         LuckPermsUtils.checkForLuckPerms();
@@ -148,9 +154,4 @@ public class ObelouixUltimate extends JavaPlugin {
     public TranslationAPI getTranslationAPI() {
         return translationAPI;
     }
-
-    public CommandManager getCommandManager() {
-        return commandManager;
-    }
-
 }

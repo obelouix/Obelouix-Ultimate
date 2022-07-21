@@ -117,7 +117,8 @@ public class SpawnCommand extends BaseCommand {
                         ));
 
                         if (target == sender) {
-                            MessagesAPI.sendMessage(target, Component.text(I18NMessages.TELEPORTING.getTranslation(target), NamedTextColor.GOLD));
+//                            MessagesAPI.sendMessage(target, Component.text(I18NMessages.TELEPORTING.getTranslation(target), NamedTextColor.GOLD));
+                            MessagesAPI.sendMessage(target, Component.translatable("obelouix.teleporting"));
                         } else {
                             MessagesAPI.sendMessage(sender, Component.text(I18NMessages.TELEPORTING_TARGET_SPAWN.getTranslation(sender), NamedTextColor.GOLD)
                                     .replaceText(TextReplacementConfig.builder()

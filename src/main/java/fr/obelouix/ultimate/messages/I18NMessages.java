@@ -31,7 +31,7 @@ public enum I18NMessages {
     /**
      * The message that tell the command sender that he used the command badly
      */
-    COMMAND_TIME_NOT_ALLOWED_TO_CHANGE_THIS_WORLD("obelouix.command.time.not_allowed_for_this world"),
+    COMMAND_TIME_NOT_ALLOWED_TO_CHANGE_THIS_WORLD("obelouix.command.time.not_allowed_for_this_world"),
     COMMAND_WORLD_REQUIRED("obelouix.command.world_required"),
     COMMAND_WRONG_USAGE("obelouix.wrong_command_usage"),
     DIRECTION("obelouix.direction"),
