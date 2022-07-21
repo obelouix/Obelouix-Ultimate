@@ -74,7 +74,7 @@ public enum TranslationKey {
      * @return a component
      */
     public Component toCapitalizedComponent() {
-        @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
+        final @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
         return Component.text(StringUtils.capitalize(component));
     }
 
@@ -85,7 +85,7 @@ public enum TranslationKey {
      * @return a colored component
      */
     public Component toCapitalizedComponent(TextColor textColor) {
-        @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
+        final @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
         return Component.text(StringUtils.capitalize(component), textColor);
     }
 
@@ -96,7 +96,7 @@ public enum TranslationKey {
      * @return a component with decoration(s)
      */
     public Component toCapitalizedComponent(TextDecoration... decorations) {
-        @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
+        final @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
         return Component.text(StringUtils.capitalize(component), Style.style(decorations));
     }
 
@@ -109,7 +109,7 @@ public enum TranslationKey {
      * @return a colored component with decoration(s)
      */
     public Component toCapitalizedComponent(TextColor textColor, TextDecoration... decorations) {
-        @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
+        final @NotNull String component = PlainTextComponentSerializer.plainText().serialize(toComponent());
         return Component.text(StringUtils.capitalize(component), textColor, decorations);
     }
 
