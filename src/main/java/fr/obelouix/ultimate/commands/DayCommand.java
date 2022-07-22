@@ -10,7 +10,6 @@ import fr.obelouix.ultimate.i18n.TranslationKey;
 import fr.obelouix.ultimate.messages.PluginMessages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
-import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -70,10 +69,7 @@ public class DayCommand extends BaseCommand {
             MessagesAPI.sendMessage(sender, TranslationKey.NOT_ALLOWED_TO_CHANGE_WORLD_TIME.toCapitalizedComponent(NamedTextColor.DARK_RED)
                     .replaceText(TextReplacementConfig.builder()
                             .matchLiteral("{0}")
-                            .replacement(Component.text(world.getName(), NamedTextColor.RED)
-                                    .hoverEvent(HoverEvent.showText(
-                                            Component.text("Environment:" + world.getEnvironment())
-                                    )))
+                            .replacement(Component.text(world.getName(), NamedTextColor.RED))
                             .build())
             );
         }
