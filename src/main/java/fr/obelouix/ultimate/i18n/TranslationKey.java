@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 
 public enum TranslationKey {
 
+    NOT_ALLOWED_TO_CHANGE_WORLD_TIME(Component.translatable("obelouix.command.time.not_allowed_for_this_world")),
+    COMMAND_WORLD_REQUIRED(Component.translatable("obelouix.command.world_required")),
     DIRECTION(Component.translatable("obelouix.direction")),
     NORTH(Component.translatable("obelouix.direction.north")),
     SOUTH(Component.translatable("obelouix.direction.south")),
