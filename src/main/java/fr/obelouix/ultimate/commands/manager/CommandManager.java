@@ -115,12 +115,15 @@ public class CommandManager {
         //new PingCommand().register();
         List.of(
                 new DayCommand(),
+                new DifficultyCommand(),
                 new FillCommand(),
                 new FreezeCommand(),
+                new GiveCommand(),
                 new MiddayCommand(),
                 new MidnightCommand(),
                 new NightCommand(),
-                new SpawnCommand()/* ,
+                new SpawnCommand(),
+                new SuicideCommand()/* ,
                 new TimeCommand()*/
                 //new PingCommand()
         ).forEach(BaseCommand::register);
