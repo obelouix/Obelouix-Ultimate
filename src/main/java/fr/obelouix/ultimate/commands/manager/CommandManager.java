@@ -5,7 +5,6 @@ import cloud.commandframework.brigadier.CloudBrigadierManager;
 import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
-import com.avaje.ebeaninternal.server.deploy.parse.AnnotationParser;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.commands.*;
 import fr.obelouix.ultimate.commands.argument.BlockArgument;
@@ -40,7 +39,6 @@ public class CommandManager {
         }
     }
 
-    private AnnotationParser annotationParser;
     private PaperCommandManager<CommandSender> manager;
     private Audience audience;
 
