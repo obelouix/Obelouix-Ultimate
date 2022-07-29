@@ -99,8 +99,8 @@ dependencies {
     compileOnly("net.essentialsx:EssentialsXDiscord:2.20.0-SNAPSHOT")
 
     // FAWE
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.4.0") { isTransitive = false }
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.4.0") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.4.2") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.4.2") { isTransitive = false }
 
     // WorldGuard
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-20211230.194325-8")
@@ -123,7 +123,7 @@ dependencies {
 
     implementation("com.j256.ormlite:ormlite-core:6.1")
     implementation("com.j256.ormlite:ormlite-jdbc:6.1")
-    implementation("com.h2database:h2:2.1.212")
+    implementation("com.h2database:h2:2.1.214")
 
 }
 
