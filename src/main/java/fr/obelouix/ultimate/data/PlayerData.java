@@ -7,7 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLocaleChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +41,7 @@ public class PlayerData extends fr.obelouix.ultimate.data.player.Player implemen
     public static void setShowCoordinates(Player player, boolean show) {
         showCoordinates.replace(player, show);
         final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
-                .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getName() + ".conf"))
+                .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getUniqueId() + ".conf"))
                 .build();
         try {
             final CommentedConfigurationNode root = playerFile.load();
@@ -54,6 +53,7 @@ public class PlayerData extends fr.obelouix.ultimate.data.player.Player implemen
 
     }
 
+/*
     @EventHandler
     public void onPlayerChangeLocale(PlayerLocaleChangeEvent event) {
         final BukkitRunnable bukkitRunnable = new BukkitRunnable() {
@@ -77,6 +77,16 @@ public class PlayerData extends fr.obelouix.ultimate.data.player.Player implemen
         //execute the task 10 ticks ( = 500 ms) after player logged in
         bukkitRunnable.runTaskLaterAsynchronously(plugin, 10L);
     }
+*/
+
+    public static Map<Player, Boolean> getCoordinatesPlayerMap() {
+        return showCoordinates;
+    }
+
+    @EventHandler
+    public void onPlayerDisconnect(PlayerQuitEvent event) {
+        showCoordinates.remove(event.getPlayer());
+    }
 
     //High priority because we must get the player locale before sending any translated messages
     @EventHandler(priority = EventPriority.HIGH)
@@ -94,13 +104,16 @@ public class PlayerData extends fr.obelouix.ultimate.data.player.Player implemen
 
         if (StorageType.isUsingFiles()) {
             final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
-                    .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", event.getPlayer().getName() + ".conf"))
+                    .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", event.getPlayer().getUniqueId() + ".conf"))
                     .build();
             final CommentedConfigurationNode root = playerFile.load();
-            root.node("uuid").set(event.getPlayer().getUniqueId());
-            if (root.node("language").getString() == null || !Objects.requireNonNull(root.node("language").getString()).equalsIgnoreCase(getLocale())) {
-                root.node("language").set(getLocale());
+
+            if (root.node("last-account-name").empty() || !Objects.equals(root.node("last-account-name").getString(), event.getPlayer().getName())) {
+                root.node("last-account-name").set(event.getPlayer().getName());
             }
+/*            if (root.node("language").getString() == null || !Objects.requireNonNull(root.node("language").getString()).equalsIgnoreCase(getLocale())) {
+                root.node("language").set(getLocale());
+            }*/
             if (root.node("show-coordinates").empty()) {
                 root.node("show-coordinates").set(true);
             }
@@ -110,10 +123,4 @@ public class PlayerData extends fr.obelouix.ultimate.data.player.Player implemen
         }
 
     }
-
-    @EventHandler
-    public void onPlayerDisconnect(PlayerQuitEvent event) {
-        showCoordinates.remove(event.getPlayer());
-    }
-
 }

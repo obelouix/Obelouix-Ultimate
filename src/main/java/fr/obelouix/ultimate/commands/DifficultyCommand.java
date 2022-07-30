@@ -6,6 +6,7 @@ import cloud.commandframework.bukkit.parsers.WorldArgument;
 import cloud.commandframework.context.CommandContext;
 import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.commands.manager.BaseCommand;
+import fr.obelouix.ultimate.i18n.TranslationKey;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
@@ -60,7 +61,8 @@ public class DifficultyCommand extends BaseCommand {
                 }
             }
         } else {
-            Bukkit.getWorlds().forEach(world -> MessagesAPI.sendMessage(context.getSender(), Component.text(world.getDifficulty().translationKey())));
+            MessagesAPI.sendMessage(context.getSender(), TranslationKey.WORLD_DIFFICULTIES_HEADER.toCenteredTextComponent("="));
+//            Bukkit.getWorlds().forEach(world -> MessagesAPI.sendMessage(context.getSender(), TranslationKey.DIRECTION.toCenteredTextComponent("-")/*Component.translatable(world.getDifficulty().translationKey())*/));
         }
     }
 }

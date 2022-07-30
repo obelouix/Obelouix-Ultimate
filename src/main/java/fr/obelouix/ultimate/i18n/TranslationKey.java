@@ -21,7 +21,8 @@ public enum TranslationKey {
     NORTH_WEST(Component.translatable("obelouix.direction.northwest")),
     NORTH_EAST(Component.translatable("obelouix.direction.northeast")),
     SOUTH_WEST(Component.translatable("obelouix.direction.southwest")),
-    SOUTH_EAST(Component.translatable("obelouix.direction.southeast"));
+    SOUTH_EAST(Component.translatable("obelouix.direction.southeast")),
+    WORLD_DIFFICULTIES_HEADER(Component.translatable("obelouix.difficulty.header"));
 
 
     private final TranslatableComponent key;
@@ -115,5 +116,9 @@ public enum TranslationKey {
         return Component.text(StringUtils.capitalize(component), textColor, decorations);
     }
 
+    public Component toCenteredTextComponent(String padStr) {
+        final @NotNull String component = StringUtils.SPACE + PlainTextComponentSerializer.plainText().serialize(toComponent()) + StringUtils.SPACE;
+        return Component.text(StringUtils.center(component, 56, padStr));
+    }
 
 }

@@ -3,6 +3,7 @@ package fr.obelouix.ultimate.coordinates;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.config.Config;
+import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.i18n.TranslationKey;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -15,11 +16,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.configurate.CommentedConfigurationNode;
-import org.spongepowered.configurate.ConfigurateException;
-import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
-
-import java.nio.file.Path;
 
 public class Coordinates implements Listener {
 
@@ -30,28 +26,18 @@ public class Coordinates implements Listener {
 
             @Override
             public void run() {
-                Bukkit.getOnlinePlayers().forEach(player -> {
+                PlayerData.getCoordinatesPlayerMap().forEach((player, show) -> {
                     if (!Config.getCoordinatesBlacklist().contains(player.getWorld())) {
-                        final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
-                                .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getName() + ".conf"))
-                                .build();
-                        final CommentedConfigurationNode root;
-                        try {
-                            root = playerFile.load();
-                            if (root.node("show-coordinates").getBoolean()) {
-
-                                final Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
-                                        .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
-                                        .append(Component.text(" Y: ", NamedTextColor.GREEN))
-                                        .append(Component.text(player.getLocation().getBlockY(), NamedTextColor.WHITE))
-                                        .append(Component.text(" Z: ", NamedTextColor.DARK_BLUE))
-                                        .append(Component.text(player.getLocation().getBlockZ(), NamedTextColor.WHITE))
-                                        .append(Component.text(" " + parseTo24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
-                                        .append(showDirection(player));
-                                MessagesAPI.sendActionBar(player.getPlayer(), actionBar);
-                            }
-                        } catch (ConfigurateException e) {
-                            e.printStackTrace();
+                        if (show) {
+                            final Component actionBar = Component.text("X: ", NamedTextColor.DARK_RED)
+                                    .append(Component.text(player.getLocation().getBlockX(), NamedTextColor.WHITE))
+                                    .append(Component.text(" Y: ", NamedTextColor.GREEN))
+                                    .append(Component.text(player.getLocation().getBlockY(), NamedTextColor.WHITE))
+                                    .append(Component.text(" Z: ", NamedTextColor.DARK_BLUE))
+                                    .append(Component.text(player.getLocation().getBlockZ(), NamedTextColor.WHITE))
+                                    .append(Component.text(" " + parseTo24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
+                                    .append(showDirection(player));
+                            MessagesAPI.sendActionBar(player.getPlayer(), actionBar);
                         }
                     }
                 });

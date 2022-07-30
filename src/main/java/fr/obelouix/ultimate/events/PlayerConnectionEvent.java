@@ -26,7 +26,7 @@ public class PlayerConnectionEvent implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerJoin(PlayerLoginEvent event) {
         final Player player = event.getPlayer();
 
