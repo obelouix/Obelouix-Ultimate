@@ -48,7 +48,7 @@ repositories {
 }
 
 dependencies {
-    paperDevBundle("1.19.1-R0.1-SNAPSHOT")
+    paperDevBundle("1.19.2-R0.1-SNAPSHOT")
     // paperweightDevBundle("com.example.paperfork", "1.18-R0.1-SNAPSHOT")
 
     // You will need to manually specify the full dependency if using the groovy gradle dsl
@@ -130,7 +130,7 @@ dependencies {
 tasks {
 
     runServer {
-        minecraftVersion("1.19")
+        minecraftVersion("1.19.2")
     }
     // Configure reobfJar to run when invoking the build task
     build {

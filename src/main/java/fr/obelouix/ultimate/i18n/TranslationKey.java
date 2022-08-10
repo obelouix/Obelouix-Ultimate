@@ -22,8 +22,8 @@ public enum TranslationKey {
     NORTH_EAST(Component.translatable("obelouix.direction.northeast")),
     SOUTH_WEST(Component.translatable("obelouix.direction.southwest")),
     SOUTH_EAST(Component.translatable("obelouix.direction.southeast")),
+    SILENT_JOIN(Component.translatable("obelouix.silentjoin")),
     WORLD_DIFFICULTIES_HEADER(Component.translatable("obelouix.difficulty.header"));
-
 
     private final TranslatableComponent key;
 

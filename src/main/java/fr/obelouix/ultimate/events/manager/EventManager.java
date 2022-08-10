@@ -4,7 +4,11 @@ import fr.obelouix.ultimate.commands.FreezeCommand;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.coordinates.Coordinates;
 import fr.obelouix.ultimate.data.PlayerData;
-import fr.obelouix.ultimate.events.*;
+import fr.obelouix.ultimate.events.AnvilEvents;
+import fr.obelouix.ultimate.events.PlayerConnectionEvent;
+import fr.obelouix.ultimate.events.ReloadDetector;
+import fr.obelouix.ultimate.events.WitherBlockDamageEvent;
+import fr.obelouix.ultimate.events.blocks.BlocksEvent;
 import fr.obelouix.ultimate.fastleafdecay.FastLeafDecay;
 import fr.obelouix.ultimate.recipes.RecipeDiscoverer;
 
@@ -15,13 +19,12 @@ public class EventManager extends Events {
     public EventManager() {
 
         addEvents(List.of(new PlayerData(),
-                        new ServerListEvent(),
-                        new ServerListEvent(),
                         new ReloadDetector(),
                         new PlayerConnectionEvent(),
                         new Coordinates(),
                         new RecipeDiscoverer(),
-                        new FreezeCommand()//,
+                        new FreezeCommand(),
+                        new BlocksEvent()//,
                         //new HeadDrop()
                         //new NightSkipEvent()
                 )

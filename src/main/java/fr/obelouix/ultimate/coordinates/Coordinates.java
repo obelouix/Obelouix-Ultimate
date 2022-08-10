@@ -37,7 +37,7 @@ public class Coordinates implements Listener {
                                     .append(Component.text(player.getLocation().getBlockZ(), NamedTextColor.WHITE))
                                     .append(Component.text(" " + parseTo24(player.getWorld().getTime()) + " ", NamedTextColor.GOLD))
                                     .append(showDirection(player));
-                            MessagesAPI.sendActionBar(player.getPlayer(), actionBar);
+                            MessagesAPI.sendActionBar(player, actionBar);
                         }
                     }
                 });

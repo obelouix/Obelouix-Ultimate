@@ -1,14 +1,12 @@
 package fr.obelouix.ultimate.data;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.utils.FakeServerBrand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
@@ -53,54 +51,18 @@ public class PlayerData extends fr.obelouix.ultimate.data.player.Player implemen
 
     }
 
-/*
-    @EventHandler
-    public void onPlayerChangeLocale(PlayerLocaleChangeEvent event) {
-        final BukkitRunnable bukkitRunnable = new BukkitRunnable() {
-            @Override
-            public void run() {
-                final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
-                        .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", event.getPlayer().getName() + ".conf"))
-                        .build();
-                final CommentedConfigurationNode root;
-                try {
-                    root = playerFile.load();
-                    setLocale(getPlayerLocaleString(event.getPlayer()));
-                    root.node("language").set(getLocale());
-                    playerFile.save(root);
-                } catch (ConfigurateException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
-        //execute the task 10 ticks ( = 500 ms) after player logged in
-        bukkitRunnable.runTaskLaterAsynchronously(plugin, 10L);
-    }
-*/
-
     public static Map<Player, Boolean> getCoordinatesPlayerMap() {
         return showCoordinates;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerDisconnect(PlayerQuitEvent event) {
         showCoordinates.remove(event.getPlayer());
     }
 
     //High priority because we must get the player locale before sending any translated messages
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) throws IOException {
-        final BukkitRunnable bukkitRunnable = new BukkitRunnable() {
-            @Override
-            public void run() {
-                setLocale(getPlayerLocaleString(event.getPlayer()));
-            }
-        };
-        //execute the task 10 ticks ( = 500 ms) after player logged in
-        bukkitRunnable.runTaskLaterAsynchronously(plugin, 10L);
-
-        FakeServerBrand.sendFakeBrand(event.getPlayer());
 
         if (StorageType.isUsingFiles()) {
             final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()

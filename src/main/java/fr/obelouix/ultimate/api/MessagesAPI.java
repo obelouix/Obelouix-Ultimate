@@ -37,6 +37,10 @@ public class MessagesAPI {
         audience.sendMessage(message);
     }
 
+    public static void sendMessage(@NotNull Audience audience, Component message) {
+        audience.sendMessage(message);
+    }
+
     /**
      * Send a message to every connected players
      *
@@ -347,7 +351,18 @@ public class MessagesAPI {
     }
 
     /**
-     * This allow you to kick a player with a message in his language
+     * send an action bar to an audience
+     *
+     * @param audience  the audience that will see the action bar
+     * @param component the component to show
+     */
+    public static void sendActionBar(Audience audience, Component component) {
+        audience.sendActionBar(component);
+    }
+
+
+    /**
+     * This allows you to kick a player with a message in his language
      * (this message must be defined in language properties files)
      *
      * @param player    the player to kick

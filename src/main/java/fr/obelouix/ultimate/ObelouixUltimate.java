@@ -4,23 +4,19 @@ import co.aikar.timings.lib.TimingManager;
 import fr.obelouix.ultimate.api.TranslationAPI;
 import fr.obelouix.ultimate.commands.manager.CommandManager;
 import fr.obelouix.ultimate.config.Config;
-import fr.obelouix.ultimate.data.MultiverseMigrator;
 import fr.obelouix.ultimate.data.StorageType;
-import fr.obelouix.ultimate.dynmap.DynmapLoader;
 import fr.obelouix.ultimate.events.manager.EventManager;
+import fr.obelouix.ultimate.hook.PluginHooks;
 import fr.obelouix.ultimate.i18n.I18N;
 import fr.obelouix.ultimate.profiler.Spark;
 import fr.obelouix.ultimate.profiler.Timings;
 import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
 import fr.obelouix.ultimate.recipes.CustomFurnaceRecipes;
 import fr.obelouix.ultimate.tweaks.TweaksManager;
-import fr.obelouix.ultimate.utils.LuckPermsUtils;
 import fr.obelouix.ultimate.utils.PluginDetector;
 import fr.obelouix.ultimate.utils.Updater;
-import fr.obelouix.ultimate.worlds.WorldManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ObelouixUltimate extends JavaPlugin {
@@ -31,6 +27,7 @@ public class ObelouixUltimate extends JavaPlugin {
     private static Spark spark;
     private static Timings timings;
     private final I18N i18n = new I18N();
+    private PluginHooks hooks;
 
     /**
      * Get an instance of {@link ObelouixUltimate ObelouixUltimate} main class
@@ -106,34 +103,26 @@ public class ObelouixUltimate extends JavaPlugin {
         checkPaperPresence();
         checkOfflineMode();
         instance = this;
-        translationAPI = new TranslationAPI();
-        translationAPI.setResourceBundleBaseName("lang_");
         i18n.init();
-        getComponentLogger().info(Component.translatable("obelouix.teleporting"));
         PluginDetector.init();
 
+        hooks = new PluginHooks();
+        hooks.setup();
+
         // Use Spark instead of Timings if available
-        spark = new Spark();
-        if (spark.getSpark() == null) {
+        if (PluginHooks.getSpark() == null) {
             timings = new Timings();
         }
 
-        /* EssentialsMigrator.start();*/
 
-        new MultiverseMigrator();
-        WorldManager.loadWorlds();
-        if (Config.shouldUnloadEmptyWorlds()) {
-            Bukkit.getServer().getScheduler().runTaskTimer(this, WorldManager.unloadEmptyWorlds(), 300, 1200);
-        }
-
-        LuckPermsUtils.checkForLuckPerms();
-        if (PluginDetector.getWorldGuard() != null) {
+        //LuckPermsUtils.checkForLuckPerms();
+/*        if (PluginDetector.getWorldGuard() != null) {
             this.getComponentLogger().info("Found WorldGuard");
 //            new WorldGuard();
         }
         if (PluginDetector.getDynmap() != null) {
             new DynmapLoader().init();
-        }
+        }*/
         Config.loadConfig();
 
         try {
@@ -153,5 +142,13 @@ public class ObelouixUltimate extends JavaPlugin {
 
     public TranslationAPI getTranslationAPI() {
         return translationAPI;
+    }
+
+    public I18N getI18n() {
+        return i18n;
+    }
+
+    public PluginHooks getHooks() {
+        return hooks;
     }
 }
