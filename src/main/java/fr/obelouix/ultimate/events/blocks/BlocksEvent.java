@@ -30,7 +30,7 @@ public class BlocksEvent implements Listener {
             final @NotNull Collection<ItemStack> drops = event.getBlock().getDrops();
             final Material blockType = event.getBlock().getType();
             // List of blacklisted blocks
-            final List<Material> blacklist = List.of(Material.CHEST, Material.TRAPPED_CHEST, Material.FURNACE, Material.BLAST_FURNACE);
+            final List<Material> blacklist = List.of(Material.CHEST, Material.TRAPPED_CHEST, Material.FURNACE, Material.BLAST_FURNACE, Material.DISPENSER, Material.DROPPER);
 
             // Cancel drop only if the broken block isn't a blacklisted block
             if (!blacklist.contains(blockType)) {
