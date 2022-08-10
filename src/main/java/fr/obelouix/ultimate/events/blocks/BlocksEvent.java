@@ -18,6 +18,7 @@ import java.util.Objects;
 
 public class BlocksEvent implements Listener {
 
+    // Will be used later
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -45,7 +46,7 @@ public class BlocksEvent implements Listener {
                             .filter(itemStack -> itemStack.getAmount() < itemStack.getMaxStackSize())
                             .toList();
 
-                    for (ItemStack itemStack : inventory) {
+                    for (final ItemStack itemStack : inventory) {
                         if (itemStack.getAmount() < itemStack.getMaxStackSize() && itemStack.getType().equals(event.getBlock().getType())) {
                             event.setDropItems(false);
                             final ItemStack tempItemStack = new ItemStack(itemStack.getType(), 1);
