@@ -28,11 +28,12 @@ public class BlocksEvent implements Listener {
 
         if (player.getGameMode() == GameMode.SURVIVAL) {
             final @NotNull Collection<ItemStack> drops = event.getBlock().getDrops();
+            final Material blockType = event.getBlock().getType();
             // List of blacklisted blocks
             final List<Material> blacklist = List.of(Material.CHEST, Material.TRAPPED_CHEST, Material.FURNACE, Material.BLAST_FURNACE);
 
             // Cancel drop only if the broken block isn't a blacklisted block
-            if (!blacklist.contains(event.getBlock().getType())) {
+            if (!blacklist.contains(blockType)) {
                 // Player inventory is not full
                 if (player.getInventory().firstEmpty() != -1) {
                     event.setDropItems(false);
@@ -47,7 +48,7 @@ public class BlocksEvent implements Listener {
                             .toList();
 
                     for (final ItemStack itemStack : inventory) {
-                        if (itemStack.getAmount() < itemStack.getMaxStackSize() && itemStack.getType().equals(event.getBlock().getType())) {
+                        if (itemStack.getAmount() < itemStack.getMaxStackSize() && itemStack.getType().equals(blockType)) {
                             event.setDropItems(false);
                             final ItemStack tempItemStack = new ItemStack(itemStack.getType(), 1);
                             player.getInventory().addItem(tempItemStack);
