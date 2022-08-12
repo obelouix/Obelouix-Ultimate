@@ -26,7 +26,7 @@ public class I18N implements Translator {
 
         translationRegistry = TranslationRegistry.create(Key.key("obelouix", "translations"));
         translationRegistry.defaultLocale(DEFAULT_LOCALE);
-        translationRegistry.registerAll(DEFAULT_LOCALE, ResourceBundle.getBundle("lang_" + DEFAULT_LOCALE, UTF8ResourceBundleControl.get()), false);
+        translationRegistry.registerAll(DEFAULT_LOCALE, ResourceBundle.getBundle("lang_" + DEFAULT_LOCALE, UTF8ResourceBundleControl.get()), true);
 
         registerOtherLanguages();
         globalTranslator.addSource(translationRegistry);

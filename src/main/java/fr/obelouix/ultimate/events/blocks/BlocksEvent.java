@@ -1,6 +1,8 @@
 package fr.obelouix.ultimate.events.blocks;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.data.PlayerData;
+import fr.obelouix.ultimate.i18n.Translator;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,6 +12,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,7 +35,17 @@ public class BlocksEvent implements Listener {
             final Material blockType = event.getBlock().getType();
             // List of blacklisted blocks
             final List<Material> blacklist = List.of(Material.CHEST, Material.TRAPPED_CHEST, Material.FURNACE, Material.BLAST_FURNACE, Material.DISPENSER, Material.DROPPER, Material.HOPPER);
+            final ConfigurationNode configurationNode = PlayerData.getPlayerFile(player);
 
+            if (configurationNode.node("alerts", "block-drop").getBoolean()) {
+                player.sendMessage(Translator.minimessage.translate("obelouix.alert.block_drop", player));
+                try {
+                    configurationNode.node("alerts", "block-drop").set(false);
+                    PlayerData.save(player, configurationNode);
+                } catch (SerializationException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             // Cancel drop only if the broken block isn't a blacklisted block
             if (!blacklist.contains(blockType)) {
                 // Player inventory is not full

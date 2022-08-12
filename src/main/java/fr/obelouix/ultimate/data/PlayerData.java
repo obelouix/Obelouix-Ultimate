@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
+import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class PlayerData extends fr.obelouix.ultimate.data.player.Player implemen
 
     private static final ObelouixUltimate plugin = ObelouixUltimate.getInstance();
     private static final Map<Player, Boolean> showCoordinates = new HashMap<>();
+    private static final Map<Player, Boolean> showBlockDropAlert = new HashMap<>();
 
     /**
      * This method allow to get the client locale of a player
@@ -55,9 +57,35 @@ public class PlayerData extends fr.obelouix.ultimate.data.player.Player implemen
         return showCoordinates;
     }
 
+    public static Map<Player, Boolean> getShowBlockDropAlertMap() {
+        return showBlockDropAlert;
+    }
+
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerDisconnect(PlayerQuitEvent event) {
         showCoordinates.remove(event.getPlayer());
+    }
+
+    public static CommentedConfigurationNode getPlayerFile(Player player) {
+        final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
+                .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getUniqueId() + ".conf"))
+                .build();
+        try {
+            return playerFile.load();
+        } catch (ConfigurateException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void save(Player player, ConfigurationNode node) {
+        final HoconConfigurationLoader playerFile = HoconConfigurationLoader.builder()
+                .path(Path.of(plugin.getDataFolder().getPath(), "data", "players", player.getUniqueId() + ".conf"))
+                .build();
+        try {
+            playerFile.save(node);
+        } catch (ConfigurateException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //High priority because we must get the player locale before sending any translated messages
@@ -80,7 +108,12 @@ public class PlayerData extends fr.obelouix.ultimate.data.player.Player implemen
                 root.node("show-coordinates").set(true);
             }
 
+            if (root.node("alerts", "block-drop").empty()) {
+                root.node("alerts", "block-drop").set(true);
+            }
+
             showCoordinates.putIfAbsent(event.getPlayer(), root.node("show-coordinates").getBoolean());
+            showCoordinates.putIfAbsent(event.getPlayer(), root.node("alerts", "block-drop").getBoolean());
             playerFile.save(root);
         }
 
