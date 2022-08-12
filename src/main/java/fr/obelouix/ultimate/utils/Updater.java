@@ -4,6 +4,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.i18n.Translator;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.BufferedReader;
@@ -34,7 +35,7 @@ public class Updater {
                     InputStream inputStream = new URL("https://api.github.com/repos/obelouix/Obelouix-Ultimate/releases/latest").openStream();
                     reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
 
-                    plugin.getComponentLogger().info(Translator.translate("obelouix.update.check"));
+                    plugin.getComponentLogger().info(Translator.translate("obelouix.update.check").color(NamedTextColor.YELLOW));
                     result = JsonParser.parseReader(reader).getAsJsonObject().getAsJsonPrimitive("tag_name");
 
                     if (updateAvailable(plugin.getDescription().getVersion().replace("-SNAPSHOT", ""), result.getAsString().replace("-SNAPSHOT", ""))) {
@@ -44,10 +45,12 @@ public class Updater {
                         } else {
                             if (!isBothSnapshot) {
                                 plugin.getComponentLogger().info("A new update available, download it here: https://github.com/obelouix/Obelouix-Ultimate/releases/latest");
-                            } else plugin.getComponentLogger().info(Translator.translate("obelouix.update.up_to_date"));
+                            } else
+                                plugin.getComponentLogger().info(Translator.translate("obelouix.update.up_to_date").color(NamedTextColor.GREEN));
                         }
 
-                    } else plugin.getComponentLogger().info(Translator.translate("obelouix.update.up_to_date"));
+                    } else
+                        plugin.getComponentLogger().info(Translator.translate("obelouix.update.up_to_date").color(NamedTextColor.GREEN));
 
 
                 } catch (IOException ignored) {
