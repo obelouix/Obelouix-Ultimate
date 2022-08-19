@@ -34,7 +34,7 @@ public class EventManager extends Events {
             addEvent(new WitherBlockDamageEvent());
         }
 
-        if (Config.isAnvilInfiniteRepairEnabled()) {
+        if (Config.canInfinitelyRepair()) {
             addEvent(new AnvilEvents());
         }
 

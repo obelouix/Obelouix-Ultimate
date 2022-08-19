@@ -9,9 +9,9 @@ import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.database.Database;
 import fr.obelouix.ultimate.database.models.PlayerOptionsTable;
 import fr.obelouix.ultimate.database.models.PlayerTable;
-import fr.obelouix.ultimate.utils.FakeServerBrand;
+import fr.obelouix.ultimate.i18n.Translator;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -72,19 +72,23 @@ public class PlayerConnectionEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        FakeServerBrand.sendFakeBrand(event.getPlayer());
+        //FakeServerBrand.sendFakeBrand(event.getPlayer());
+        final Player player = event.getPlayer();
+        if (player.hasPermission("obelouix.silentjoin")) {
+            event.joinMessage(null);
+        }
         new BukkitRunnable() {
             @Override
             public void run() {
-                Component message = Component.translatable("obelouix.silentjoin", TextColor.color(0, 100, 255));
-                message = message.replaceText(builder -> builder.matchLiteral("{0}").replacement(event.getPlayer().displayName()));
-                plugin.getComponentLogger().debug(event.getPlayer().displayName());
+                Component message = Translator.translate("obelouix.silentjoin", player)
+                        .color(NamedTextColor.DARK_AQUA)
+                        .replaceText(builder -> builder.matchLiteral("{0}").replacement(event.getPlayer().displayName()));
                 MessagesAPI.sendMessage(Audience.SILENT_JOIN_AUDIENCE, message);
             }
-        }.runTaskLaterAsynchronously(plugin, 5);
+        }.runTaskLater(plugin, 60);
 
 
-        event.joinMessage(Component.empty());
+//        event.joinMessage(Component.empty());
     }
 
 }
