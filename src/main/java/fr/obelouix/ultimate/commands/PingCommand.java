@@ -43,7 +43,7 @@ public class PingCommand extends BaseCommand {
     private List<String> suggestions(CommandContext<CommandSender> commandContext, String s) {
         if (commandContext.hasPermission("obelouix.command.ping.others")) {
             final List<String> players = new ArrayList<>();
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            for (final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (!onlinePlayer.equals(commandContext.getSender())) {
                     //don't had players that have this permission
                     if (!onlinePlayer.hasPermission("obelouix.ping.hide")) players.add(onlinePlayer.getName());
