@@ -10,7 +10,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 
-public class BlockTransformationEvent implements Listener {
+public class CoralBlockTransformationEvent implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void reviveDeadCoral(ProjectileHitEvent event) {
