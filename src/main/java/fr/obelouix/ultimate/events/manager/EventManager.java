@@ -8,6 +8,7 @@ import fr.obelouix.ultimate.events.AnvilEvents;
 import fr.obelouix.ultimate.events.PlayerConnectionEvent;
 import fr.obelouix.ultimate.events.ReloadDetector;
 import fr.obelouix.ultimate.events.WitherBlockDamageEvent;
+import fr.obelouix.ultimate.events.blocks.BlockTransformationEvent;
 import fr.obelouix.ultimate.events.blocks.BlocksEvent;
 import fr.obelouix.ultimate.fastleafdecay.FastLeafDecay;
 import fr.obelouix.ultimate.recipes.RecipeDiscoverer;
@@ -24,7 +25,8 @@ public class EventManager extends Events {
                         new Coordinates(),
                         new RecipeDiscoverer(),
                         new FreezeCommand(),
-                        new BlocksEvent()//,
+                        new BlocksEvent(),
+                        new BlockTransformationEvent()//,
                         //new HeadDrop()
                         //new NightSkipEvent()
                 )
