@@ -25,12 +25,15 @@ public class EventManager extends Events {
                         new Coordinates(),
                         new RecipeDiscoverer(),
                         new FreezeCommand(),
-                        new BlocksEvent(),
-                        new CoralBlockTransformationEvent()//,
+                        new BlocksEvent()//,
                         //new HeadDrop()
                         //new NightSkipEvent()
                 )
         );
+
+        if (Config.canReviveCoralBlock()) {
+            addEvent(new CoralBlockTransformationEvent());
+        }
 
         if (Config.isWitherBlockDamageDisabled()) {
             addEvent(new WitherBlockDamageEvent());

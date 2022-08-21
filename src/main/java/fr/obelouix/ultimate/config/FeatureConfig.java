@@ -58,6 +58,12 @@ class FeatureConfig extends BaseConfig {
             featuresNode.node("fast-leaf-decay").set(false);
         }
 
+        if (featuresNode.node("potions", "revive-coral-blocks").empty()) {
+            featuresNode.node("potions", "revive-coral-blocks").set(true)
+                    .commentIfAbsent("Send a healing splash potion on dead coral blocks to revive them");
+        }
+
+
     }
 
     @Override
@@ -84,7 +90,7 @@ class FeatureConfig extends BaseConfig {
 
         Config.customServerBrand = featuresNode.node("custom-server-brand").getString();
         Config.fastLeafDecay = featuresNode.node("fast-leaf-decay").getBoolean();
-
+        Config.reviveCoralBlock = featuresNode.node("potions", "revive-coral-blocks").getBoolean();
     }
 
 }

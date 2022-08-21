@@ -22,6 +22,7 @@ public class Config {
             .path(Path.of(plugin.getDataFolder().getPath(), "config.conf"))
             .build();
     protected static final Set<World> coordinatesBlacklist = new HashSet<>();
+    protected static boolean reviveCoralBlock;
     protected static boolean debugMode;
     protected static boolean disableReloadCommand;
     protected static String customServerBrand;
@@ -220,5 +221,9 @@ public class Config {
      */
     public static boolean ShareEnderDragonExperience() {
         return Config.shareEnderDragonExperience;
+    }
+
+    public static boolean canReviveCoralBlock() {
+        return reviveCoralBlock;
     }
 }
