@@ -51,12 +51,13 @@ class MainConfig extends BaseConfig {
         Config.debugMode = Config.getRoot().node("debug-mode").getBoolean();
         Config.disableReloadCommand = Config.getRoot().node("disable-default-reload-command").getBoolean();
 
-        Config.storageType = Config.getRoot().node("storage-type").getString();
-        if (Config.storageType != null && Config.storageType.equalsIgnoreCase("mysql")) {
+        //temporarily forcing it to files
+        Config.storageType = "file"; //Config.getRoot().node("storage-type").getString();
+/*        if (Config.storageType != null && Config.storageType.equalsIgnoreCase("mysql")) {
             Config.databaseUrl = Config.getRoot().node("data", "database", "url").getString();
             Config.databasePort = Config.getRoot().node("data", "database", "port").getInt();
 
-        }
+        }*/
 /*        if (Stream.of("mysql", "h2").anyMatch(s -> Config.storageType.equalsIgnoreCase(s))) {
             Config.databaseUsername = Config.getRoot().node("data", "database", "username").getString();
             Config.databasePassword = Config.getRoot().node("data", "database", "password").getString();
