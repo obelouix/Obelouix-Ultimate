@@ -18,17 +18,18 @@ public class BlockTransformationEvent implements Listener {
 
         if (projectile instanceof ThrownPotion potion) {
             final PotionMeta potionMeta = potion.getPotionMeta();
-            if (potionMeta.getBasePotionData().getType() != PotionType.REGEN) event.setCancelled(true);
-            if (event.getHitBlock() == null) event.setCancelled(true);
+            if (potionMeta.getBasePotionData().getType() == PotionType.REGEN) {
+                if (event.getHitBlock() == null) event.setCancelled(true);
 
-            final Block hitBlock = event.getHitBlock();
-            switch (hitBlock.getType()) {
-                case DEAD_BRAIN_CORAL_BLOCK -> hitBlock.setType(Material.BRAIN_CORAL_BLOCK);
-                case DEAD_BUBBLE_CORAL_BLOCK -> hitBlock.setType(Material.BUBBLE_CORAL_BLOCK);
-                case DEAD_FIRE_CORAL_BLOCK -> hitBlock.setType(Material.FIRE_CORAL_BLOCK);
-                case DEAD_HORN_CORAL_BLOCK -> hitBlock.setType(Material.HORN_CORAL_BLOCK);
-                case DEAD_TUBE_CORAL_BLOCK -> hitBlock.setType(Material.TUBE_CORAL_BLOCK);
-                default -> event.setCancelled(true);
+                final Block hitBlock = event.getHitBlock();
+                switch (hitBlock.getType()) {
+                    case DEAD_BRAIN_CORAL_BLOCK -> hitBlock.setType(Material.BRAIN_CORAL_BLOCK);
+                    case DEAD_BUBBLE_CORAL_BLOCK -> hitBlock.setType(Material.BUBBLE_CORAL_BLOCK);
+                    case DEAD_FIRE_CORAL_BLOCK -> hitBlock.setType(Material.FIRE_CORAL_BLOCK);
+                    case DEAD_HORN_CORAL_BLOCK -> hitBlock.setType(Material.HORN_CORAL_BLOCK);
+                    case DEAD_TUBE_CORAL_BLOCK -> hitBlock.setType(Material.TUBE_CORAL_BLOCK);
+                    default -> event.setCancelled(true);
+                }
             }
         } else event.setCancelled(true);
 
