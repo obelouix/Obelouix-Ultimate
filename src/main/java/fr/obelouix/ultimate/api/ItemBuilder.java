@@ -70,6 +70,17 @@ public class ItemBuilder {
     }
 
     /**
+     * Add Enchantment with an unsafe level to the item.
+     *
+     * @param enchantment the enchantment to add
+     * @param level       the level of the enchantment to add
+     */
+    public ItemBuilder addUnsafeEnchantement(Enchantment enchantment, int level) {
+        itemMeta.addEnchant(enchantment, level, true);
+        return this;
+    }
+
+    /**
      * Remove the enchantments from the item
      */
     public ItemBuilder clearEnchantments() {
@@ -102,6 +113,21 @@ public class ItemBuilder {
         itemMeta.getEnchants().clear();
         Arrays.stream(enchantments).forEach(
                 enchantment -> itemMeta.addEnchant(enchantment, level, false)
+        );
+        return this;
+    }
+
+    /**
+     * Add Enchantments with an unsafe level to the item.
+     *
+     * @param enchantments a list of enchantments to add
+     * @param level        the level of all the enchantements
+     */
+    public ItemBuilder setUnsafeEnchantement(int level, Enchantment... enchantments) {
+        itemMeta.getEnchants().clear();
+        Arrays.stream(enchantments).forEach(
+                enchantment -> itemMeta.addEnchant(enchantment, level, true)
+
         );
         return this;
     }

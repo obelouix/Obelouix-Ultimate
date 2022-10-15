@@ -59,6 +59,15 @@ public class WeaponBuilder extends ItemBuilder {
      * {@inheritDoc}
      */
     @Override
+    public ItemBuilder addUnsafeEnchantement(Enchantment enchantment, int level) {
+        return super.addUnsafeEnchantement(enchantment, level);
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ItemBuilder clearEnchantments() {
         return super.clearEnchantments();
     }
@@ -77,6 +86,14 @@ public class WeaponBuilder extends ItemBuilder {
     @Override
     public ItemBuilder setEnchantement(int level, Enchantment... enchantments) {
         return super.setEnchantement(level, enchantments);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ItemBuilder setUnsafeEnchantement(int level, Enchantment... enchantments) {
+        return super.setUnsafeEnchantement(level, enchantments);
     }
 
     /**
