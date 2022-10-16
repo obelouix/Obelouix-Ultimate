@@ -87,7 +87,7 @@ public class ItemBuilder {
         } else {
             itemMeta.addEnchant(Enchantment.PROTECTION_FALL, 1, false);
         }
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        hideEnchantments();
         return this;
     }
 
