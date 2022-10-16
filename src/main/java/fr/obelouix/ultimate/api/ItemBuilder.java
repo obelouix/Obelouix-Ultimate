@@ -232,15 +232,65 @@ public class ItemBuilder {
      * @param attackDamage the attack damage to set
      * @param attackSpeed  the attack speed to set
      */
-
     public ItemBuilder setAttackDamageAndSpeed(double attackDamage, double attackSpeed) {
         setAttackDamage(attackDamage);
         setAttackSpeed(attackSpeed);
         return this;
     }
 
+    /**
+     * Hide attributes like Damage
+     */
     public ItemBuilder hideAttributes() {
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        return this;
+    }
+
+    /**
+     * Hide enchantments
+     */
+    public ItemBuilder hideEnchantments() {
+        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        return this;
+    }
+
+    /**
+     * Hide what the ItemStack can break/destroy
+     */
+    public ItemBuilder hideDestroy() {
+        itemMeta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+        return this;
+    }
+
+    /**
+     * Hide dyes from coloured leather armour
+     */
+    public ItemBuilder hideDyes() {
+        itemMeta.addItemFlags(ItemFlag.HIDE_DYE);
+        return this;
+    }
+
+    /**
+     * Hide where this ItemStack can be build/placed on
+     */
+    public ItemBuilder hidePlacedOn() {
+        itemMeta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+        return this;
+    }
+
+    /**
+     * Hide d potion effects, book and firework information, map tooltips, patterns of banners, and enchantments of enchanted books.
+     */
+    public ItemBuilder hidePotionEffects() {
+        itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        return this;
+    }
+
+    /**
+     * Hide the unbreakable State
+     */
+    public ItemBuilder hideUnbreakble() {
+        itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         return this;
     }
 
