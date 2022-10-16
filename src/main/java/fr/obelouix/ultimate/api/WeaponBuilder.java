@@ -35,7 +35,7 @@ public class WeaponBuilder extends ItemBuilder {
      * @param damage the attack damage to set
      */
     public WeaponBuilder setAttackDamage(double damage) {
-        AttributeModifier attackDamage = new AttributeModifier(UUID.randomUUID(), "generic.Damage", damage, AttributeModifier.Operation.ADD_NUMBER);
+        final AttributeModifier attackDamage = new AttributeModifier(UUID.randomUUID(), "generic.Damage", damage, AttributeModifier.Operation.ADD_NUMBER);
         super.itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, attackDamage);
         return this;
     }
@@ -46,7 +46,7 @@ public class WeaponBuilder extends ItemBuilder {
      * @param speed the attack speed to set
      */
     public WeaponBuilder setAttackSpeed(double speed) {
-        AttributeModifier attackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.AttackSpeed", speed, AttributeModifier.Operation.ADD_NUMBER);
+        final AttributeModifier attackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.AttackSpeed", speed, AttributeModifier.Operation.ADD_NUMBER);
         super.itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, attackSpeed);
         return this;
     }
