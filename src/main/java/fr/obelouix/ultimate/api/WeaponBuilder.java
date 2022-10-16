@@ -4,7 +4,10 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * Allows to create an item that will be a weapon
@@ -59,6 +62,14 @@ public class WeaponBuilder extends ItemBuilder {
      * {@inheritDoc}
      */
     @Override
+    public ItemBuilder addGlowingEffect() {
+        return super.addGlowingEffect();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ItemBuilder addUnsafeEnchantement(Enchantment enchantment, int level) {
         return super.addUnsafeEnchantement(enchantment, level);
     }
@@ -92,9 +103,42 @@ public class WeaponBuilder extends ItemBuilder {
      * {@inheritDoc}
      */
     @Override
+    public ItemBuilder setLore(@Nullable List<Component> lore) {
+        return super.setLore(lore);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Component> getLore() {
+        return super.getLore();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ItemBuilder setMeta(ItemMeta meta) {
+        return super.setMeta(meta);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ItemMeta getItemMeta() {
+        return super.getItemMeta();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ItemBuilder setUnsafeEnchantement(int level, Enchantment... enchantments) {
         return super.setUnsafeEnchantement(level, enchantments);
     }
+
 
     /**
      * Build the weapon
