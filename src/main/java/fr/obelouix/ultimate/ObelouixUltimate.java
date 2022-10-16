@@ -135,9 +135,12 @@ public class ObelouixUltimate extends JavaPlugin {
         CommandManager.getInstance();
         new EventManager();
         new TweaksManager();
+        /*new Blocks();
+        List.of(new CompressedCobblestone(), new Cobblestone()).forEach(RecipeRegistry::addRecipe);*/
         new CustomFurnaceRecipes();
         new CustomCraftingTableRecipes();
         new Updater();
+
     }
 
     public TranslationAPI getTranslationAPI() {

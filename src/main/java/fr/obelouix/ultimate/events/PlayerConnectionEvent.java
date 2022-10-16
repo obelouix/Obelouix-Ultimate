@@ -2,26 +2,29 @@ package fr.obelouix.ultimate.events;
 
 import com.j256.ormlite.stmt.QueryBuilder;
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.api.MessagesAPI;
-import fr.obelouix.ultimate.audience.Audience;
+import fr.obelouix.ultimate.api.ItemBuilder;
+import fr.obelouix.ultimate.api.WeaponBuilder;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.database.Database;
 import fr.obelouix.ultimate.database.models.PlayerOptionsTable;
 import fr.obelouix.ultimate.database.models.PlayerTable;
-import fr.obelouix.ultimate.i18n.Translator;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapView;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayerConnectionEvent implements Listener {
@@ -70,7 +73,7 @@ public class PlayerConnectionEvent implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+/*    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         //FakeServerBrand.sendFakeBrand(event.getPlayer());
         final Player player = event.getPlayer();
@@ -89,6 +92,26 @@ public class PlayerConnectionEvent implements Listener {
 
 
 //        event.joinMessage(Component.empty());
+    }*/
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        final ItemStack testItem = new ItemBuilder(Material.ACACIA_LOG)
+                .displayname(Component.text("Test", NamedTextColor.GREEN))
+                .addGlowingEffect()
+                .setLore(Collections.singletonList(Component.text("Ceci est un test", TextColor.color(100, 200, 125))))
+                .build();
+
+        final ItemStack weaponTest = new WeaponBuilder(Material.NETHERITE_SWORD)
+                .displayname(Component.text("Test", NamedTextColor.GREEN))
+                .addGlowingEffect()
+                .addEnchantement(Enchantment.DAMAGE_ALL, 5)
+                .setAttackDamageAndSpeed(10, 2.5)
+                .setLore(Collections.singletonList(Component.text("Ceci est un test", TextColor.color(100, 200, 125))))
+                .build();
+
+        event.getPlayer().getInventory().addItem(testItem);
+        event.getPlayer().getInventory().addItem(weaponTest);
     }
 
 }

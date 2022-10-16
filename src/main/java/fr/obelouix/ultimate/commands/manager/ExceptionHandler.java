@@ -3,13 +3,12 @@ package fr.obelouix.ultimate.commands.manager;
 import cloud.commandframework.exceptions.NoPermissionException;
 import cloud.commandframework.exceptions.NoSuchCommandException;
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.api.MessagesAPI;
-import fr.obelouix.ultimate.messages.I18NMessages;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -51,12 +50,14 @@ final class ExceptionHandler implements Listener {
             final String command = ev.getMessage().split(" ")[0];
             final HelpTopic topic = Bukkit.getServer().getHelpMap().getHelpTopic(command);
             if (topic == null) {
-                MessagesAPI.sendMessage(player, Component.text(I18NMessages.UNKNOWN_COMMAND.getTranslation(player), NamedTextColor.DARK_RED)
+                final String click_to_run = PlainTextComponentSerializer.plainText().serialize(Component.translatable("obelouix.click_to_run"));
+                player.sendMessage(Component.translatable("obelouix.command.unknown", NamedTextColor.DARK_RED)
                         .replaceText(TextReplacementConfig.builder()
                                 .matchLiteral("/help")
                                 .replacement(Component.text("/help", NamedTextColor.RED).clickEvent(ClickEvent.runCommand("/help"))
-                                        .hoverEvent(MiniMessage.miniMessage().deserialize("<rainbow>" + I18NMessages.CLICK_TO_RUN.getTranslation(player) + "</rainbow>")))
+                                        .hoverEvent(MiniMessage.miniMessage().deserialize("<rainbow>" + click_to_run + "</rainbow>")))
                                 .build()));
+
                 ev.setCancelled(true);
             }
         }
@@ -64,17 +65,18 @@ final class ExceptionHandler implements Listener {
 
     //Unknown command for cloud
     private void unknownCommand(@NonNull CommandSender sender, @NonNull NoSuchCommandException exception) {
-        MessagesAPI.sendMessage(sender, Component.text(I18NMessages.UNKNOWN_COMMAND.getTranslation(sender), NamedTextColor.DARK_RED)
+        final String click_to_run = PlainTextComponentSerializer.plainText().serialize(Component.translatable("obelouix.click_to_run"));
+        sender.sendMessage(Component.translatable("obelouix.command.unknown", NamedTextColor.DARK_RED)
                 .replaceText(TextReplacementConfig.builder()
                         .matchLiteral("/help")
                         .replacement(Component.text("/help", NamedTextColor.RED).clickEvent(ClickEvent.runCommand("/help"))
-                                .hoverEvent(MiniMessage.miniMessage().deserialize("<rainbow>" + I18NMessages.CLICK_TO_RUN.getTranslation(sender) + "</rainbow>")))
+                                .hoverEvent(MiniMessage.miniMessage().deserialize("<rainbow>" + click_to_run + "</rainbow>")))
                         .build()));
     }
 
     //No Permission message
     private void noPermission(@NonNull CommandSender sender, @NonNull NoPermissionException exception) {
-        MessagesAPI.sendMessage(sender, Component.text(I18NMessages.COMMAND_NO_PERMISSION.getTranslation(sender), NamedTextColor.DARK_RED));
+        sender.sendMessage(Component.translatable("no_permission", NamedTextColor.DARK_RED));
     }
 
 /*

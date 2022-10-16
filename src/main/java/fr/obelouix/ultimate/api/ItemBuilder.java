@@ -2,6 +2,8 @@ package fr.obelouix.ultimate.api;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -12,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class ItemBuilder {
 
@@ -83,7 +86,7 @@ public class ItemBuilder {
         } else {
             itemMeta.addEnchant(Enchantment.PROTECTION_FALL, 1, false);
         }
-        itemMeta.hasItemFlag(ItemFlag.HIDE_ENCHANTS);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         return this;
     }
 
@@ -213,4 +216,38 @@ public class ItemBuilder {
         return item;
     }
 
+    /**
+     * Set the weapon's attack damage
+     *
+     * @param damage the attack damage to set
+     */
+    public ItemBuilder setAttackDamage(double damage) {
+        final AttributeModifier attackDamage = new AttributeModifier(UUID.randomUUID(), "generic.Damage", damage, AttributeModifier.Operation.ADD_NUMBER);
+        itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, attackDamage);
+        return this;
+    }
+
+    /**
+     * Set the weapon's attack speed
+     *
+     * @param speed the attack speed to set
+     */
+    public ItemBuilder setAttackSpeed(double speed) {
+        final AttributeModifier attackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.AttackSpeed", speed, AttributeModifier.Operation.ADD_NUMBER);
+        itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, attackSpeed);
+        return this;
+    }
+
+    /**
+     * Set the weapon's attack damage and attack speed
+     *
+     * @param attackDamage the attack damage to set
+     * @param attackSpeed  the attack speed to set
+     */
+
+    public ItemBuilder setAttackDamageAndSpeed(double attackDamage, double attackSpeed) {
+        setAttackDamage(attackDamage);
+        setAttackSpeed(attackSpeed);
+        return this;
+    }
 }

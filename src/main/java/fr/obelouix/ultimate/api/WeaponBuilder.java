@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
@@ -34,8 +35,8 @@ public class WeaponBuilder extends ItemBuilder {
      *
      * @param damage the attack damage to set
      */
-    public WeaponBuilder setAttackDamage(double damage) {
-        final AttributeModifier attackDamage = new AttributeModifier(UUID.randomUUID(), "generic.Damage", damage, AttributeModifier.Operation.ADD_NUMBER);
+    public ItemBuilder setAttackDamage(double damage) {
+        final AttributeModifier attackDamage = new AttributeModifier(UUID.randomUUID(), "generic.Damage", damage, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
         super.itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, attackDamage);
         return this;
     }
@@ -45,8 +46,8 @@ public class WeaponBuilder extends ItemBuilder {
      *
      * @param speed the attack speed to set
      */
-    public WeaponBuilder setAttackSpeed(double speed) {
-        final AttributeModifier attackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.AttackSpeed", speed, AttributeModifier.Operation.ADD_NUMBER);
+    public ItemBuilder setAttackSpeed(double speed) {
+        final AttributeModifier attackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.AttackSpeed", speed, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
         super.itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, attackSpeed);
         return this;
     }
@@ -57,7 +58,8 @@ public class WeaponBuilder extends ItemBuilder {
      * @param attackDamage the attack damage to set
      * @param attackSpeed  the attack speed to set
      */
-    public WeaponBuilder setAttackDamageAndSpeed(double attackDamage, double attackSpeed) {
+
+    public ItemBuilder setAttackDamageAndSpeed(double attackDamage, double attackSpeed) {
         setAttackDamage(attackDamage);
         setAttackSpeed(attackSpeed);
         return this;

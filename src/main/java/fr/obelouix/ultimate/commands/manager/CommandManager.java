@@ -6,7 +6,9 @@ import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import fr.obelouix.ultimate.ObelouixUltimate;
-import fr.obelouix.ultimate.commands.*;
+import fr.obelouix.ultimate.commands.DifficultyCommand;
+import fr.obelouix.ultimate.commands.FillCommand;
+import fr.obelouix.ultimate.commands.FreezeCommand;
 import fr.obelouix.ultimate.commands.argument.BlockArgument;
 import fr.obelouix.ultimate.commands.argument.GroupArgument;
 import io.leangen.geantyref.TypeToken;
@@ -112,16 +114,16 @@ public class CommandManager {
 
         //new PingCommand().register();
         List.of(
-                new DayCommand(),
+                //new DayCommand(),
                 new DifficultyCommand(),
                 new FillCommand(),
-                new FreezeCommand(),
+                new FreezeCommand()/*,
                 new GiveCommand(),
                 new MiddayCommand(),
                 new MidnightCommand(),
                 new NightCommand(),
                 new SpawnCommand(),
-                new SuicideCommand()/* ,
+                new SuicideCommand(),
                 new TimeCommand()*/
                 //new PingCommand()
         ).forEach(BaseCommand::register);

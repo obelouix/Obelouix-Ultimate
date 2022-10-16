@@ -1,6 +1,7 @@
 package fr.obelouix.ultimate.recipes;
 
 import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.blocks.CompressedBlocks;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -26,6 +27,10 @@ public class CustomCraftingTableRecipes {
 
         register(repairable_anvil);
 
+        final HashMap<Character, ItemStack> COMPRESSED_COBBLESTONE = new HashMap<>();
+        COMPRESSED_COBBLESTONE.put('C', CompressedBlocks.COMPRESSED_COBBLESTONE);
+        final ShapedRecipe compressed_cobblestone_recipe = registerRecipe(new NamespacedKey(plugin, "compressed_cobblestone"), CompressedBlocks.COMPRESSED_COBBLESTONE, COMPRESSED_COBBLESTONE, "CCC", "CCC", "CCC");
+        register(compressed_cobblestone_recipe);
     }
 
     private ShapedRecipe registerRecipe(@NotNull NamespacedKey key, @NotNull ItemStack result, Map<Character, ItemStack> ingredients, String... shape) {

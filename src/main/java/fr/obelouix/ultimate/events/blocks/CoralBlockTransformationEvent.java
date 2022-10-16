@@ -26,7 +26,7 @@ public class CoralBlockTransformationEvent implements Listener {
                 if (hitBlock == null) event.setCancelled(true);
                 else transform(hitBlock);
             }
-        } else event.setCancelled(true);
+        }
 
     }
 
