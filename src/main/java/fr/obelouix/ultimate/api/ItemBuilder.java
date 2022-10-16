@@ -229,7 +229,18 @@ public class ItemBuilder {
     }
 
     /**
-     * Set the weapon's attack damage
+     * Set the item defense points.
+     *
+     * @param defense the item defense point to set
+     */
+    public ItemBuilder setArmor(double defense) {
+        final AttributeModifier armor = new AttributeModifier(UUID.randomUUID(), "generic.Damage", defense, AttributeModifier.Operation.ADD_NUMBER);
+        itemMeta.addAttributeModifier(Attribute.GENERIC_ARMOR, armor);
+        return this;
+    }
+
+    /**
+     * Set the item's attack damage
      *
      * @param damage the attack damage to set
      */
@@ -240,7 +251,7 @@ public class ItemBuilder {
     }
 
     /**
-     * Set the weapon's attack speed
+     * Set the item's attack speed
      *
      * @param speed the attack speed to set
      */
@@ -251,7 +262,7 @@ public class ItemBuilder {
     }
 
     /**
-     * Set the weapon's attack damage and attack speed
+     * Set the item's attack damage and attack speed
      *
      * @param attackDamage the attack damage to set
      * @param attackSpeed  the attack speed to set
@@ -259,6 +270,28 @@ public class ItemBuilder {
     public ItemBuilder setAttackDamageAndSpeed(double attackDamage, double attackSpeed) {
         setAttackDamage(attackDamage);
         setAttackSpeed(attackSpeed);
+        return this;
+    }
+
+    /**
+     * Set the knockback resistance of the item
+     *
+     * @param resistance the knockback resistance to set
+     */
+    public ItemBuilder setKnockbackResistance(double resistance) {
+        final AttributeModifier knockbackResistance = new AttributeModifier(UUID.randomUUID(), "generic.knockback_resistance", resistance, AttributeModifier.Operation.ADD_NUMBER);
+        itemMeta.addAttributeModifier(Attribute.GENERIC_KNOCKBACK_RESISTANCE, knockbackResistance);
+        return this;
+    }
+
+    /**
+     * Set the movement speed of the item that will be applied to the entity holding it
+     *
+     * @param speed the movement speed to set
+     */
+    public ItemBuilder setMovementSpeed(double speed) {
+        final AttributeModifier movementSpeed = new AttributeModifier(UUID.randomUUID(), "generic.movement_speed", speed, AttributeModifier.Operation.ADD_NUMBER);
+        itemMeta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, movementSpeed);
         return this;
     }
 
