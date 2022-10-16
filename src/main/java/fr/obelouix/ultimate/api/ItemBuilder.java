@@ -205,18 +205,6 @@ public class ItemBuilder {
     }
 
     /**
-     * Build the item
-     * <br> Same as {@link #build()} but for internal use
-     *
-     * @param item the itemstack to build
-     * @return the item
-     */
-    ItemStack build(ItemStack item) {
-        item.setItemMeta(itemMeta);
-        return item;
-    }
-
-    /**
      * Set the weapon's attack damage
      *
      * @param damage the attack damage to set
@@ -250,4 +238,10 @@ public class ItemBuilder {
         setAttackSpeed(attackSpeed);
         return this;
     }
+
+    public ItemBuilder hideAttributes() {
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        return this;
+    }
+
 }
