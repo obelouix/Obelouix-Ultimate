@@ -2,12 +2,15 @@ package fr.obelouix.ultimate.api;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Allows to create an item that will be a weapon
@@ -15,6 +18,8 @@ import java.util.List;
 public class WeaponBuilder extends ItemBuilder {
 
     private final ItemStack weapon;
+    private AttributeModifier attackDamage;
+    private AttributeModifier attackSpeed;
 
     public WeaponBuilder(Material material) {
         super(material);
@@ -24,6 +29,40 @@ public class WeaponBuilder extends ItemBuilder {
     public WeaponBuilder(Material material, int amount) {
         super(material, amount);
         weapon = new ItemBuilder(material, amount).build();
+    }
+
+    /**
+     * Set the weapon's attack damage
+     *
+     * @param attackDamage the attack damage to set
+     */
+    public WeaponBuilder setAttackDamage(double attackDamage) {
+        this.attackDamage = new AttributeModifier(UUID.randomUUID(), "generic.Damage", attackDamage, AttributeModifier.Operation.ADD_NUMBER);
+        super.itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, this.attackDamage);
+        return this;
+    }
+
+    /**
+     * Set the weapon's attack speed
+     *
+     * @param attackSpeed the attack speed to set
+     */
+    public WeaponBuilder setAttackSpeed(double attackSpeed) {
+        this.attackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.AttackSpeed", attackSpeed, AttributeModifier.Operation.ADD_NUMBER);
+        super.itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, this.attackSpeed);
+        return this;
+    }
+
+    /**
+     * Set the weapon's attack damage and attack speed
+     *
+     * @param attackDamage the attack damage to set
+     * @param attackSpeed  the attack speed to set
+     */
+    public WeaponBuilder setAttackDamageAndSpeed(double attackDamage, double attackSpeed) {
+        setAttackDamage(attackDamage);
+        setAttackSpeed(attackSpeed);
+        return this;
     }
 
     /**
