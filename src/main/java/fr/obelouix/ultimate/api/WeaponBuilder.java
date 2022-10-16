@@ -18,8 +18,6 @@ import java.util.UUID;
 public class WeaponBuilder extends ItemBuilder {
 
     private final ItemStack weapon;
-    private AttributeModifier attackDamage;
-    private AttributeModifier attackSpeed;
 
     public WeaponBuilder(Material material) {
         super(material);
@@ -34,22 +32,22 @@ public class WeaponBuilder extends ItemBuilder {
     /**
      * Set the weapon's attack damage
      *
-     * @param attackDamage the attack damage to set
+     * @param damage the attack damage to set
      */
-    public WeaponBuilder setAttackDamage(double attackDamage) {
-        this.attackDamage = new AttributeModifier(UUID.randomUUID(), "generic.Damage", attackDamage, AttributeModifier.Operation.ADD_NUMBER);
-        super.itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, this.attackDamage);
+    public WeaponBuilder setAttackDamage(double damage) {
+        AttributeModifier attackDamage = new AttributeModifier(UUID.randomUUID(), "generic.Damage", damage, AttributeModifier.Operation.ADD_NUMBER);
+        super.itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, attackDamage);
         return this;
     }
 
     /**
      * Set the weapon's attack speed
      *
-     * @param attackSpeed the attack speed to set
+     * @param speed the attack speed to set
      */
-    public WeaponBuilder setAttackSpeed(double attackSpeed) {
-        this.attackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.AttackSpeed", attackSpeed, AttributeModifier.Operation.ADD_NUMBER);
-        super.itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, this.attackSpeed);
+    public WeaponBuilder setAttackSpeed(double speed) {
+        AttributeModifier attackSpeed = new AttributeModifier(UUID.randomUUID(), "generic.AttackSpeed", speed, AttributeModifier.Operation.ADD_NUMBER);
+        super.itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, attackSpeed);
         return this;
     }
 
