@@ -294,4 +294,12 @@ public class ItemBuilder {
         return this;
     }
 
+    /**
+     * Hide all {@link ItemFlag}'s
+     */
+    public ItemBuilder hideAllFlags() {
+        Arrays.stream(ItemFlag.values()).forEach(flag -> itemMeta.addItemFlags(flag));
+        return this;
+    }
+
 }

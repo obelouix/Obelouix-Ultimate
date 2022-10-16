@@ -3,7 +3,6 @@ package fr.obelouix.ultimate.events;
 import com.j256.ormlite.stmt.QueryBuilder;
 import fr.obelouix.ultimate.ObelouixUltimate;
 import fr.obelouix.ultimate.api.ItemBuilder;
-import fr.obelouix.ultimate.api.WeaponBuilder;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.data.PlayerData;
 import fr.obelouix.ultimate.database.Database;
@@ -94,6 +93,7 @@ public class PlayerConnectionEvent implements Listener {
 //        event.joinMessage(Component.empty());
     }*/
 
+    //TODO: REMOVE THIS AFTER TEST IS DONE
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         final ItemStack testItem = new ItemBuilder(Material.ACACIA_LOG)
@@ -102,12 +102,13 @@ public class PlayerConnectionEvent implements Listener {
                 .setLore(Collections.singletonList(Component.text("Ceci est un test", TextColor.color(100, 200, 125))))
                 .build();
 
-        final ItemStack weaponTest = new WeaponBuilder(Material.NETHERITE_SWORD)
+        final ItemStack weaponTest = new ItemBuilder(Material.NETHERITE_SWORD)
                 .displayname(Component.text("Test", NamedTextColor.GREEN))
                 .addGlowingEffect()
                 .addEnchantement(Enchantment.DAMAGE_ALL, 5)
                 .setAttackDamageAndSpeed(10, 2.5)
                 .setLore(Collections.singletonList(Component.text("Ceci est un test", TextColor.color(100, 200, 125))))
+                .hideAllFlags()
                 .build();
 
         event.getPlayer().getInventory().addItem(testItem);
