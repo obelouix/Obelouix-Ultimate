@@ -39,7 +39,7 @@ public class ItemBuilder {
     }
 
     /**
-     * Sets the damage
+     * Sets the damage (durability)
      *
      * @param damage the damage
      */
