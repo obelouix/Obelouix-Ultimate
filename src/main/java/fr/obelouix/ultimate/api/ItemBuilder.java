@@ -201,4 +201,16 @@ public class ItemBuilder {
         return item;
     }
 
+    /**
+     * Build the item
+     * <br> Same as {@link #build()} but for internal use
+     *
+     * @param item the itemstack to build
+     * @return the item
+     */
+    ItemStack build(ItemStack item) {
+        item.setItemMeta(itemMeta);
+        return item;
+    }
+
 }

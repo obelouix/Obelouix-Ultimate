@@ -146,7 +146,7 @@ public class WeaponBuilder extends ItemBuilder {
      * @return the weapon
      */
     public ItemStack build() {
-        return weapon;
+        return super.build(weapon);
     }
 
 }
