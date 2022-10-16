@@ -1,5 +1,6 @@
 package fr.obelouix.ultimate.api;
 
+import com.destroystokyo.paper.Namespaced;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -100,6 +101,29 @@ public class ItemBuilder {
         itemMeta.addEnchant(enchantment, level, true);
         return this;
     }
+
+    /**
+     * Set the materials where the item can be placed using their keys
+     * (e.g. Material.GRASS_BLOCK.getKey() )
+     *
+     * @param materials a list of materials keys
+     */
+    public ItemBuilder canBePlacedOn(List<Namespaced> materials) {
+        itemMeta.setPlaceableKeys(materials);
+        return this;
+    }
+
+    /**
+     * Set the materials that can be destroyed by the item
+     * (e.g. Material.GRASS_BLOCK.getKey() )
+     *
+     * @param materials a list of materials keys
+     */
+    public ItemBuilder canDestoy(List<Namespaced> materials) {
+        itemMeta.setDestroyableKeys(materials);
+        return this;
+    }
+
 
     /**
      * Remove the enchantments from the item
