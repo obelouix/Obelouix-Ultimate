@@ -2,6 +2,8 @@ package fr.obelouix.ultimate.api;
 
 import com.destroystokyo.paper.Namespaced;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -12,10 +14,7 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class ItemBuilder {
 
@@ -52,6 +51,134 @@ public class ItemBuilder {
             damageable.setDamage(damage);
         } else throw new ItemBuilderException(item.getType() + " 's meta is not an instance of Damageable");
         return this;
+    }
+
+    public ItemBuilder addColoredEnchantmentLore() {
+        final Map<Enchantment, Integer> enchantments = itemMeta.getEnchants();
+        //Create a new List if there is no lore
+        final List<Component> lore = itemMeta.lore() != null ? itemMeta.lore() : new ArrayList<>();
+        enchantments.forEach((enchantment, integer) -> {
+            switch (enchantment.getKey().value()) {
+                // All purposes
+                case "mending" ->
+                        lore.add(Component.translatable("enchantment.minecraft.mending", NamedTextColor.GOLD).append(setEnchantLevelToComponent(integer)));
+                case "vanishing_curse" ->
+                        lore.add(Component.translatable("enchantment.minecraft.vanishing_curse", NamedTextColor.DARK_RED).append(setEnchantLevelToComponent(integer)));
+                case "unbreaking" ->
+                        lore.add(Component.translatable("enchantment.minecraft.unbreaking", NamedTextColor.DARK_PURPLE).append(setEnchantLevelToComponent(integer)));
+
+                // Armor
+                case "aqua_affinity" ->
+                        lore.add(Component.translatable("enchantment.minecraft.waterWorker", NamedTextColor.AQUA).append(setEnchantLevelToComponent(integer)));
+                case "blast_protection" ->
+                        lore.add(Component.translatable("enchantment.minecraft.protect.explosion", NamedTextColor.GREEN).append(setEnchantLevelToComponent(integer)));
+                case "binding_curse" ->
+                        lore.add(Component.translatable("enchantment.minecraft.binding_curse", NamedTextColor.DARK_RED).append(setEnchantLevelToComponent(integer)));
+                case "depth_strider" ->
+                        lore.add(Component.translatable("enchantment.minecraft.waterWalker", NamedTextColor.AQUA).append(setEnchantLevelToComponent(integer)));
+                case "feather_falling" ->
+                        lore.add(Component.translatable("enchantment.minecraft.protect.fall", NamedTextColor.GREEN).append(setEnchantLevelToComponent(integer)));
+                case "fire_protection" ->
+                        lore.add(Component.translatable("enchantment.minecraft.protect.fire", NamedTextColor.GOLD).append(setEnchantLevelToComponent(integer)));
+                case "frost_walker" ->
+                        lore.add(Component.translatable("enchantment.minecraft.frostWalker", NamedTextColor.AQUA).append(setEnchantLevelToComponent(integer)));
+                case "projectile_protection" ->
+                        lore.add(Component.translatable("enchantment.minecraft.protect.projectile", NamedTextColor.GREEN).append(setEnchantLevelToComponent(integer)));
+                case "protection" ->
+                        lore.add(Component.translatable("enchantment.minecraft.protect.all", NamedTextColor.GREEN).append(setEnchantLevelToComponent(integer)));
+                case "respiration" ->
+                        lore.add(Component.translatable("enchantment.minecraft.oxygen", NamedTextColor.AQUA).append(setEnchantLevelToComponent(integer)));
+                case "soul_speed" ->
+                        lore.add(Component.translatable("enchantment.minecraft.soul_speed", NamedTextColor.GREEN).append(setEnchantLevelToComponent(integer)));
+                case "swift_sneak" ->
+                        lore.add(Component.translatable("enchantment.minecraft.swift_sneak", NamedTextColor.GREEN).append(setEnchantLevelToComponent(integer)));
+                case "thorns" ->
+                        lore.add(Component.translatable("enchantment.minecraft.thorns", NamedTextColor.DARK_PURPLE).append(setEnchantLevelToComponent(integer)));
+
+                // Melee Weapons
+                case "bane_of_arthropods" ->
+                        lore.add(Component.translatable("enchantment.minecraft.bane_of_arthropods", NamedTextColor.LIGHT_PURPLE).append(setEnchantLevelToComponent(integer)));
+                case "fire_aspect" ->
+                        lore.add(Component.translatable("enchantment.minecraft.fire_aspect", TextColor.color(255, 128, 0)).append(setEnchantLevelToComponent(integer)));
+                case "looting" ->
+                        lore.add(Component.translatable("enchantment.minecraft.looting", NamedTextColor.GOLD).append(setEnchantLevelToComponent(integer)));
+                case "knockback" ->
+                        lore.add(Component.translatable("enchantment.minecraft.knockback", NamedTextColor.YELLOW).append(setEnchantLevelToComponent(integer)));
+                case "sharpness" ->
+                        lore.add(Component.translatable("enchantment.minecraft.sharpness", NamedTextColor.LIGHT_PURPLE).append(setEnchantLevelToComponent(integer)));
+                case "smite" ->
+                        lore.add(Component.translatable("enchantment.minecraft.smite", NamedTextColor.LIGHT_PURPLE).append(setEnchantLevelToComponent(integer)));
+                case "sweeping" ->
+                        lore.add(Component.translatable("enchantment.minecraft.sweeping", NamedTextColor.BLUE).append(setEnchantLevelToComponent(integer)));
+
+                // Ranged Weapons
+                case "channeling" ->
+                        lore.add(Component.translatable("enchantment.minecraft.channeling", NamedTextColor.GREEN).append(setEnchantLevelToComponent(integer)));
+                case "flame" ->
+                        lore.add(Component.translatable("enchantment.minecraft.flame", TextColor.color(255, 128, 0)).append(setEnchantLevelToComponent(integer)));
+                case "infinity" ->
+                        lore.add(Component.translatable("enchantment.minecraft.infinity", NamedTextColor.GOLD).append(setEnchantLevelToComponent(integer)));
+                case "loyalty" ->
+                        lore.add(Component.translatable("enchantment.minecraft.loyalty", NamedTextColor.YELLOW).append(setEnchantLevelToComponent(integer)));
+                case "riptide" ->
+                        lore.add(Component.translatable("enchantment.minecraft.riptide", NamedTextColor.GREEN).append(setEnchantLevelToComponent(integer)));
+                case "multishot" ->
+                        lore.add(Component.translatable("enchantment.minecraft.multishot", NamedTextColor.GOLD).append(setEnchantLevelToComponent(integer)));
+                case "piercing" ->
+                        lore.add(Component.translatable("enchantment.minecraft.piercing", NamedTextColor.GREEN).append(setEnchantLevelToComponent(integer)));
+                case "power" ->
+                        lore.add(Component.translatable("enchantment.minecraft.power", NamedTextColor.LIGHT_PURPLE).append(setEnchantLevelToComponent(integer)));
+                case "punch" ->
+                        lore.add(Component.translatable("enchantment.minecraft.punch", NamedTextColor.LIGHT_PURPLE).append(setEnchantLevelToComponent(integer)));
+                case "quick_charge" ->
+                        lore.add(Component.translatable("enchantment.minecraft.quick_charge", NamedTextColor.GREEN).append(setEnchantLevelToComponent(integer)));
+
+                // Melee & Ranged Weapons
+                case "impaling" ->
+                        lore.add(Component.translatable("enchantment.minecraft.impaling", NamedTextColor.LIGHT_PURPLE).append(setEnchantLevelToComponent(integer)));
+
+                // Tools
+                case "fortune" ->
+                        lore.add(Component.translatable("enchantment.minecraft.fortune", NamedTextColor.GOLD).append(setEnchantLevelToComponent(integer)));
+                case "luck_of_the_sea" ->
+                        lore.add(Component.translatable("enchantment.minecraft.luck_of_the_sea", NamedTextColor.LIGHT_PURPLE).append(setEnchantLevelToComponent(integer)));
+                case "lure" ->
+                        lore.add(Component.translatable("enchantment.minecraft.lure", NamedTextColor.YELLOW).append(setEnchantLevelToComponent(integer)));
+                case "silk_touch" ->
+                        lore.add(Component.translatable("enchantment.minecraft.silk_touch", NamedTextColor.DARK_PURPLE).append(setEnchantLevelToComponent(integer)));
+
+                // Tools & Melee Weapons
+                case "efficiency" ->
+                        lore.add(Component.translatable("enchantment.minecraft.efficiency", NamedTextColor.YELLOW).append(setEnchantLevelToComponent(integer)));
+            }
+        });
+        return this;
+    }
+
+    private Component setEnchantLevelToComponent(int level) {
+        return switch (level) {
+            case 1 -> Component.text("I");
+            case 2 -> Component.text("II");
+            case 3 -> Component.text("III");
+            case 4 -> Component.text("IV");
+            case 5 -> Component.text("V");
+            case 6 -> Component.text("VI");
+            case 7 -> Component.text("VII");
+            case 8 -> Component.text("VIII");
+            case 9 -> Component.text("IX");
+            case 10 -> Component.text("X");
+            case 11 -> Component.text("XI");
+            case 12 -> Component.text("XII");
+            case 13 -> Component.text("XIII");
+            case 14 -> Component.text("XIV");
+            case 15 -> Component.text("XV");
+            case 16 -> Component.text("XVI");
+            case 17 -> Component.text("XVII");
+            case 18 -> Component.text("XVIII");
+            case 19 -> Component.text("XIX");
+            case 20 -> Component.text("XX");
+            default -> Component.text(level);
+        };
     }
 
     /**
