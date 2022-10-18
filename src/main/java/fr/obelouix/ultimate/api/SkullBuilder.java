@@ -5,7 +5,9 @@ import com.destroystokyo.paper.profile.ProfileProperty;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -26,6 +28,15 @@ public class SkullBuilder {
      */
     public SkullBuilder displayname(Component displayname) {
         skullMeta.displayName(displayname);
+        return this;
+    }
+
+    /**
+     * Add the enchantment effect to the skull item
+     */
+    public SkullBuilder glowing() {
+        skullMeta.getEnchantLevel(Enchantment.ARROW_INFINITE);
+        skullMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         return this;
     }
 
