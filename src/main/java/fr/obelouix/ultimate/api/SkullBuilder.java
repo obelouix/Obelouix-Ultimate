@@ -124,6 +124,7 @@ public class SkullBuilder {
      * Set the texture of the head
      * You can get the <b>Texture value</b> from websites like mineskin
      * <br>See more details <a href="https://custom-ores.fandom.com/wiki/Getting_a_Texture_Value">here</a>
+     * <br><br><b>Using {@link #owner(UUID)}/{@link #owner(String)}/{@link #owner(Player)} is not needed when calling this method</b>
      *
      * @param textureID the texture Data/Value to set
      */
