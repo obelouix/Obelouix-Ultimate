@@ -38,8 +38,21 @@ public class InventoryBuilder {
         return this;
     }
 
+    public InventoryBuilder setItem(int slot, ItemStack item) {
+        inventory.setItem(slot, item);
+        return this;
+    }
+
     public ItemStack getItem(int slot) {
         return inventory.getItem(slot);
+    }
+
+    public InventoryBuilder fillEmptySlots(ItemStack fillItem) {
+        for (int i = 0; i < inventory.getSize(); i++) {
+            if (inventory.firstEmpty() == -1) break;
+            setItem(inventory.firstEmpty(), fillItem);
+        }
+        return this;
     }
 
     public Inventory build() {
