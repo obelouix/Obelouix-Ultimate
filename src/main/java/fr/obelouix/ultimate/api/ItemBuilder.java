@@ -556,4 +556,25 @@ public class ItemBuilder {
         return this;
     }
 
+    /**
+     * Sets the custom model data.
+     * modelData is an integer that may be associated client side with a custom item model.
+     *
+     * @param modelData the data to set, or null to clear
+     */
+    public ItemBuilder setCustomModelData(int modelData) {
+        itemMeta.setCustomModelData(modelData);
+        return this;
+    }
+
+    /**
+     * Sets the unbreakable tag. An unbreakable item will not lose durability
+     *
+     * @param unbreakable true if set unbreakable
+     */
+    public ItemBuilder setUnbreakable(boolean unbreakable) {
+        itemMeta.setUnbreakable(unbreakable);
+        return this;
+    }
+
 }
