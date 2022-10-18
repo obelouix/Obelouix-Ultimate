@@ -2,6 +2,7 @@ package fr.obelouix.ultimate.api;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,6 +18,14 @@ public class InventoryBuilder {
 
     public InventoryBuilder(InventoryType type, Component title) {
         this.inventory = Bukkit.createInventory(null, type.get(), title);
+    }
+
+    public InventoryBuilder(Player owner, InventoryType type) {
+        this.inventory = Bukkit.createInventory(owner, type.get());
+    }
+
+    public InventoryBuilder(Player owner, InventoryType type, Component title) {
+        this.inventory = Bukkit.createInventory(owner, type.get(), title);
     }
 
     public InventoryBuilder addItem(ItemStack[] itemStacks) {
