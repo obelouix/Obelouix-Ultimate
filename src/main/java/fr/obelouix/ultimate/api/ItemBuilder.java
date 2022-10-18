@@ -280,16 +280,6 @@ public class ItemBuilder {
             case 8 -> Component.text("VIII");
             case 9 -> Component.text("IX");
             case 10 -> Component.text("X");
-            case 11 -> Component.text("XI");
-            case 12 -> Component.text("XII");
-            case 13 -> Component.text("XIII");
-            case 14 -> Component.text("XIV");
-            case 15 -> Component.text("XV");
-            case 16 -> Component.text("XVI");
-            case 17 -> Component.text("XVII");
-            case 18 -> Component.text("XVIII");
-            case 19 -> Component.text("XIX");
-            case 20 -> Component.text("XX");
             default -> Component.text(level);
         };
     }
