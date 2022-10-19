@@ -10,6 +10,7 @@ import fr.obelouix.ultimate.events.ReloadDetector;
 import fr.obelouix.ultimate.events.WitherBlockDamageEvent;
 import fr.obelouix.ultimate.events.blocks.CoralBlockTransformationEvent;
 import fr.obelouix.ultimate.fastleafdecay.FastLeafDecay;
+import fr.obelouix.ultimate.gui.options.OptionsInventory;
 import fr.obelouix.ultimate.recipes.RecipeDiscoverer;
 
 import java.util.List;
@@ -23,7 +24,8 @@ public class EventManager extends Events {
                         new PlayerConnectionEvent(),
                         new Coordinates(),
                         new RecipeDiscoverer(),
-                        new FreezeCommand()
+                        new FreezeCommand(),
+                        new OptionsInventory()
                         //new DoubleDoors()//,
                         //new BlocksEvent()//,
                         //new HeadDrop()
