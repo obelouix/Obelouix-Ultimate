@@ -24,6 +24,7 @@ repositories {
     mavenCentral()
     listOf(
         "https://repo.papermc.io/repository/maven-public/",              // Paper
+        "https://repo.purpurmc.org/snapshots",                          // Purpur
         "https://oss.sonatype.org/content/groups/public/",              // Sonatype
         "https://jitpack.io",                                           // Jitpack
         "https://repo.dmulloy2.net/repository/public/",                 // dmulloy2
@@ -59,6 +60,7 @@ dependencies {
     // Dependencies you don't want to include go in the compileOnly configuration.
     // Make sure to relocate shaded dependencies!
     compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
+    compileOnly("org.purpurmc.purpur:purpur-api:1.19-R0.1-SNAPSHOT")
 
     // PaperLib
     implementation("io.papermc:paperlib:1.0.7")

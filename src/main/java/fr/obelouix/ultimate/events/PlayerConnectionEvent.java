@@ -100,6 +100,7 @@ public class PlayerConnectionEvent implements Listener {
                 .displayname(Component.text("Test", NamedTextColor.GREEN))
                 .addGlowingEffect()
                 .setLore(Collections.singletonList(Component.text("Ceci est un test", TextColor.color(100, 200, 125))))
+                .canBePlacedOn(List.of(Material.GRASS_BLOCK.getKey()))
                 .build();
 
         final ItemStack weaponTest = new ItemBuilder(Material.NETHERITE_SWORD)
@@ -109,6 +110,7 @@ public class PlayerConnectionEvent implements Listener {
                 .setAttackDamageAndSpeed(10, 2.5)
                 .setLore(Collections.singletonList(Component.text("Ceci est un test", TextColor.color(100, 200, 125))))
                 .hideAllFlags()
+                .canDestoy(List.of(Material.CAKE.getKey()))
                 .build();
 
         event.getPlayer().getInventory().addItem(testItem);

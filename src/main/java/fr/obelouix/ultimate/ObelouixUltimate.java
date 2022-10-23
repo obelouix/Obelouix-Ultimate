@@ -14,6 +14,7 @@ import fr.obelouix.ultimate.recipes.CustomCraftingTableRecipes;
 import fr.obelouix.ultimate.recipes.CustomFurnaceRecipes;
 import fr.obelouix.ultimate.tweaks.TweaksManager;
 import fr.obelouix.ultimate.utils.PluginDetector;
+import fr.obelouix.ultimate.utils.ServerType;
 import fr.obelouix.ultimate.utils.Updater;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -61,12 +62,10 @@ public class ObelouixUltimate extends JavaPlugin {
         i18n.unregister();
     }
 
-    /**
-     * Check if the server is a paper based server
-     * if not, the server will be shutdown
-     */
-    private void checkPaperPresence() {
-        if (!PluginDetector.detectClass("com.destroystokyo.paper.PaperConfig")) {
+    @Override
+    public void onEnable() {
+
+        if (!ServerType.isPaperServer()) {
             this.getLogger().severe(
                     """
                             **************************************************************\s
@@ -81,26 +80,7 @@ public class ObelouixUltimate extends JavaPlugin {
             // Shutdown the server to force the user to change server software
             getServer().shutdown();
         }
-    }
 
-    private void checkOfflineMode() {
-        if (!this.getServer().getOnlineMode()) {
-            this.getComponentLogger().warn(Component.text("""
-                                        
-                    ****************************************************************
-                                        
-                      THIS SERVER IS RUNNING IN OFFLINE MODE. IF YOU RUN INTO ANY
-                      PROBLEMS DON'T ASK FOR SUPPORT. SUPPORT WILL BE ONLY GIVEN
-                      TO SERVERS RUNNING IN ONLINE MODE
-                                        
-                    ****************************************************************
-                    """, NamedTextColor.DARK_RED));
-        }
-    }
-
-    @Override
-    public void onEnable() {
-        checkPaperPresence();
         checkOfflineMode();
         instance = this;
         i18n.init();
@@ -142,6 +122,22 @@ public class ObelouixUltimate extends JavaPlugin {
         new Updater();
 
     }
+
+    private void checkOfflineMode() {
+        if (!this.getServer().getOnlineMode()) {
+            this.getComponentLogger().warn(Component.text("""
+                                        
+                    ****************************************************************
+                                        
+                      THIS SERVER IS RUNNING IN OFFLINE MODE. IF YOU RUN INTO ANY
+                      PROBLEMS DON'T ASK FOR SUPPORT. SUPPORT WILL BE ONLY GIVEN
+                      TO SERVERS RUNNING IN ONLINE MODE
+                                        
+                    ****************************************************************
+                    """, NamedTextColor.DARK_RED));
+        }
+    }
+
 
     public TranslationAPI getTranslationAPI() {
         return translationAPI;
