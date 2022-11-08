@@ -4,7 +4,7 @@ plugins {
     `java-library`
     idea //force Intellij to generate project file, cause i don't know why it refuse to import dependencies
     id("io.papermc.paperweight.userdev") version "1.3.8"
-    id("xyz.jpenilla.run-paper") version "1.0.6" // Adds runServer and runMojangMappedServer tasks for testing
+    id("xyz.jpenilla.run-paper") version "1.1.0" // Adds runServer and runMojangMappedServer tasks for testing
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2" // Generates plugin.yml
 
     // Shades and relocates dependencies into our plugin jar. See https://imperceptiblethoughts.com/shadow/introduction/
