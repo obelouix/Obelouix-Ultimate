@@ -94,8 +94,8 @@ dependencies {
     compileOnly("net.essentialsx:EssentialsXDiscord:2.20.0-SNAPSHOT")
 
     // FAWE
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.4.3") { isTransitive = false }
-    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.4.3") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.4.10") { isTransitive = false }
+    compileOnly("com.fastasyncworldedit:FastAsyncWorldEdit-Bukkit:2.4.10") { isTransitive = false }
 
     // WorldGuard
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.7-20211230.194325-8")
