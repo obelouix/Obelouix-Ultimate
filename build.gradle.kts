@@ -107,7 +107,7 @@ dependencies {
     // UltimateAdvancementAPI
     implementation("com.frengor:ultimateadvancementapi-shadeable:2.1.2")
 
-    implementation("org.bstats:bstats-bukkit:3.0.0")
+    implementation("org.bstats:bstats-bukkit:3.0.1")
     implementation("org.inventivetalent:reflectionhelper:1.18.10-SNAPSHOT")
     //PacketAPI Listener
     implementation("org.inventivetalent.packetlistenerapi:api:3.9.10-SNAPSHOT")
