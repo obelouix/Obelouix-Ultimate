@@ -1,0 +1,8 @@
+name: ObelouixUltimate
+version: '1.0-SNAPSHOT'
+main: fr.obelouix.ultimate.Main
+description: Paper Test Plugin
+api-version: '1.19'
+bootstrapper: fr.obelouix.ultimate.Bootstrap
+loader: fr.obelouix.ultimate.ObelouixPluginLoader
+
