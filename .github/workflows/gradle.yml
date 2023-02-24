@@ -5,9 +5,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ master, ver/1.19 ]
+    branches: [ master, paper-rewrite ]
   pull_request:
-    branches: [ master, ver/1.19 ]
+    branches: [ master, paper-rewrite ]
 
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Gradle Wrapper Validation
-      uses: gradle/wrapper-validation-action@v1.0.4
+      uses: gradle/wrapper-validation-action@v1.0.6
 
     - name: Cache Gradle packages
       uses: actions/cache@v3
