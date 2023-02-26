@@ -19,6 +19,7 @@ public class ObelouixPluginLoader implements PluginLoader {
                 new DefaultArtifact("org.spongepowered:configurate-hocon:4.1.2"),
                 new DefaultArtifact("cloud.commandframework:cloud-paper:1.8.1"),
                 new DefaultArtifact("cloud.commandframework:cloud-minecraft-extras:1.8.1"),
+                new DefaultArtifact("org.incendo.interfaces:interfaces-core:1.0.0-SNAPSHOT"),
                 new DefaultArtifact("org.incendo.interfaces:interfaces-paper:1.0.0-SNAPSHOT")
         ).forEach(defaultArtifact -> resolver.addDependency(new Dependency(defaultArtifact, null)));
 

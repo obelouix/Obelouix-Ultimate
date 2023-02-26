@@ -5,7 +5,6 @@ import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.execution.preprocessor.CommandPreprocessingContext;
 import cloud.commandframework.meta.CommandMeta;
 import com.google.common.collect.ImmutableList;
-import fr.obelouix.ultimate.Main;
 import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.commands.manager.CommandRegistration;
 import fr.obelouix.ultimate.config.PlayerConfig;

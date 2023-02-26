@@ -8,6 +8,7 @@ import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import fr.obelouix.ultimate.Main;
 import fr.obelouix.ultimate.commands.CoordinatesCommand;
+import fr.obelouix.ultimate.commands.OptionsCommand;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class ObelouixCommandManager {
         }
 
         manager.registerBrigadier();
-         manager.registerAsynchronousCompletions();
+        manager.registerAsynchronousCompletions();
 
         final CloudBrigadierManager<?, ?> brigadierManager = manager.brigadierManager();
         if(brigadierManager != null) {
@@ -48,8 +49,10 @@ public class ObelouixCommandManager {
     }
 
     private static void registerCommands(){
-        List.of(new CoordinatesCommand())
-                .forEach(CommandRegistration::register);
+        List.of(
+                new CoordinatesCommand(),
+                new OptionsCommand()
+                ).forEach(CommandRegistration::register);
     }
     public static PaperCommandManager<CommandSender> getManager() {
         return manager;
