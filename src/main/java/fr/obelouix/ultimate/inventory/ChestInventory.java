@@ -12,6 +12,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
+
 public class ChestInventory implements Inventory {
 
     private static final ChestInventory INSTANCE = new ChestInventory();
@@ -67,21 +69,27 @@ public class ChestInventory implements Inventory {
         return this;
     }
 
-    public ChestInventory fill(ItemStack itemStack){
-        if(tempInventory == null) tempInventory = Bukkit.createInventory(null, rows, title);
+    public ChestInventory fill(ItemStack itemStack) {
+        if (tempInventory == null) tempInventory = Bukkit.createInventory(null, rows, title);
         for (int i = 0; i < tempInventory.getSize(); i++) {
-            if(tempInventory.getItem(i) == null) tempInventory.setItem(i, itemStack);
+            if (tempInventory.getItem(i) == null) tempInventory.setItem(i, itemStack);
         }
         return this;
     }
 
-    public ChestInventory action(int slot, InventoryRunnable runnable){
-        Bukkit.getPluginManager().registerEvent(InventoryClickEvent.class, new Listener() {}, EventPriority.NORMAL, (listener, event) -> {
-            if (((InventoryClickEvent)event).getInventory().equals(inventory) && (((InventoryClickEvent)event).getSlot() == slot)) {
+    public ChestInventory action(int slot, InventoryRunnable runnable) {
+        Bukkit.getPluginManager().registerEvent(InventoryClickEvent.class, new Listener() {
+        }, EventPriority.NORMAL, (listener, event) -> {
+            if (((InventoryClickEvent) event).getInventory().equals(inventory) && (((InventoryClickEvent) event).getSlot() == slot)) {
                 runnable.run();
             }
         }, Main.getPlugin());
-        return  this;
+        return this;
+    }
+
+    public ChestInventory actions(HashMap<Integer, InventoryRunnable> actionsMap) {
+        actionsMap.forEach(this::action);
+        return this;
     }
 
     @Override
@@ -93,6 +101,7 @@ public class ChestInventory implements Inventory {
     public org.bukkit.inventory.Inventory getInventory() {
         return inventory;
     }
+
     public int first(ItemStack item) {
         return inventory.first(item);
     }
