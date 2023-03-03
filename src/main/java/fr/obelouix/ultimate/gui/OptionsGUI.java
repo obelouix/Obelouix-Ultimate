@@ -28,7 +28,7 @@ public class OptionsGUI {
     public OptionsGUI(Player player) {
         this.player = player;
         createInterface();
-        actions.put(0, coordinatesActions());
+        actions.put(9, coordinatesActions());
     }
 
 
@@ -38,11 +38,12 @@ public class OptionsGUI {
 //                .title(Component.text("test"))
                 .setItem(0, new ItemStack(Material.COMPASS))
                 .setItem(9, new ItemStack(Material.LIME_DYE)) //TODO: CHANGE
-                .fill(new ItemStack(Material.BLACK_STAINED_GLASS_PANE))
+                .fill(new ItemStack(Material.BLACK_STAINED_GLASS_PANE), true)
                 .setItem(2, new ItemStack(Material.COMPASS))
                 .cancelClick()
-                .update(true, 5)
-                .actions(actions)
+                .update(true, 20)
+                //.actions(actions)
+                .action(9, coordinatesActions())
                 /*.action(0, new InventoryRunnable() {
                     @Override
                     public void run() {
@@ -74,10 +75,11 @@ public class OptionsGUI {
                     final CommentedConfigurationNode playerConfig = PlayerConfig.getPlayerConfig(player).load();
                     final boolean coordsConfig = PlayerConfig.getBooleanNode(playerConfig.node("show-coordinates"));
                     final ItemMeta itemMeta = chestInventory.getItem(9).getItemMeta();
-
+                    MessagesAPI.sendMessage(player, Component.text(coordsConfig));
                     if (coordsConfig) {
                         if (player.performCommand("coords off")) {
                             itemMeta.displayName(GlobalTranslator.render(Component.translatable("obelouix.coordinates.off")
+                                    .color(NamedTextColor.RED)
                                     .decoration(TextDecoration.ITALIC, false), player.locale()));
 
                             chestInventory.getItem(9).setType(Material.RED_DYE);
@@ -87,6 +89,7 @@ public class OptionsGUI {
                     } else {
                         if (player.performCommand("coords on")) {
                             itemMeta.displayName(GlobalTranslator.render(Component.translatable("obelouix.coordinates.on")
+                                    .color(NamedTextColor.GREEN)
                                     .decoration(TextDecoration.ITALIC, false), player.locale()));
 
                             chestInventory.getItem(9).setType(Material.LIME_DYE);
