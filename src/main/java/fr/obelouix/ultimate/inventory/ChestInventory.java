@@ -1,5 +1,6 @@
 package fr.obelouix.ultimate.inventory;
 
+import com.google.common.annotations.Beta;
 import fr.obelouix.ultimate.Main;
 import fr.obelouix.ultimate.gui.InventoryRunnable;
 import net.kyori.adventure.text.Component;
@@ -12,6 +13,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 public class ChestInventory implements Inventory {
@@ -61,15 +63,24 @@ public class ChestInventory implements Inventory {
 
     @Override
     public ChestInventory cancelClick() {
-        Bukkit.getPluginManager().registerEvent(InventoryClickEvent.class, new Listener() {}, EventPriority.NORMAL, (listener, event) -> {
-            if (((InventoryClickEvent)event).getInventory().equals(inventory)) {
+        Bukkit.getPluginManager().registerEvent(InventoryClickEvent.class, new Listener() {
+        }, EventPriority.NORMAL, (listener, event) -> {
+            if (((InventoryClickEvent) event).getInventory().equals(inventory)) {
                 ((InventoryClickEvent) event).setCancelled(true);
             }
         }, Main.getPlugin());
         return this;
     }
 
-    public ChestInventory fill(ItemStack itemStack) {
+    public ChestInventory fill(ItemStack itemStack, boolean hideName) {
+
+        if (hideName) {
+            final ItemMeta meta = itemStack.getItemMeta();
+            meta.displayName(Component.empty());
+            meta.lore(Collections.singletonList(Component.empty()));
+            itemStack.setItemMeta(meta);
+        }
+
         if (tempInventory == null) tempInventory = Bukkit.createInventory(null, rows, title);
         for (int i = 0; i < tempInventory.getSize(); i++) {
             if (tempInventory.getItem(i) == null) tempInventory.setItem(i, itemStack);
@@ -87,6 +98,7 @@ public class ChestInventory implements Inventory {
         return this;
     }
 
+    @Beta
     public ChestInventory actions(HashMap<Integer, InventoryRunnable> actionsMap) {
         actionsMap.forEach(this::action);
         return this;
