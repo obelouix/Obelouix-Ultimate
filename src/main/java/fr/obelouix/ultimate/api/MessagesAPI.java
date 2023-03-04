@@ -1,6 +1,5 @@
 package fr.obelouix.ultimate.api;
 
-import fr.obelouix.ultimate.I18N.PluginTranslator;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.inventory.Book;

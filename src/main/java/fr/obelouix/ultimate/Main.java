@@ -1,6 +1,6 @@
 package fr.obelouix.ultimate;
 
-import fr.obelouix.ultimate.I18N.PluginTranslator;
+import fr.obelouix.ultimate.I18N.Translator;
 import fr.obelouix.ultimate.commands.manager.ObelouixCommandManager;
 import fr.obelouix.ultimate.config.Config;
 import fr.obelouix.ultimate.events.EventManager;
@@ -19,7 +19,7 @@ public class Main extends JavaPlugin {
         logger = this.getComponentLogger();
 
         Config.loadConfig();
-        PluginTranslator.init();
+        Translator.init();
         EventManager.init();
         ObelouixCommandManager.init();
 

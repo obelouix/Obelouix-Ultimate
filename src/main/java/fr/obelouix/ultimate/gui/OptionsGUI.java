@@ -1,5 +1,6 @@
 package fr.obelouix.ultimate.gui;
 
+import fr.obelouix.ultimate.I18N.Translator;
 import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.config.PlayerConfig;
 import fr.obelouix.ultimate.inventory.ChestInventory;
@@ -14,95 +15,91 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Collections;
 
 public class OptionsGUI {
 
     private final Player player;
     private ChestInventory chestInventory;
-    private final HashMap<Integer, InventoryRunnable> actions = new HashMap<>();
 
     public OptionsGUI(Player player) {
         this.player = player;
+        MessagesAPI.sendMessage(player, Component.text(player.locale().toString()));
         createInterface();
-        actions.put(9, coordinatesActions());
     }
 
 
     private void createInterface() {
+
         chestInventory = ChestInventory.builder()
                 .rows(6)
-//                .title(Component.text("test"))
-                .setItem(0, new ItemStack(Material.COMPASS))
-                .setItem(9, new ItemStack(Material.LIME_DYE)) //TODO: CHANGE
+                .title(Component.translatable("options.title", NamedTextColor.DARK_BLUE))
+                .setItem(0, setupCoordinatesItem())
+                .setItem(9, setStateItem(isCoordinatesEnabled()))
                 .fill(new ItemStack(Material.BLACK_STAINED_GLASS_PANE), true)
                 .setItem(2, new ItemStack(Material.COMPASS))
                 .cancelClick()
-                .update(true, 20)
-                //.actions(actions)
+                //.update(true, 20)
                 .action(9, coordinatesActions())
-                /*.action(0, new InventoryRunnable() {
-                    @Override
-                    public void run() {
-                        MessagesAPI.sendMessage(player, Component.text("test", NamedTextColor.AQUA));
-                        MessagesAPI.sendMessage(player,Component.text(new ItemStack(Objects.requireNonNull(chestInventory.getInventory().getItem(0))).hasItemMeta()));
-                    }
-                })
-                .action(2, test())*/
                 .build();
     }
 
-    public InventoryRunnable test(){
-        return new InventoryRunnable() {
-            @Override
-            public void run() {
-                MessagesAPI.sendMessage(player, Component.text("test", NamedTextColor.GREEN));
-                final ItemMeta itemMeta = chestInventory.getItemMeta(chestInventory.getItem(0));
-                itemMeta.lore(List.of(Component.text(LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ISO_TIME))));
-                chestInventory.getItem(0).setItemMeta(itemMeta);
-            }
-        };
+    private ItemStack setupCoordinatesItem() {
+        final ItemStack coordinatesItem = new ItemStack(Material.COMPASS);
+        final ItemMeta meta = coordinatesItem.getItemMeta();
+        meta.displayName(GlobalTranslator.render(Component.translatable("obelouix.coordinates")
+                .color(NamedTextColor.AQUA)
+                .decoration(TextDecoration.ITALIC, false), player.locale()));
+
+        coordinatesItem.setItemMeta(meta);
+        return coordinatesItem;
+    }
+
+    private ItemStack setStateItem(boolean state) {
+        ItemStack item = new ItemStack(Material.LIME_DYE);
+        final ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.lore(Collections.singletonList(Component.empty()));
+
+        if (state) {
+            item = new ItemStack(Material.LIME_DYE);
+            itemMeta.displayName(Translator.translate(Component.translatable("obelouix.coordinates.on")
+                    .color(NamedTextColor.GREEN)
+                    .decoration(TextDecoration.ITALIC, false), player.locale()));
+        } else {
+            item = new ItemStack(Material.RED_DYE);
+            itemMeta.displayName(Translator.translate(Component.translatable("obelouix.coordinates.off")
+                    .color(NamedTextColor.RED)
+                    .decoration(TextDecoration.ITALIC, false), player.locale()));
+        }
+        item.setItemMeta(itemMeta);
+        return item;
     }
 
     private InventoryRunnable coordinatesActions() {
         return new InventoryRunnable() {
             @Override
             public void run() {
-                try {
-                    final CommentedConfigurationNode playerConfig = PlayerConfig.getPlayerConfig(player).load();
-                    final boolean coordsConfig = PlayerConfig.getBooleanNode(playerConfig.node("show-coordinates"));
-                    final ItemMeta itemMeta = chestInventory.getItem(9).getItemMeta();
-                    MessagesAPI.sendMessage(player, Component.text(coordsConfig));
-                    if (coordsConfig) {
-                        if (player.performCommand("coords off")) {
-                            itemMeta.displayName(GlobalTranslator.render(Component.translatable("obelouix.coordinates.off")
-                                    .color(NamedTextColor.RED)
-                                    .decoration(TextDecoration.ITALIC, false), player.locale()));
-
-                            chestInventory.getItem(9).setType(Material.RED_DYE);
-                            chestInventory.getItem(9).setItemMeta(itemMeta);
-                        }
-
-                    } else {
-                        if (player.performCommand("coords on")) {
-                            itemMeta.displayName(GlobalTranslator.render(Component.translatable("obelouix.coordinates.on")
-                                    .color(NamedTextColor.GREEN)
-                                    .decoration(TextDecoration.ITALIC, false), player.locale()));
-
-                            chestInventory.getItem(9).setType(Material.LIME_DYE);
-                            chestInventory.getItem(9).setItemMeta(itemMeta);
-                        }
+                if (isCoordinatesEnabled()) {
+                    if (player.performCommand("coords off")) {
+                        chestInventory.setItem(9, setStateItem(false));
                     }
-
-                } catch (ConfigurateException e) {
-                    throw new RuntimeException(e);
+                } else {
+                    if (player.performCommand("coords on")) {
+                        chestInventory.setItem(9, setStateItem(true));
+                    }
                 }
-
             }
         };
+    }
+
+    private boolean isCoordinatesEnabled() {
+        try {
+            final CommentedConfigurationNode playerConfig = PlayerConfig.getPlayerConfig(player).load();
+            return PlayerConfig.getBooleanNode(playerConfig.node("show-coordinates"));
+
+        } catch (ConfigurateException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void show() {
