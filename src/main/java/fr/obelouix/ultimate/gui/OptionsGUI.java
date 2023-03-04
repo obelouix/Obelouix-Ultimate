@@ -1,7 +1,6 @@
 package fr.obelouix.ultimate.gui;
 
 import fr.obelouix.ultimate.I18N.Translator;
-import fr.obelouix.ultimate.api.MessagesAPI;
 import fr.obelouix.ultimate.config.PlayerConfig;
 import fr.obelouix.ultimate.inventory.ChestInventory;
 import net.kyori.adventure.text.Component;
@@ -24,7 +23,6 @@ public class OptionsGUI {
 
     public OptionsGUI(Player player) {
         this.player = player;
-        MessagesAPI.sendMessage(player, Component.text(player.locale().toString()));
         createInterface();
     }
 
@@ -37,9 +35,7 @@ public class OptionsGUI {
                 .setItem(0, setupCoordinatesItem())
                 .setItem(9, setStateItem(isCoordinatesEnabled()))
                 .fill(new ItemStack(Material.BLACK_STAINED_GLASS_PANE), true)
-                .setItem(2, new ItemStack(Material.COMPASS))
                 .cancelClick()
-                //.update(true, 20)
                 .action(9, coordinatesActions())
                 .build();
     }
