@@ -21,7 +21,9 @@ public class EventManager extends EventsRegistration{
             addEvent(new AnvilinfiniteRepair());
         }
 
-        registerEvents();
+        if (Config.canReviveCoralBlock())
+
+            registerEvents();
     }
 
 }
