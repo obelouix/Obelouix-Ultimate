@@ -18,9 +18,7 @@ public class ObelouixPluginLoader implements PluginLoader {
         ImmutableList.of(
                 new DefaultArtifact("org.spongepowered:configurate-hocon:4.1.2"),
                 new DefaultArtifact("cloud.commandframework:cloud-paper:1.8.1"),
-                new DefaultArtifact("cloud.commandframework:cloud-minecraft-extras:1.8.1"),
-                new DefaultArtifact("org.incendo.interfaces:interfaces-core:1.0.0-SNAPSHOT"),
-                new DefaultArtifact("org.incendo.interfaces:interfaces-paper:1.0.0-SNAPSHOT")
+                new DefaultArtifact("cloud.commandframework:cloud-minecraft-extras:1.8.1")
         ).forEach(defaultArtifact -> resolver.addDependency(new Dependency(defaultArtifact, null)));
 
         resolver.addRepository(new RemoteRepository.Builder("paper", "default", "https://repo.papermc.io/repository/maven-public/").build());
