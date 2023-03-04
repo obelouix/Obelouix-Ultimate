@@ -18,7 +18,13 @@ public class Translator {
     public static final GlobalTranslator globalTranslator = GlobalTranslator.translator();
 
     public static void init() {
-        registerAllTranslations(List.of(new Locale("en", "US"), new Locale("fr", "FR")));
+        registerAllTranslations(
+                List.of(
+                        new Locale("en", "US"),
+                        new Locale("fr", "FR"),
+                        new Locale("fr", "CA")
+                )
+        );
     }
 
     private static void registerAllTranslations(List<Locale> locales) {
