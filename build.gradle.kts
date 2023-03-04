@@ -10,7 +10,6 @@ version = "1.0-SNAPSHOT"
 
 val cloudVersion:String = "1.8.1"
 val configurateHoconVersion:String = "4.1.2"
-val interfacePaperVersion:String = "1.0.0-SNAPSHOT"
 
 java {
     // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
@@ -46,6 +45,4 @@ dependencies {
     implementation("cloud.commandframework", "cloud-brigadier", cloudVersion)
     //No need to add the main configurate, paper bundle's it
     implementation("org.spongepowered", "configurate-hocon", configurateHoconVersion)
-    //Interfaces
-    implementation("org.incendo.interfaces", "interfaces-paper", interfacePaperVersion)
 }
