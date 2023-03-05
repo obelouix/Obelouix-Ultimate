@@ -39,7 +39,7 @@ public class Translator {
                     final ResourceBundle resourceBundle = ResourceBundle.getBundle(
                             "translations." + language, locale, UTF8ResourceBundleControl.get());
 
-                    registry.registerAll(locale, resourceBundle, false);
+                    registry.registerAll(locale, resourceBundle, true);
 
                     if (globalTranslator.addSource(registry)) {
                         Main.getPlugin().getComponentLogger().info(Component.text("Registered locale: " + language, NamedTextColor.GREEN));
