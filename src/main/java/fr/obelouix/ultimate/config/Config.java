@@ -21,21 +21,18 @@ public class Config {
     private static final HoconConfigurationLoader configLoader = HoconConfigurationLoader.builder()
             .path(Path.of(Main.getPlugin().getDataFolder().getPath(), "config.conf"))
             .build();
-
-
+    private static final Set<World> coordinatesBlacklist = new HashSet<>();
     private static CommentedConfigurationNode root;
-
     private static boolean configReloaded = true;
     private static boolean disableReloadCommand = false;
     private static boolean disableWitherBlockDamage = false;
     private static boolean showWitherSkullExplosionsParticles = false;
     private static boolean isAnvilInfiniteRepairEnabled = false;
     private static boolean isFastLeafDecayEnabled = false;
-    private static final Set<World> coordinatesBlacklist = new HashSet<>();
-
     private static boolean giveEnderDragon = false;
 
     private static boolean reviveCoralBlock;
+    private static boolean protectTamedAnimals;
 
     public static void loadConfig() {
         try {
@@ -60,13 +57,14 @@ public class Config {
             e.printStackTrace();
         }
 
-        giveEnderDragon = root.node("tweaks", "give-enderdragon-exp-to-everyone").getBoolean();
-        reviveCoralBlock = root.node("features", "blocks", "revive-coral-with-potion").getBoolean();
         disableReloadCommand = root.node("disable-default-reload-command").getBoolean();
-        isAnvilInfiniteRepairEnabled = root.node("anvil", "infinite-repair").getBoolean();
         disableWitherBlockDamage = root.node("protection", "explosions", "wither", "disable-block-damage").getBoolean();
-        showWitherSkullExplosionsParticles = root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").getBoolean();
+        giveEnderDragon = root.node("tweaks", "give-enderdragon-exp-to-everyone").getBoolean();
+        isAnvilInfiniteRepairEnabled = root.node("anvil", "infinite-repair").getBoolean();
         isFastLeafDecayEnabled = root.node("fast-leaf-decay", "enabled").getBoolean();
+        protectTamedAnimals = root.node("features", "entity", "tamed", "block-damage").getBoolean();
+        reviveCoralBlock = root.node("features", "blocks", "revive-coral-with-potion").getBoolean();
+        showWitherSkullExplosionsParticles = root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").getBoolean();
         Main.getPlugin().getComponentLogger().info("Configuration loaded");
 
         try {
@@ -138,6 +136,11 @@ public class Config {
                             .commentIfAbsent("Allows to revive dead coral blocks using instant health splash potions");
                 }
 
+                if (featuresNode.node("entity", "tamed", "block-damage").empty()) {
+                    featuresNode.node("entity", "tamed", "block-damage").set(true)
+                            .commentIfAbsent("Protect tamed entities from any damage source");
+                }
+
                 if (root.node("coordinates", "world", "blacklist").empty()) {
                     root.node("coordinates", "world", "blacklist").setList(String.class, new ArrayList<>())
                             .commentIfAbsent("Add here the worlds were you wish to hide the coordinates bar" +
@@ -205,5 +208,9 @@ public class Config {
 
     public static boolean canReviveCoralBlock() {
         return reviveCoralBlock;
+    }
+
+    public static boolean shouldProtectTamedAnimals() {
+        return protectTamedAnimals;
     }
 }
