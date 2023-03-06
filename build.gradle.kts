@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("io.papermc.paperweight.userdev") version "1.5.2" // Paper dev bundle
+    id("io.papermc.paperweight.userdev") version "1.5.3" // Paper dev bundle
     id("xyz.jpenilla.run-paper") version "2.0.1" // Adds runServer and runMojangMappedServer tasks for testing
    // id("net.minecrell.plugin-yml.bukkit") version "0.5.2" // Generates plugin.yml
 }
