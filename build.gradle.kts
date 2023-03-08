@@ -22,7 +22,7 @@ repositories {
     listOf(
         "https://repo.papermc.io/repository/maven-public/",              // Paper
         "https://oss.sonatype.org/content/repositories/snapshots/",      // Sonatype
-        "https://repo.opencollab.dev/#/maven-snapshots/"                 // Floodgate
+        "https://repo.opencollab.dev/org"                                // Floodgate
     ).forEach{
         maven(it)
     }
