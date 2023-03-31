@@ -1,6 +1,7 @@
 rootProject.name = "ObelouixUltimate"
 
 listOf(
+    "common",
     "paper",
     "folia"
 ).forEach {

@@ -14,21 +14,18 @@ plugins {
 
 subprojects {
 
-    plugins.apply("java")
-    plugins.apply("io.papermc.paperweight.userdev")
-    plugins.apply("xyz.jpenilla.run-paper")
+    group = "${project.property("group")}"
+    version = "${project.property("version")}"
 
-    java {
-        // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
-        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    plugins.apply("java")
+
+    if (!project.name.contains("common")) {
+        plugins.apply("io.papermc.paperweight.userdev")
+        plugins.apply("xyz.jpenilla.run-paper")
+
     }
 
 
-}
-
-java {
-    // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 repositories {
@@ -44,7 +41,7 @@ repositories {
     }
 }
 
-dependencies {
+/*dependencies {
     //paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
     // paperweightDevBundle("com.example.paperfork", "1.18-R0.1-SNAPSHOT")
 
@@ -58,13 +55,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
     compileOnly("dev.folia:folia-api:1.19.4-R0.1-SNAPSHOT")
 
-    //Cloud Command Framework
-    implementation("cloud.commandframework", "cloud-paper", cloudVersion)
-    implementation("cloud.commandframework", "cloud-minecraft-extras", cloudVersion)
-    implementation("cloud.commandframework", "cloud-brigadier", cloudVersion)
-    //No need to add the main configurate, paper bundle's it
-    implementation("org.spongepowered", "configurate-hocon", configurateHoconVersion)
     //floodgate
     implementation("org.geysermc.floodgate", "api", floodgateVersion)
     
-}
+}*/
