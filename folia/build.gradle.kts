@@ -2,7 +2,7 @@ repositories {
     mavenCentral()
     listOf(
         "https://repo.papermc.io/repository/maven-public/",              // Paper
-        "https://repo.papermc.io/repository/maven-snapshots/",            // Paper snapshots (fpr Folia)
+        "https://repo.papermc.io/repository/maven-snapshots/",            // Paper snapshots (for Folia)
         "https://oss.sonatype.org/content/repositories/snapshots/",      // Sonatype
         "https://repo.opencollab.dev/maven-snapshots",                  // Floodgate
         "https://repo.opencollab.dev/maven-releases"                   // Cumulus & GeyserMC
@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    paperweightDevelopmentBundle("dev.folia:dev-bundle:1.19.4-R0.1-SNAPSHOT")
+    paperweight.devBundle("dev.folia:dev-bundle:1.19.4-R0.1-SNAPSHOT")
 
     //paperweightDevelopmentBundle("dev.folia:dev-bundle:1.19.4-R0.1-SNAPSHOT")
     // paperweightDevBundle("com.example.paperfork", "1.18-R0.1-SNAPSHOT")

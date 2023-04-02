@@ -1,6 +1,3 @@
-group = "fr.obelouix"
-version = "1.0-SNAPSHOT"
-
 val cloudVersion: String = "1.8.1"
 val configurateHoconVersion: String = "4.1.2"
 val floodgateVersion: String = "2.2.2-SNAPSHOT"
@@ -32,7 +29,7 @@ repositories {
     mavenCentral()
     listOf(
         "https://repo.papermc.io/repository/maven-public/",              // Paper
-        "https://repo.papermc.io/repository/maven-snapshots/",            // Paper snapshots (fpr Folia)
+        "https://repo.papermc.io/repository/maven-snapshots/",            // Paper snapshots (for Folia)
         "https://oss.sonatype.org/content/repositories/snapshots/",      // Sonatype
         "https://repo.opencollab.dev/maven-snapshots",                  // Floodgate
         "https://repo.opencollab.dev/maven-releases"                   // Cumulus & GeyserMC
