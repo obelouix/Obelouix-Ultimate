@@ -1,3 +1,7 @@
+import io.papermc.paperweight.util.convertToPath
+import org.gradle.kotlin.dsl.main
+import org.gradle.kotlin.dsl.sourceSets
+
 val cloudVersion: String = "1.8.1"
 val configurateHoconVersion: String = "4.1.2"
 val floodgateVersion: String = "2.2.2-SNAPSHOT"
@@ -19,6 +23,9 @@ subprojects {
     if (!project.name.contains("common")) {
         plugins.apply("io.papermc.paperweight.userdev")
         plugins.apply("xyz.jpenilla.run-paper")
+
+        synchronizeSharedResources()
+
     }
 
     java {
@@ -60,6 +67,17 @@ repositories {
         "https://repo.opencollab.dev/maven-releases"                   // Cumulus & GeyserMC
     ).forEach{
         maven(it)
+    }
+}
+
+fun Project.synchronizeSharedResources() {
+    sourceSets {
+        main {
+            resources.srcDir(project(":${rootProject.name}-common").sourceSets["main"].resources.srcDirs)
+        }
+        test {
+            resources.srcDir(project(":${rootProject.name}-common").sourceSets["test"].resources.srcDirs)
+        }
     }
 }
 
