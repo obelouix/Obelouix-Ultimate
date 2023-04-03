@@ -41,12 +41,14 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
       run: ./gradlew build
 
-    - name: Upload artifact
+    - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Obelouix-Ultimate
-        path: build/libs
-
+        name: Obelouix-Ultimate-Paper
+        path: |
+          paper/build/libs
+          folia/build/libs
+        
   codeQL:
     needs: [build]
     runs-on: ubuntu-latest
