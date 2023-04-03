@@ -27,3 +27,11 @@ dependencies {
     compileOnly("dev.folia:folia-api:1.19.4-R0.1-SNAPSHOT")
     implementation(project(":${rootProject.name}-common"))
 }
+
+tasks.processResources {
+    filesMatching("paper-plugin.yml") {
+        filter { line ->
+            line.replace("folia-supported: false", "folia-supported: true")
+        }
+    }
+}

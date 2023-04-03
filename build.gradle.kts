@@ -1,7 +1,3 @@
-import io.papermc.paperweight.util.convertToPath
-import org.gradle.kotlin.dsl.main
-import org.gradle.kotlin.dsl.sourceSets
-
 val cloudVersion: String = "1.8.1"
 val configurateHoconVersion: String = "4.1.2"
 val floodgateVersion: String = "2.2.2-SNAPSHOT"
@@ -47,11 +43,13 @@ subprojects {
             // See https://openjdk.java.net/jeps/247 for more information.
             options.release.set(17)
         }
+
         javadoc {
             options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
         }
         processResources {
             filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
+
         }
     }
 
