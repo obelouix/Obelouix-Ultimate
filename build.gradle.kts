@@ -6,21 +6,34 @@ plugins {
     id("java")
     id("io.papermc.paperweight.userdev") version "1.5.3" apply false // Paper dev bundle
     id("xyz.jpenilla.run-paper") version "2.0.1" apply false // Adds runServer and runMojangMappedServer tasks for testing
+    id("com.github.johnrengelman.shadow") version "8.1.1" // Shadow plugin
     // id("net.minecrell.plugin-yml.bukkit") version "0.5.2" // Generates plugin.yml
 }
 
+group = "fr.obelouix.ultimate"
+version = "1.0.0-SNAPSHOT"
+
 subprojects {
 
-    group = "${project.property("group")}"
-    version = "${project.property("version")}"
+    group = "${rootProject.property("group")}"
+    version = "${rootProject.property("version")}"
 
     plugins.apply("java")
 
     if (!project.name.contains("common")) {
         plugins.apply("io.papermc.paperweight.userdev")
         plugins.apply("xyz.jpenilla.run-paper")
+        plugins.apply("com.github.johnrengelman.shadow")
 
         synchronizeSharedResources()
+
+        tasks {
+            shadowJar {
+                setProperty("zip64", true)
+                archiveClassifier.set("noshade")
+                archiveFileName.set("${project.name}-${project.version}.jar")
+            }
+        }
 
     }
 
@@ -51,6 +64,7 @@ subprojects {
             filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
 
         }
+
     }
 
 }

@@ -21,4 +21,5 @@ dependencies {
     implementation("cloud.commandframework", "cloud-brigadier", cloudVersion)
     //No need to add the main configurate, paper bundle's it
     implementation("org.spongepowered", "configurate-hocon", configurateHoconVersion)
+    implementation("io.papermc:paperlib:1.0.7")
 }

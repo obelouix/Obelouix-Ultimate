@@ -35,3 +35,15 @@ tasks.processResources {
         }
     }
 }
+
+tasks.shadowJar {
+    configurations = listOf(project.configurations.compileClasspath.get())
+
+    dependencies {
+        include(project(":${rootProject.name}-common"))
+        // exclude all dependencies because paper server can auto-download them using the PluginLoader
+        from(configurations) {
+            exclude { !it.name.contains(rootProject.name) }
+        }
+    }
+}

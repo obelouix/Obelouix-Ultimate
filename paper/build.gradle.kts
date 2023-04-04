@@ -1,11 +1,11 @@
 repositories {
     mavenCentral()
     listOf(
-        "https://repo.papermc.io/repository/maven-public/",              // Paper
-        "https://repo.papermc.io/repository/maven-snapshots/",            // Paper snapshots (for Folia)
-        "https://oss.sonatype.org/content/repositories/snapshots/",      // Sonatype
-        "https://repo.opencollab.dev/maven-snapshots",                  // Floodgate
-        "https://repo.opencollab.dev/maven-releases"                   // Cumulus & GeyserMC
+            "https://repo.papermc.io/repository/maven-public/",              // Paper
+            "https://repo.papermc.io/repository/maven-snapshots/",            // Paper snapshots (for Folia)
+            "https://oss.sonatype.org/content/repositories/snapshots/",      // Sonatype
+            "https://repo.opencollab.dev/maven-snapshots",                  // Floodgate
+            "https://repo.opencollab.dev/maven-releases"                   // Cumulus & GeyserMC
     ).forEach {
         maven(it)
     }
@@ -24,4 +24,20 @@ dependencies {
     // Make sure to relocate shaded dependencies!
     compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
     implementation(project(":${rootProject.name}-common"))
+}
+
+tasks.build {
+    dependsOn(tasks.shadowJar)
+}
+
+tasks.shadowJar {
+    configurations = listOf(project.configurations.compileClasspath.get())
+
+    dependencies {
+        include(project(":${rootProject.name}-common"))
+        // exclude all dependencies because paper server can auto-download them using the PluginLoader
+        from(configurations) {
+            exclude { !it.name.contains(rootProject.name) }
+        }
+    }
 }
