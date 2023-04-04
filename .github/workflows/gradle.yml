@@ -46,8 +46,8 @@ jobs:
       with:
         name: Obelouix-Ultimate-artifacts-bundle
         path: |
-          paper/build/libs/*(?:(?!\b(test)\b).)*.jar
-          folia/build/libs/*(?:(?!\b(dev)\b).)*.jar
+          paper/build/libs/ObelouixUltimate-paper-[0-9].*-SNAPSHOT.jar
+          folia/build/libs/ObelouixUltimate-folia-[0-9].*-SNAPSHOT.jar
         
   codeQL:
     runs-on: ubuntu-latest
