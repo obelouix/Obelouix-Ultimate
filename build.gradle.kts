@@ -19,29 +19,22 @@ subprojects {
     version = "${rootProject.property("version")}"
 
     plugins.apply("java")
+    plugins.apply("com.github.johnrengelman.shadow")
 
-    if (!project.name.contains("common")) {
+    project(":${rootProject.name}-paper") {
         plugins.apply("io.papermc.paperweight.userdev")
         plugins.apply("xyz.jpenilla.run-paper")
-        plugins.apply("com.github.johnrengelman.shadow")
+    }
 
-        synchronizeSharedResources()
-
-        tasks {
-            shadowJar {
-                setProperty("zip64", true)
-                archiveClassifier.set("noshade")
-                archiveFileName.set("${project.name}-${project.version}.jar")
-            }
-        }
-
+    project(":${rootProject.name}-folia") {
+        plugins.apply("io.papermc.paperweight.userdev")
+        plugins.apply("xyz.jpenilla.run-paper")
     }
 
     java {
         // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
         toolchain.languageVersion.set(JavaLanguageVersion.of(17))
     }
-
 
     tasks {
         // Configure reobfJar to run when invoking the build task
@@ -64,6 +57,20 @@ subprojects {
             filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
 
         }
+
+        shadowJar {
+            if (project.name.equals(":${rootProject.name}-paper") || project.name.equals(":${rootProject.name}-folia")) {
+                setProperty("zip64", true)
+                archiveClassifier.set("noshade")
+                archiveFileName.set("${project.name}-${project.version}.jar")
+            }
+        }
+
+    }
+
+    if (project.name.equals(":${rootProject.name}-paper") || project.name.equals(":${rootProject.name}-folia")) {
+
+        synchronizeSharedResources()
 
     }
 

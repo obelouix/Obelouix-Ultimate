@@ -1,6 +1,3 @@
-val cloudVersion: String = "1.8.1"
-val configurateHoconVersion: String = "4.1.2"
-
 repositories {
     mavenCentral()
     listOf(
@@ -15,11 +12,13 @@ repositories {
 }
 
 dependencies {
+
+    compileOnly(libs.paper.api)
+    compileOnly(libs.folia.api)
+    implementation(libs.paperLib)
     //Cloud Command Framework
-    implementation("cloud.commandframework", "cloud-paper", cloudVersion)
-    implementation("cloud.commandframework", "cloud-minecraft-extras", cloudVersion)
-    implementation("cloud.commandframework", "cloud-brigadier", cloudVersion)
-    //No need to add the main configurate, paper bundle's it
-    implementation("org.spongepowered", "configurate-hocon", configurateHoconVersion)
-    implementation("io.papermc:paperlib:1.0.7")
+    implementation(libs.bundles.cloudCommandFrameworkBundle)
+
+    //Configurate
+    implementation(libs.configurate.hocon)
 }
