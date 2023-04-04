@@ -17,7 +17,7 @@ public class ObelouixUltimate extends JavaPlugin {
         if (Folia.isFolia()) {
             getComponentLogger().error(
                     Component.text("Your server is running Folia, " +
-                                    "please use the Folia version of ObelouixUltimate or some features will not work",
+                                    "please use the Paper version of ObelouixUltimate or some features will not work",
                             NamedTextColor.DARK_RED));
         }
     }
