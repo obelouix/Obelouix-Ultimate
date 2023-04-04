@@ -44,11 +44,12 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: '["Obelouix-Ultimate-Paper", "Obelouix-Ultimate-Folia"]'
-        path: '["paper/build/libs", "folia/build/libs"]'
+        name: Obelouix-Ultimate-artifacts-bundle
+        path: |
+          paper/build/libs/*(?:(?!\b(test)\b).)*.jar
+          folia/build/libs/*(?:(?!\b(dev)\b).)*.jar
         
   codeQL:
-    needs: [build]
     runs-on: ubuntu-latest
     permissions:
       actions: read
