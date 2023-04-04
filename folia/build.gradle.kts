@@ -36,6 +36,10 @@ tasks.processResources {
     }
 }
 
+tasks.build {
+    dependsOn(tasks.shadowJar)
+}
+
 tasks.shadowJar {
     configurations = listOf(project.configurations.compileClasspath.get())
 
