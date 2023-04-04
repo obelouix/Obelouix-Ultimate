@@ -1,6 +1,6 @@
 name: ObelouixUltimate
 version: '1.0-SNAPSHOT'
-main: fr.obelouix.ultimate.Main
+main: fr.obelouix.ultimate.ObelouixUltimate
 description: Paper Test Plugin
 author: Obelouix
 api-version: '1.19'
