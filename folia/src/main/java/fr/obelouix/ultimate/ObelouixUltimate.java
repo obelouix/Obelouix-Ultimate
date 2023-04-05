@@ -1,5 +1,6 @@
 package fr.obelouix.ultimate;
 
+import fr.obelouix.ultimate.I18N.Translator;
 import fr.obelouix.ultimate.commands.manager.ObelouixCommandManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,7 +13,7 @@ public class ObelouixUltimate extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Translator.init(this);
         ObelouixCommandManager.init(this);
-
     }
 }

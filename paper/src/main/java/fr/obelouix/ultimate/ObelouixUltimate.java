@@ -1,5 +1,6 @@
 package fr.obelouix.ultimate;
 
+import fr.obelouix.ultimate.I18N.Translator;
 import fr.obelouix.ultimate.commands.manager.ObelouixCommandManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -22,6 +23,7 @@ public class ObelouixUltimate extends JavaPlugin {
                             NamedTextColor.DARK_RED));
         }
 
+        Translator.init(this);
         ObelouixCommandManager.init(this);
 
     }
