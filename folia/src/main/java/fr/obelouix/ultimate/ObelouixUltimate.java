@@ -13,5 +13,6 @@ public class ObelouixUltimate extends JavaPlugin {
     @Override
     public void onEnable() {
         ObelouixCommandManager.init(this);
+
     }
 }
