@@ -13,7 +13,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.function.Consumer;
 
-public class FoliaScheduler implements Scheduler<ScheduledTask> {
+public abstract class FoliaScheduler implements Scheduler<ScheduledTask> {
 
     /**
      * Schedule a task to run asynchronously using the {@link GlobalRegionScheduler}
@@ -38,18 +38,6 @@ public class FoliaScheduler implements Scheduler<ScheduledTask> {
         Bukkit.getServer().getGlobalRegionScheduler().runDelayed(plugin, task, delay);
     }
 
-    /**
-     * Schedule a task to run asynchronously using the {@link GlobalRegionScheduler}
-     * This method do the same thing as {@link #delayedSchedule(Plugin, Consumer, int)}
-     *
-     * @param plugin   the plugin that will be used to register the task
-     * @param runnable the task to run
-     * @param delay    the delay in ticks before the task is run
-     */
-    @Override
-    public void delayedAsyncSchedule(Plugin plugin, Consumer<ScheduledTask> runnable, int delay) {
-        delayedSchedule(plugin, runnable, delay);
-    }
 
     /**
      * Schedule a task to run asynchronously using the {@link RegionScheduler}
