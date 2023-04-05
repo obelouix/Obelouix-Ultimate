@@ -19,12 +19,17 @@ public class ObelouixUltimate extends JavaPlugin {
         return plugin;
     }
 
+    public static Config getPluginConfig() {
+        return config;
+    }
+
     @Override
     public void onEnable() {
-        if (plugin == null) plugin = this;
+        plugin = this;
         config = new Config();
         config.loadConfig();
         Translator.init(this);
         ObelouixCommandManager.init(this);
     }
+
 }
