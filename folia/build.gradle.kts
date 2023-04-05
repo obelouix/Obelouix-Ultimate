@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.devBundle("dev.folia","1.19.4-R0.1-SNAPSHOT")
+    paperweight.foliaDevBundle("1.19.4-R0.1-SNAPSHOT")
 
     //paperweightDevelopmentBundle("dev.folia:dev-bundle:1.19.4-R0.1-SNAPSHOT")
     // paperweightDevBundle("com.example.paperfork", "1.18-R0.1-SNAPSHOT")
