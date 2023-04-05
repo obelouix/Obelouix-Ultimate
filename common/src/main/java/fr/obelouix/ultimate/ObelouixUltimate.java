@@ -15,14 +15,6 @@ public class ObelouixUltimate extends JavaPlugin {
         super.onDisable();
     }
 
-    public static ObelouixUltimate getPlugin() {
-        return plugin;
-    }
-
-    public static Config getPluginConfig() {
-        return config;
-    }
-
     @Override
     public void onEnable() {
         plugin = this;
@@ -30,6 +22,14 @@ public class ObelouixUltimate extends JavaPlugin {
         config.loadConfig();
         Translator.init(this);
         ObelouixCommandManager.init(this);
+    }
+
+    public static ObelouixUltimate getPlugin() {
+        return plugin;
+    }
+
+    public static Config getPluginConfig() {
+        return config;
     }
 
 }
