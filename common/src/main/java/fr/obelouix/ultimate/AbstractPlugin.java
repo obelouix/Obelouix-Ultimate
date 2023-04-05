@@ -5,9 +5,10 @@ import fr.obelouix.ultimate.commands.manager.ObelouixCommandManager;
 import fr.obelouix.ultimate.config.Config;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class ObelouixUltimate extends JavaPlugin {
+public abstract class AbstractPlugin extends JavaPlugin {
 
-    private static ObelouixUltimate plugin;
+
+    protected static AbstractPlugin plugin;
     private static Config config;
 
     @Override
@@ -17,14 +18,13 @@ public class ObelouixUltimate extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        plugin = this;
         config = new Config();
         config.loadConfig();
         Translator.init(this);
         ObelouixCommandManager.init(this);
     }
 
-    public static ObelouixUltimate getPlugin() {
+    public static AbstractPlugin getPlugin() {
         return plugin;
     }
 

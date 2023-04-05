@@ -1,6 +1,6 @@
 package fr.obelouix.ultimate.config;
 
-import fr.obelouix.ultimate.ObelouixUltimate;
+import fr.obelouix.ultimate.AbstractPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.spongepowered.configurate.CommentedConfigurationNode;
@@ -20,7 +20,7 @@ public class Config {
 
 
     private static final HoconConfigurationLoader configLoader = HoconConfigurationLoader.builder()
-            .path(Path.of(ObelouixUltimate.getPlugin().getDataFolder().getPath(), "config.conf"))
+            .path(Path.of(AbstractPlugin.getPlugin().getDataFolder().getPath(), "config.conf"))
             .build();
     private static final Set<World> coordinatesBlacklist = new HashSet<>();
     private static CommentedConfigurationNode root;
@@ -36,10 +36,10 @@ public class Config {
     private static boolean protectTamedAnimals;
 
     private static void createFile() {
-        final File file = Path.of(ObelouixUltimate.getPlugin().getDataFolder().getPath(), "config.conf").toFile();
+        final File file = Path.of(AbstractPlugin.getPlugin().getDataFolder().getPath(), "config.conf").toFile();
 
         if (!file.exists()) {
-            ObelouixUltimate.getPlugin().getComponentLogger().info("Creating configuration file...");
+            AbstractPlugin.getPlugin().getComponentLogger().info("Creating configuration file...");
 
 
             save(root);
@@ -174,16 +174,16 @@ public class Config {
             root = configLoader.load();
             createFile();
         } catch (ConfigurateException e) {
-            ObelouixUltimate.getPlugin().getComponentLogger().error("An error occurred while loading this configuration: " + e.getMessage());
+            AbstractPlugin.getPlugin().getComponentLogger().error("An error occurred while loading this configuration: " + e.getMessage());
             configReloaded = false;
             if (e.getCause() != null) {
                 e.getCause().printStackTrace();
             }
         }
 
-        ObelouixUltimate.getPlugin().getComponentLogger().info("Loading configuration...");
+        AbstractPlugin.getPlugin().getComponentLogger().info("Loading configuration...");
 
-        final File file = Path.of(ObelouixUltimate.getPlugin().getDataFolder().getPath(), "config.conf").toFile();
+        final File file = Path.of(AbstractPlugin.getPlugin().getDataFolder().getPath(), "config.conf").toFile();
 
         try {
             addMissingConfigs();
@@ -199,7 +199,7 @@ public class Config {
         protectTamedAnimals = root.node("features", "entity", "tamed", "block-damage").getBoolean();
         reviveCoralBlock = root.node("features", "blocks", "revive-coral-with-potion").getBoolean();
         showWitherSkullExplosionsParticles = root.node("protection", "explosions", "wither", "show-wither-skull-explosions-particles").getBoolean();
-        ObelouixUltimate.getPlugin().getComponentLogger().info("Configuration loaded");
+        AbstractPlugin.getPlugin().getComponentLogger().info("Configuration loaded");
 
         try {
             Objects.requireNonNull(root.node("coordinates", "world", "blacklist").getList(String.class)).forEach(
