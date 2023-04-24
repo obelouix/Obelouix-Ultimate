@@ -5,7 +5,7 @@ val floodgateVersion: String = "2.2.2-SNAPSHOT"
 plugins {
     id("java")
     id("io.papermc.paperweight.userdev") version "1.5.4" apply false // Paper dev bundle
-    id("xyz.jpenilla.run-paper") version "2.0.1" apply false // Adds runServer and runMojangMappedServer tasks for testing
+    id("xyz.jpenilla.run-paper") version "2.1.0" apply false // Adds runServer and runMojangMappedServer tasks for testing
     id("com.github.johnrengelman.shadow") version "8.1.1" // Shadow plugin
     // id("net.minecrell.plugin-yml.bukkit") version "0.5.2" // Generates plugin.yml
 }
